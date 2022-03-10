@@ -214,7 +214,7 @@ Partial Class Catatan
         Me.TCustomer.StateCommon.Item.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.0!)
         Me.TCustomer.StateTracking.Item.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(244, Byte), Integer))
         Me.TCustomer.StateTracking.Item.Content.ShortText.Color1 = System.Drawing.Color.Black
-        Me.TCustomer.TabIndex = 130
+        Me.TCustomer.TabIndex = 2
         '
         'TSupplier
         '
@@ -241,7 +241,7 @@ Partial Class Catatan
         Me.TSupplier.StateCommon.Item.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.0!)
         Me.TSupplier.StateTracking.Item.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(244, Byte), Integer))
         Me.TSupplier.StateTracking.Item.Content.ShortText.Color1 = System.Drawing.Color.Black
-        Me.TSupplier.TabIndex = 130
+        Me.TSupplier.TabIndex = 1
         '
         'TBarang
         '
@@ -268,7 +268,7 @@ Partial Class Catatan
         Me.TBarang.StateCommon.Item.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.0!)
         Me.TBarang.StateTracking.Item.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(244, Byte), Integer))
         Me.TBarang.StateTracking.Item.Content.ShortText.Color1 = System.Drawing.Color.Black
-        Me.TBarang.TabIndex = 130
+        Me.TBarang.TabIndex = 0
         '
         'TDari
         '
@@ -284,7 +284,7 @@ Partial Class Catatan
         Me.TDari.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
         Me.TDari.StateCommon.Content.Font = New System.Drawing.Font("Trebuchet MS", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TDari.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
-        Me.TDari.TabIndex = 8
+        Me.TDari.TabIndex = 0
         Me.TDari.ValueNullable = New Date(2022, 1, 16, 16, 43, 0, 0)
         '
         'CBMasuk
@@ -299,7 +299,7 @@ Partial Class Catatan
         Me.CBMasuk.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.CBMasuk.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.5!, System.Drawing.FontStyle.Bold)
         Me.CBMasuk.StateDisabled.ShortText.Color1 = System.Drawing.Color.Gray
-        Me.CBMasuk.TabIndex = 3
+        Me.CBMasuk.TabIndex = 0
         Me.CBMasuk.Values.Text = "Masuk"
         '
         'KryptonGroup1
@@ -370,7 +370,7 @@ Partial Class Catatan
         Me.TSampai.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
         Me.TSampai.StateCommon.Content.Font = New System.Drawing.Font("Trebuchet MS", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TSampai.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
-        Me.TSampai.TabIndex = 8
+        Me.TSampai.TabIndex = 1
         Me.TSampai.ValueNullable = New Date(2022, 1, 16, 16, 43, 0, 0)
         '
         'LBLSampai
@@ -449,7 +449,7 @@ Partial Class Catatan
         Me.CBBelum.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.CBBelum.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.5!, System.Drawing.FontStyle.Bold)
         Me.CBBelum.StateDisabled.ShortText.Color1 = System.Drawing.Color.Gray
-        Me.CBBelum.TabIndex = 3
+        Me.CBBelum.TabIndex = 1
         Me.CBBelum.Values.Text = "Belum Lunas"
         '
         'CBSudah
@@ -464,7 +464,7 @@ Partial Class Catatan
         Me.CBSudah.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.CBSudah.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.5!, System.Drawing.FontStyle.Bold)
         Me.CBSudah.StateDisabled.ShortText.Color1 = System.Drawing.Color.Gray
-        Me.CBSudah.TabIndex = 3
+        Me.CBSudah.TabIndex = 0
         Me.CBSudah.Values.Text = "Sudah Lunas"
         '
         'KryptonBorderEdge1
@@ -517,7 +517,7 @@ Partial Class Catatan
         Me.CBKeluar.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.CBKeluar.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.5!, System.Drawing.FontStyle.Bold)
         Me.CBKeluar.StateDisabled.ShortText.Color1 = System.Drawing.Color.Gray
-        Me.CBKeluar.TabIndex = 3
+        Me.CBKeluar.TabIndex = 1
         Me.CBKeluar.Values.Text = "Keluar"
         '
         'PemisahH

@@ -748,7 +748,7 @@ Partial Class Dashboard
             Or Krypton.Toolkit.PaletteDrawBorders.Left) _
             Or Krypton.Toolkit.PaletteDrawBorders.Right), Krypton.Toolkit.PaletteDrawBorders)
         Me.DGV.StateCommon.DataCell.Content.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.DGV.StateCommon.DataCell.Content.Font = New System.Drawing.Font("Verdana", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DGV.StateCommon.DataCell.Content.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DGV.StateCommon.HeaderColumn.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(33, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(94, Byte), Integer))
         Me.DGV.StateCommon.HeaderColumn.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
         Me.DGV.StateCommon.HeaderColumn.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
@@ -1559,7 +1559,7 @@ Partial Class Dashboard
         Me.CPeriode.HeaderText = "Periode"
         Me.CPeriode.Name = "CPeriode"
         Me.CPeriode.ReadOnly = True
-        Me.CPeriode.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CPeriode.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CPeriode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CPeriode.Width = 85
         '
@@ -1570,6 +1570,7 @@ Partial Class Dashboard
         Me.CKeluar.HeaderText = "Keluar"
         Me.CKeluar.Name = "CKeluar"
         Me.CKeluar.ReadOnly = True
+        Me.CKeluar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CKeluar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CKeluar.Width = 60
         '
@@ -1581,7 +1582,7 @@ Partial Class Dashboard
         Me.CPendapatan.HeaderText = "Pendapatan"
         Me.CPendapatan.Name = "CPendapatan"
         Me.CPendapatan.ReadOnly = True
-        Me.CPendapatan.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CPendapatan.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CPendapatan.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CPendapatan.Width = 106
         '
@@ -1592,6 +1593,7 @@ Partial Class Dashboard
         Me.CMasuk.HeaderText = "Masuk"
         Me.CMasuk.Name = "CMasuk"
         Me.CMasuk.ReadOnly = True
+        Me.CMasuk.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CMasuk.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CMasuk.Width = 60
         '
@@ -1603,7 +1605,7 @@ Partial Class Dashboard
         Me.CPengeluaran.HeaderText = "Pengeluaran"
         Me.CPengeluaran.Name = "CPengeluaran"
         Me.CPengeluaran.ReadOnly = True
-        Me.CPengeluaran.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CPengeluaran.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CPengeluaran.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CPengeluaran.Width = 106
         '
@@ -1615,7 +1617,7 @@ Partial Class Dashboard
         Me.CSaldoAkhir.HeaderText = "Saldo Akhir"
         Me.CSaldoAkhir.Name = "CSaldoAkhir"
         Me.CSaldoAkhir.ReadOnly = True
-        Me.CSaldoAkhir.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CSaldoAkhir.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CSaldoAkhir.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CSaldoAkhir.Width = 115
         '

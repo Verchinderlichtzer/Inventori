@@ -26,12 +26,12 @@ Partial Class Keluar
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Keluar))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -74,6 +74,8 @@ Partial Class Keluar
         Me.TKeterangan = New Krypton.Toolkit.KryptonTextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.DGV = New Krypton.Toolkit.KryptonDataGridView()
+        Me.LBLDetailBarang = New Krypton.Toolkit.KryptonLabel()
+        Me.DGVDetailBarang = New Krypton.Toolkit.KryptonDataGridView()
         Me.CIDBarang = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CNamaBarang = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CStok = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -81,8 +83,6 @@ Partial Class Keluar
         Me.CSatuan = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CDiskon = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CTotalHarga = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.LBLDetailBarang = New Krypton.Toolkit.KryptonLabel()
-        Me.DGVDetailBarang = New Krypton.Toolkit.KryptonDataGridView()
         Me.C3Faktur = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.C3TanggalMasuk = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.C3Awal = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -460,7 +460,7 @@ Partial Class Keluar
         Me.TBiayaLain.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TBiayaLain.StateDisabled.Border.Rounding = 0!
         Me.TBiayaLain.StateDisabled.Border.Width = 0
-        Me.TBiayaLain.TabIndex = 208
+        Me.TBiayaLain.TabIndex = 7
         Me.TBiayaLain.Text = "0"
         Me.TBiayaLain.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -503,7 +503,7 @@ Partial Class Keluar
         Me.TPPN.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TPPN.StateDisabled.Border.Rounding = 0!
         Me.TPPN.StateDisabled.Border.Width = 0
-        Me.TPPN.TabIndex = 207
+        Me.TPPN.TabIndex = 6
         Me.TPPN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'BTNSimpan
@@ -552,7 +552,7 @@ Partial Class Keluar
             Or Krypton.Toolkit.PaletteDrawBorders.Left) _
             Or Krypton.Toolkit.PaletteDrawBorders.Right), Krypton.Toolkit.PaletteDrawBorders)
         Me.BTNSimpan.StateTracking.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.BTNSimpan.TabIndex = 210
+        Me.BTNSimpan.TabIndex = 9
         Me.BTNSimpan.Values.Image = Global.Inventori.My.Resources.Resources.crud_simpan_pressed
         Me.BTNSimpan.Values.ImageStates.ImageCheckedNormal = Nothing
         Me.BTNSimpan.Values.ImageStates.ImageCheckedPressed = Nothing
@@ -605,7 +605,7 @@ Partial Class Keluar
             Or Krypton.Toolkit.PaletteDrawBorders.Left) _
             Or Krypton.Toolkit.PaletteDrawBorders.Right), Krypton.Toolkit.PaletteDrawBorders)
         Me.BTNClear.StateTracking.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.BTNClear.TabIndex = 212
+        Me.BTNClear.TabIndex = 10
         Me.BTNClear.Values.Image = Global.Inventori.My.Resources.Resources.crud_refresh_pressed
         Me.BTNClear.Values.ImageStates.ImageCheckedNormal = Nothing
         Me.BTNClear.Values.ImageStates.ImageCheckedPressed = Nothing
@@ -768,7 +768,7 @@ Partial Class Keluar
         Me.TDibayar.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TDibayar.StateDisabled.Border.Rounding = 0!
         Me.TDibayar.StateDisabled.Border.Width = 0
-        Me.TDibayar.TabIndex = 209
+        Me.TDibayar.TabIndex = 8
         Me.TDibayar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'TGrandSisa
@@ -937,7 +937,7 @@ Partial Class Keluar
         Me.TKeterangan.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TKeterangan.StateDisabled.Border.Rounding = 0!
         Me.TKeterangan.StateDisabled.Border.Width = 0
-        Me.TKeterangan.TabIndex = 206
+        Me.TKeterangan.TabIndex = 5
         '
         'Panel1
         '
@@ -953,6 +953,7 @@ Partial Class Keluar
         '
         Me.DGV.AllowUserToAddRows = False
         Me.DGV.AllowUserToDeleteRows = False
+        Me.DGV.AllowUserToResizeColumns = False
         Me.DGV.AllowUserToResizeRows = False
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
         Me.DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
@@ -989,74 +990,7 @@ Partial Class Keluar
         Me.DGV.StateSelected.DataCell.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.DGV.StateSelected.DataCell.Content.Color1 = System.Drawing.Color.Black
         Me.DGV.StateTracking.HeaderColumn.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(121, Byte), Integer))
-        Me.DGV.TabIndex = 192
-        '
-        'CIDBarang
-        '
-        Me.CIDBarang.HeaderText = "ID Barang"
-        Me.CIDBarang.Name = "CIDBarang"
-        Me.CIDBarang.ReadOnly = True
-        Me.CIDBarang.Visible = False
-        Me.CIDBarang.Width = 5
-        '
-        'CNamaBarang
-        '
-        Me.CNamaBarang.HeaderText = "Nama Barang"
-        Me.CNamaBarang.Name = "CNamaBarang"
-        Me.CNamaBarang.ReadOnly = True
-        Me.CNamaBarang.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CNamaBarang.Width = 450
-        '
-        'CStok
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CStok.DefaultCellStyle = DataGridViewCellStyle3
-        Me.CStok.HeaderText = "Stok"
-        Me.CStok.Name = "CStok"
-        Me.CStok.ReadOnly = True
-        Me.CStok.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CStok.Width = 75
-        '
-        'CQty
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CQty.DefaultCellStyle = DataGridViewCellStyle4
-        Me.CQty.HeaderText = "Qty"
-        Me.CQty.MaxInputLength = 4
-        Me.CQty.Name = "CQty"
-        Me.CQty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CQty.Width = 75
-        '
-        'CSatuan
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CSatuan.DefaultCellStyle = DataGridViewCellStyle5
-        Me.CSatuan.HeaderText = "Satuan"
-        Me.CSatuan.Name = "CSatuan"
-        Me.CSatuan.ReadOnly = True
-        Me.CSatuan.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CSatuan.Width = 80
-        '
-        'CDiskon
-        '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CDiskon.DefaultCellStyle = DataGridViewCellStyle6
-        Me.CDiskon.HeaderText = "Diskon"
-        Me.CDiskon.MaxInputLength = 2
-        Me.CDiskon.Name = "CDiskon"
-        Me.CDiskon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CDiskon.Width = 60
-        '
-        'CTotalHarga
-        '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle7.Format = "###,###,###"
-        Me.CTotalHarga.DefaultCellStyle = DataGridViewCellStyle7
-        Me.CTotalHarga.HeaderText = "Total Harga"
-        Me.CTotalHarga.Name = "CTotalHarga"
-        Me.CTotalHarga.ReadOnly = True
-        Me.CTotalHarga.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CTotalHarga.Width = 105
+        Me.DGV.TabIndex = 0
         '
         'LBLDetailBarang
         '
@@ -1076,6 +1010,7 @@ Partial Class Keluar
         '
         Me.DGVDetailBarang.AllowUserToAddRows = False
         Me.DGVDetailBarang.AllowUserToDeleteRows = False
+        Me.DGVDetailBarang.AllowUserToResizeColumns = False
         Me.DGVDetailBarang.AllowUserToResizeRows = False
         DataGridViewCellStyle8.BackColor = System.Drawing.Color.WhiteSmoke
         Me.DGVDetailBarang.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
@@ -1115,12 +1050,87 @@ Partial Class Keluar
         Me.DGVDetailBarang.StateTracking.HeaderColumn.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(121, Byte), Integer))
         Me.DGVDetailBarang.TabIndex = 6
         '
+        'CIDBarang
+        '
+        Me.CIDBarang.HeaderText = "ID Barang"
+        Me.CIDBarang.Name = "CIDBarang"
+        Me.CIDBarang.ReadOnly = True
+        Me.CIDBarang.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CIDBarang.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CIDBarang.Visible = False
+        Me.CIDBarang.Width = 5
+        '
+        'CNamaBarang
+        '
+        Me.CNamaBarang.HeaderText = "Nama Barang"
+        Me.CNamaBarang.Name = "CNamaBarang"
+        Me.CNamaBarang.ReadOnly = True
+        Me.CNamaBarang.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CNamaBarang.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CNamaBarang.Width = 450
+        '
+        'CStok
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CStok.DefaultCellStyle = DataGridViewCellStyle3
+        Me.CStok.HeaderText = "Stok"
+        Me.CStok.Name = "CStok"
+        Me.CStok.ReadOnly = True
+        Me.CStok.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CStok.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CStok.Width = 75
+        '
+        'CQty
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CQty.DefaultCellStyle = DataGridViewCellStyle4
+        Me.CQty.HeaderText = "Qty"
+        Me.CQty.MaxInputLength = 4
+        Me.CQty.Name = "CQty"
+        Me.CQty.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CQty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CQty.Width = 75
+        '
+        'CSatuan
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CSatuan.DefaultCellStyle = DataGridViewCellStyle5
+        Me.CSatuan.HeaderText = "Satuan"
+        Me.CSatuan.Name = "CSatuan"
+        Me.CSatuan.ReadOnly = True
+        Me.CSatuan.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CSatuan.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CSatuan.Width = 80
+        '
+        'CDiskon
+        '
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CDiskon.DefaultCellStyle = DataGridViewCellStyle6
+        Me.CDiskon.HeaderText = "Diskon"
+        Me.CDiskon.MaxInputLength = 2
+        Me.CDiskon.Name = "CDiskon"
+        Me.CDiskon.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CDiskon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CDiskon.Width = 60
+        '
+        'CTotalHarga
+        '
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle7.Format = "###,###,###"
+        Me.CTotalHarga.DefaultCellStyle = DataGridViewCellStyle7
+        Me.CTotalHarga.HeaderText = "Total Harga"
+        Me.CTotalHarga.Name = "CTotalHarga"
+        Me.CTotalHarga.ReadOnly = True
+        Me.CTotalHarga.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CTotalHarga.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CTotalHarga.Width = 105
+        '
         'C3Faktur
         '
         Me.C3Faktur.HeaderText = "Faktur"
         Me.C3Faktur.Name = "C3Faktur"
         Me.C3Faktur.ReadOnly = True
-        Me.C3Faktur.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3Faktur.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3Faktur.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3Faktur.Visible = False
         Me.C3Faktur.Width = 5
@@ -1130,7 +1140,7 @@ Partial Class Keluar
         Me.C3TanggalMasuk.HeaderText = "Tanggal Masuk"
         Me.C3TanggalMasuk.Name = "C3TanggalMasuk"
         Me.C3TanggalMasuk.ReadOnly = True
-        Me.C3TanggalMasuk.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3TanggalMasuk.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3TanggalMasuk.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3TanggalMasuk.Width = 172
         '
@@ -1141,7 +1151,7 @@ Partial Class Keluar
         Me.C3Awal.HeaderText = "Awal"
         Me.C3Awal.Name = "C3Awal"
         Me.C3Awal.ReadOnly = True
-        Me.C3Awal.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3Awal.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3Awal.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3Awal.Width = 55
         '
@@ -1153,7 +1163,7 @@ Partial Class Keluar
         Me.C3HargaJual.HeaderText = "Harga Jual"
         Me.C3HargaJual.Name = "C3HargaJual"
         Me.C3HargaJual.ReadOnly = True
-        Me.C3HargaJual.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3HargaJual.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3HargaJual.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3HargaJual.Width = 110
         '
@@ -1164,7 +1174,7 @@ Partial Class Keluar
         Me.C3Qty.HeaderText = "Qty"
         Me.C3Qty.Name = "C3Qty"
         Me.C3Qty.ReadOnly = True
-        Me.C3Qty.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3Qty.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3Qty.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3Qty.Width = 58
         '
@@ -1176,7 +1186,7 @@ Partial Class Keluar
         Me.C3TotalHarga.HeaderText = "Total Harga"
         Me.C3TotalHarga.Name = "C3TotalHarga"
         Me.C3TotalHarga.ReadOnly = True
-        Me.C3TotalHarga.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3TotalHarga.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3TotalHarga.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3TotalHarga.Width = 113
         '
@@ -1187,7 +1197,7 @@ Partial Class Keluar
         Me.C3Akhir.HeaderText = "Akhir"
         Me.C3Akhir.Name = "C3Akhir"
         Me.C3Akhir.ReadOnly = True
-        Me.C3Akhir.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3Akhir.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3Akhir.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3Akhir.Width = 65
         '
@@ -1198,7 +1208,7 @@ Partial Class Keluar
         Me.C3SisaPengurangan.HeaderText = "Sisa Pengurangan"
         Me.C3SisaPengurangan.Name = "C3SisaPengurangan"
         Me.C3SisaPengurangan.ReadOnly = True
-        Me.C3SisaPengurangan.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3SisaPengurangan.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3SisaPengurangan.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3SisaPengurangan.Width = 145
         '
@@ -1209,7 +1219,7 @@ Partial Class Keluar
         Me.C3Kedaluwarsa.HeaderText = "Kedaluwarsa"
         Me.C3Kedaluwarsa.Name = "C3Kedaluwarsa"
         Me.C3Kedaluwarsa.ReadOnly = True
-        Me.C3Kedaluwarsa.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.C3Kedaluwarsa.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.C3Kedaluwarsa.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.C3Kedaluwarsa.Width = 127
         '
@@ -1302,6 +1312,13 @@ Partial Class Keluar
     Friend WithEvents DGV As Krypton.Toolkit.KryptonDataGridView
     Friend WithEvents LBLDetailBarang As Krypton.Toolkit.KryptonLabel
     Friend WithEvents DGVDetailBarang As Krypton.Toolkit.KryptonDataGridView
+    Friend WithEvents CIDBarang As DataGridViewTextBoxColumn
+    Friend WithEvents CNamaBarang As DataGridViewTextBoxColumn
+    Friend WithEvents CStok As DataGridViewTextBoxColumn
+    Friend WithEvents CQty As DataGridViewTextBoxColumn
+    Friend WithEvents CSatuan As DataGridViewTextBoxColumn
+    Friend WithEvents CDiskon As DataGridViewTextBoxColumn
+    Friend WithEvents CTotalHarga As DataGridViewTextBoxColumn
     Friend WithEvents C3Faktur As DataGridViewTextBoxColumn
     Friend WithEvents C3TanggalMasuk As DataGridViewTextBoxColumn
     Friend WithEvents C3Awal As DataGridViewTextBoxColumn
@@ -1311,11 +1328,4 @@ Partial Class Keluar
     Friend WithEvents C3Akhir As DataGridViewTextBoxColumn
     Friend WithEvents C3SisaPengurangan As DataGridViewTextBoxColumn
     Friend WithEvents C3Kedaluwarsa As DataGridViewTextBoxColumn
-    Friend WithEvents CIDBarang As DataGridViewTextBoxColumn
-    Friend WithEvents CNamaBarang As DataGridViewTextBoxColumn
-    Friend WithEvents CStok As DataGridViewTextBoxColumn
-    Friend WithEvents CQty As DataGridViewTextBoxColumn
-    Friend WithEvents CSatuan As DataGridViewTextBoxColumn
-    Friend WithEvents CDiskon As DataGridViewTextBoxColumn
-    Friend WithEvents CTotalHarga As DataGridViewTextBoxColumn
 End Class

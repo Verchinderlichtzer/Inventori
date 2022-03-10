@@ -387,7 +387,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -649,12 +648,14 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
                     <TablixMember />
                   </TablixMembers>
                   <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
                 <TablixMember>
                   <Group Name="ID_Masuk">
@@ -725,7 +726,7 @@
                 <Value>=Fields!Tanggal.Value</Value>
               </SortExpression>
             </SortExpressions>
-            <Top>1.96972in</Top>
+            <Top>1.84472in</Top>
             <Left>0.125in</Left>
             <Height>0.5in</Height>
             <Width>8.05125in</Width>
@@ -754,7 +755,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>3.33944in</Top>
+            <Top>3.21444in</Top>
             <Left>5.92244in</Left>
             <Height>0.23in</Height>
             <Width>2.22257in</Width>
@@ -788,7 +789,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>3.56944in</Top>
+            <Top>3.44444in</Top>
             <Left>5.92244in</Left>
             <Height>0.23in</Height>
             <Width>2.22257in</Width>
@@ -804,7 +805,7 @@
             </Style>
           </Textbox>
           <Line Name="Line1">
-            <Top>3.56944in</Top>
+            <Top>3.44444in</Top>
             <Left>5.92244in</Left>
             <Height>0in</Height>
             <Width>2.22257in</Width>
@@ -834,7 +835,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>2.53916in</Top>
+            <Top>2.41416in</Top>
             <Left>5.92244in</Left>
             <Height>0.23in</Height>
             <Width>2.22257in</Width>
@@ -870,7 +871,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0.12638in</Top>
+            <Top>0.00138in</Top>
             <Left>6.72833in</Left>
             <Height>0.23in</Height>
             <Width>1.41667in</Width>
@@ -903,7 +904,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>1.66027in</Top>
+            <Top>1.53527in</Top>
             <Left>0.12501in</Left>
             <Height>0.24in</Height>
             <Width>8.02in</Width>
@@ -939,7 +940,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox6</rd:DefaultName>
-            <Top>1.24082in</Top>
+            <Top>1.11582in</Top>
             <Left>0.12501in</Left>
             <Height>0.35in</Height>
             <Width>8.02in</Width>
@@ -989,7 +990,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0.94138in</Top>
+            <Top>0.81638in</Top>
             <Left>0.125in</Left>
             <Height>0.23in</Height>
             <Width>6.53388in</Width>
@@ -1039,7 +1040,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0.71138in</Top>
+            <Top>0.58638in</Top>
             <Left>0.125in</Left>
             <Height>0.23in</Height>
             <Width>6.53388in</Width>
@@ -1071,7 +1072,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0.48138in</Top>
+            <Top>0.35638in</Top>
             <Left>0.125in</Left>
             <Height>0.23in</Height>
             <Width>6.53388in</Width>
@@ -1105,7 +1106,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0.12638in</Top>
+            <Top>0.00138in</Top>
             <Left>0.12501in</Left>
             <Height>0.355in</Height>
             <Width>6.53388in</Width>
@@ -1121,11 +1122,21 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>3.9in</Height>
+        <Height>3.7in</Height>
         <Style />
       </Body>
       <Width>8.27in</Width>
       <Page>
+        <PageHeader>
+          <Height>0.1in</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageHeader>
         <PageFooter>
           <Height>0.4in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>

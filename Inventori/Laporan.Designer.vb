@@ -174,7 +174,7 @@ Partial Class Laporan
         Me.RBBatang.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.RBBatang.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBBatang.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.RBBatang.TabIndex = 83
+        Me.RBBatang.TabIndex = 0
         Me.RBBatang.Values.Text = "Batang"
         '
         'RBGaris
@@ -188,7 +188,7 @@ Partial Class Laporan
         Me.RBGaris.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.RBGaris.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBGaris.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.RBGaris.TabIndex = 83
+        Me.RBGaris.TabIndex = 1
         Me.RBGaris.Values.Text = "Garis"
         '
         'RBKurva
@@ -202,7 +202,7 @@ Partial Class Laporan
         Me.RBKurva.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.RBKurva.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBKurva.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.RBKurva.TabIndex = 83
+        Me.RBKurva.TabIndex = 2
         Me.RBKurva.Values.Text = "Kurva"
         '
         'CBLain
@@ -216,7 +216,7 @@ Partial Class Laporan
         Me.CBLain.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.CBLain.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBLain.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.CBLain.TabIndex = 24
+        Me.CBLain.TabIndex = 1
         Me.CBLain.Values.Text = "Pengeluaran / Pendapatan Lain"
         '
         'CBKeluar
@@ -230,7 +230,7 @@ Partial Class Laporan
         Me.CBKeluar.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.CBKeluar.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBKeluar.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.CBKeluar.TabIndex = 24
+        Me.CBKeluar.TabIndex = 1
         Me.CBKeluar.Values.Text = "Keluar"
         '
         'CBTransaksi
@@ -244,7 +244,7 @@ Partial Class Laporan
         Me.CBTransaksi.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.CBTransaksi.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBTransaksi.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.CBTransaksi.TabIndex = 24
+        Me.CBTransaksi.TabIndex = 0
         Me.CBTransaksi.Values.Text = "Pembayaran Faktur"
         '
         'CBMasuk
@@ -258,7 +258,7 @@ Partial Class Laporan
         Me.CBMasuk.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.CBMasuk.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CBMasuk.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.CBMasuk.TabIndex = 24
+        Me.CBMasuk.TabIndex = 0
         Me.CBMasuk.Values.Text = "Masuk"
         '
         'LBLGrafik
@@ -408,7 +408,7 @@ Partial Class Laporan
         Me.TTahunan.StateCommon.Item.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.0!)
         Me.TTahunan.StateTracking.Item.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(244, Byte), Integer))
         Me.TTahunan.StateTracking.Item.Content.ShortText.Color1 = System.Drawing.Color.Black
-        Me.TTahunan.TabIndex = 171
+        Me.TTahunan.TabIndex = 0
         '
         'LBLTahunan
         '
@@ -473,7 +473,7 @@ Partial Class Laporan
         Me.TBulanan.Size = New System.Drawing.Size(159, 26)
         Me.TBulanan.StateCommon.Content.Font = New System.Drawing.Font("Trebuchet MS", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TBulanan.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
-        Me.TBulanan.TabIndex = 89
+        Me.TBulanan.TabIndex = 0
         Me.TBulanan.ValueNullable = New Date(2022, 1, 16, 16, 43, 0, 0)
         '
         'Pemisah6
@@ -539,7 +539,7 @@ Partial Class Laporan
         Me.TSampai.Size = New System.Drawing.Size(159, 26)
         Me.TSampai.StateCommon.Content.Font = New System.Drawing.Font("Trebuchet MS", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TSampai.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
-        Me.TSampai.TabIndex = 91
+        Me.TSampai.TabIndex = 1
         Me.TSampai.ValueNullable = New Date(2022, 1, 16, 16, 43, 0, 0)
         '
         'TDari
@@ -555,7 +555,7 @@ Partial Class Laporan
         Me.TDari.Size = New System.Drawing.Size(159, 26)
         Me.TDari.StateCommon.Content.Font = New System.Drawing.Font("Trebuchet MS", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TDari.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
-        Me.TDari.TabIndex = 90
+        Me.TDari.TabIndex = 0
         Me.TDari.ValueNullable = New Date(2022, 1, 16, 16, 43, 0, 0)
         '
         'PanelKanan
@@ -599,7 +599,7 @@ Partial Class Laporan
         Me.TEntitas.StateCommon.Item.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.0!)
         Me.TEntitas.StateTracking.Item.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(244, Byte), Integer))
         Me.TEntitas.StateTracking.Item.Content.ShortText.Color1 = System.Drawing.Color.Black
-        Me.TEntitas.TabIndex = 171
+        Me.TEntitas.TabIndex = 0
         '
         'DGVPageCounter
         '
@@ -649,7 +649,7 @@ Partial Class Laporan
         Me.TCariData.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TCariData.StateDisabled.Border.Rounding = 0!
         Me.TCariData.StateDisabled.Border.Width = 0
-        Me.TCariData.TabIndex = 111
+        Me.TCariData.TabIndex = 1
         '
         'DGVPrev
         '
@@ -717,7 +717,7 @@ Partial Class Laporan
         Me.DGV.StateSelected.DataCell.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.DGV.StateSelected.DataCell.Content.Color1 = System.Drawing.Color.Black
         Me.DGV.StateTracking.HeaderColumn.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(121, Byte), Integer))
-        Me.DGV.TabIndex = 110
+        Me.DGV.TabIndex = 2
         '
         'LBLEntitas
         '
@@ -890,7 +890,7 @@ Partial Class Laporan
         Me.RBBarang.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.RBBarang.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBBarang.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.RBBarang.TabIndex = 84
+        Me.RBBarang.TabIndex = 0
         Me.RBBarang.Values.Text = "Barang"
         '
         'RBSupplier
@@ -904,7 +904,7 @@ Partial Class Laporan
         Me.RBSupplier.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.RBSupplier.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBSupplier.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.RBSupplier.TabIndex = 85
+        Me.RBSupplier.TabIndex = 1
         Me.RBSupplier.Values.Text = "Supplier"
         '
         'RBCustomer
@@ -918,7 +918,7 @@ Partial Class Laporan
         Me.RBCustomer.StateCommon.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.RBCustomer.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.RBCustomer.StateDisabled.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
-        Me.RBCustomer.TabIndex = 86
+        Me.RBCustomer.TabIndex = 2
         Me.RBCustomer.Values.Text = "Customer"
         '
         'Pemisah1
@@ -956,7 +956,7 @@ Partial Class Laporan
         Me.BTNLapor.StateTracking.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(63, Byte), Integer), CType(CType(188, Byte), Integer))
         Me.BTNLapor.StateTracking.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
         Me.BTNLapor.StateTracking.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.BTNLapor.TabIndex = 115
+        Me.BTNLapor.TabIndex = 0
         Me.BTNLapor.Values.Text = "Tampil Laporan"
         '
         'BTNClear
@@ -983,7 +983,7 @@ Partial Class Laporan
         Me.BTNClear.StateTracking.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(63, Byte), Integer), CType(CType(188, Byte), Integer))
         Me.BTNClear.StateTracking.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
         Me.BTNClear.StateTracking.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.BTNClear.TabIndex = 115
+        Me.BTNClear.TabIndex = 1
         Me.BTNClear.Values.Text = "Clear"
         '
         'Dev

@@ -54,7 +54,7 @@
 
     Private Sub Barang_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Clear()
-        Dim Lebar() As Integer = {85, 273, 69, 399, 102, 102, 64}
+        Dim Lebar() As Integer = {85, 270, 86, 385, 102, 102, 64}
         Dim i = 0
         For Each x In DGV.Columns
             x.SortMode = DataGridViewColumnSortMode.NotSortable

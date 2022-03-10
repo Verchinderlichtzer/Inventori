@@ -81,12 +81,12 @@
     Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
         FetchData = 0
         CurrentPage = 1
-        If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = True Then
-            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Masuk, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
-        ElseIf CBTampilLabaRugi.Checked = True Then
+        If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = False Then
             QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
-        ElseIf CBTampilFaktur.Checked = True Then
+        ElseIf CBTampilLabaRugi.Checked = False And CBTampilFaktur.Checked = True Then
             QDGV("SELECT Tanggal, ID_Masuk AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
+        Else
+            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Masuk, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
         End If
         Paging()
         Timer1.Start()
@@ -155,12 +155,12 @@
     Dim CurrentPage As Integer = 1
 
     Sub Paging()
-        If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = True Then
-            QR("SELECT SUM(TBL.TiapTabel) FROM (SELECT COUNT(ID_LR) AS TiapTabel FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT COUNT(ID_Masuk) AS TiapTabel FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT COUNT(ID_Keluar) AS TiapTabel FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%') TBL")
-        ElseIf CBTampilLabaRugi.Checked = True Then
+        If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = False Then
             QR("SELECT COUNT(ID_LR) FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%'")
-        ElseIf CBTampilFaktur.Checked = True Then
+        ElseIf CBTampilLabaRugi.Checked = False And CBTampilFaktur.Checked = True Then
             QR("SELECT SUM(TBL.TiapTabel) FROM (SELECT COUNT(ID_Masuk) AS TiapTabel FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT COUNT(ID_Keluar) AS TiapTabel FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%') TBL")
+        Else
+            QR("SELECT SUM(TBL.TiapTabel) FROM (SELECT COUNT(ID_LR) AS TiapTabel FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT COUNT(ID_Masuk) AS TiapTabel FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT COUNT(ID_Keluar) AS TiapTabel FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%') TBL")
         End If
         If DR(0) Mod 13 = 0 And CurrentPage > 1 And CurrentPage = Math.Ceiling(DR(0) / 13) + 1 Then DGVPrev.PerformClick()
         DGVPageCounter.Text = CurrentPage & " / " & IIf(Math.Ceiling(DR(0) / 13) = 0, 1, Math.Ceiling(DR(0) / 13))
@@ -169,12 +169,12 @@
     End Sub
 
     Sub TampilDGV()
-        If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = True Then
-            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi UNION ALL SELECT Tanggal, ID_Masuk, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarMasuk UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar ORDER BY 1 DESC", DGV, FetchData, 13, 0)
-        ElseIf CBTampilLabaRugi.Checked = True Then
+        If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = False Then
             QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi ORDER BY 1 DESC", DGV, FetchData, 13, 0)
-        ElseIf CBTampilFaktur.Checked = True Then
+        ElseIf CBTampilLabaRugi.Checked = False And CBTampilFaktur.Checked = True Then
             QDGV("SELECT Tanggal, ID_Masuk AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLBayarMasuk UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar ORDER BY 1 DESC", DGV, FetchData, 13, 0)
+        Else
+            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi UNION ALL SELECT Tanggal, ID_Masuk, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarMasuk UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar ORDER BY 1 DESC", DGV, FetchData, 13, 0)
         End If
         Paging()
         Timer1.Start()

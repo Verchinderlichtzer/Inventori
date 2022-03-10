@@ -187,6 +187,8 @@
     End Sub
 
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
+        CONN.Dispose()
+        Koneksi()
         If BStatus = Nothing Then 'PO Dibuat
             QN("INSERT INTO TBLMasuk(ID_Masuk, Tanggal, ID_Supplier, Subtotal, PPN, BiayaLain, Status, Keterangan) VALUES('" & TFaktur.SelectedItem & "',#" & Now & "#," & Val(TSupplier.SelectedItem.Substring(0, TSupplier.SelectedItem.IndexOf(" "))) & "," & Subtotal & "," & PPN & "," & BiayaLain & ",'PO','" & TKeterangan.Text & "')")
             For Each x In DGV.Rows
@@ -228,8 +230,6 @@
         QN("INSERT INTO TBLBayarMasuk VALUES('" & TFaktur.SelectedItem & "', #" & Now & "#, 'Faktur Pembelian " & TFaktur.SelectedItem & " Pembayaran Ke-" & DR(0) + 1 & " (" & AStatus & ")', " & Dibayar & ", '" & UserAktif & "')")
         Pesan("Transaksi berhasil (" & AStatus & ")", 1)
 1:      TampilFaktur()
-        CONN.Dispose()
-        Koneksi()
     End Sub
 
     Private Sub BTNHapus_Click(sender As Object, e As EventArgs) Handles BTNHapus.Click

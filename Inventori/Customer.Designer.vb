@@ -90,7 +90,7 @@ Partial Class Customer
             Or Krypton.Toolkit.PaletteDrawBorders.Left) _
             Or Krypton.Toolkit.PaletteDrawBorders.Right), Krypton.Toolkit.PaletteDrawBorders)
         Me.BTNSimpan.StateTracking.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.BTNSimpan.TabIndex = 193
+        Me.BTNSimpan.TabIndex = 6
         Me.BTNSimpan.Values.Image = Global.Inventori.My.Resources.Resources.crud_simpan_pressed
         Me.BTNSimpan.Values.ImageStates.ImageCheckedNormal = Nothing
         Me.BTNSimpan.Values.ImageStates.ImageCheckedPressed = Nothing
@@ -143,7 +143,7 @@ Partial Class Customer
             Or Krypton.Toolkit.PaletteDrawBorders.Left) _
             Or Krypton.Toolkit.PaletteDrawBorders.Right), Krypton.Toolkit.PaletteDrawBorders)
         Me.BTNHapus.StateTracking.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.BTNHapus.TabIndex = 194
+        Me.BTNHapus.TabIndex = 7
         Me.BTNHapus.Values.Image = Global.Inventori.My.Resources.Resources.crud_hapus_pressed
         Me.BTNHapus.Values.ImageStates.ImageCheckedNormal = Nothing
         Me.BTNHapus.Values.ImageStates.ImageCheckedPressed = Nothing
@@ -196,7 +196,7 @@ Partial Class Customer
             Or Krypton.Toolkit.PaletteDrawBorders.Left) _
             Or Krypton.Toolkit.PaletteDrawBorders.Right), Krypton.Toolkit.PaletteDrawBorders)
         Me.BTNClear.StateTracking.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer), CType(CType(250, Byte), Integer))
-        Me.BTNClear.TabIndex = 195
+        Me.BTNClear.TabIndex = 8
         Me.BTNClear.Values.Image = Global.Inventori.My.Resources.Resources.crud_refresh_pressed
         Me.BTNClear.Values.ImageStates.ImageCheckedNormal = Nothing
         Me.BTNClear.Values.ImageStates.ImageCheckedPressed = Nothing
@@ -234,7 +234,7 @@ Partial Class Customer
         Me.TCariData.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TCariData.StateDisabled.Border.Rounding = 0!
         Me.TCariData.StateDisabled.Border.Width = 0
-        Me.TCariData.TabIndex = 192
+        Me.TCariData.TabIndex = 5
         '
         'DGVPageCounter
         '
@@ -333,7 +333,7 @@ Partial Class Customer
         Me.TNama.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TNama.StateDisabled.Border.Rounding = 0!
         Me.TNama.StateDisabled.Border.Width = 0
-        Me.TNama.TabIndex = 187
+        Me.TNama.TabIndex = 0
         '
         'LBLNama
         '
@@ -388,7 +388,7 @@ Partial Class Customer
         Me.DGV.StateSelected.DataCell.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.DGV.StateSelected.DataCell.Content.Color1 = System.Drawing.Color.Black
         Me.DGV.StateTracking.HeaderColumn.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(121, Byte), Integer))
-        Me.DGV.TabIndex = 191
+        Me.DGV.TabIndex = 4
         '
         'TEmail
         '
@@ -419,7 +419,7 @@ Partial Class Customer
         Me.TEmail.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TEmail.StateDisabled.Border.Rounding = 0!
         Me.TEmail.StateDisabled.Border.Width = 0
-        Me.TEmail.TabIndex = 190
+        Me.TEmail.TabIndex = 3
         '
         'TTelepon
         '
@@ -450,7 +450,7 @@ Partial Class Customer
         Me.TTelepon.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TTelepon.StateDisabled.Border.Rounding = 0!
         Me.TTelepon.StateDisabled.Border.Width = 0
-        Me.TTelepon.TabIndex = 189
+        Me.TTelepon.TabIndex = 2
         '
         'LBLEmail
         '
@@ -507,7 +507,7 @@ Partial Class Customer
         Me.TAlamat.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TAlamat.StateDisabled.Border.Rounding = 0!
         Me.TAlamat.StateDisabled.Border.Width = 0
-        Me.TAlamat.TabIndex = 188
+        Me.TAlamat.TabIndex = 1
         '
         'LBLAlamat
         '

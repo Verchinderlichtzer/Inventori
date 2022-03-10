@@ -437,7 +437,7 @@ Partial Class User
         Me.CUsername.HeaderText = "Username"
         Me.CUsername.Name = "CUsername"
         Me.CUsername.ReadOnly = True
-        Me.CUsername.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CUsername.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CUsername.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.CUsername.Width = 494
         '
@@ -446,7 +446,7 @@ Partial Class User
         Me.CBarang.FalseValue = "0"
         Me.CBarang.HeaderText = "Barang"
         Me.CBarang.Name = "CBarang"
-        Me.CBarang.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CBarang.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CBarang.TrueValue = "-1"
         '
         'CSupplier
@@ -454,7 +454,7 @@ Partial Class User
         Me.CSupplier.FalseValue = "0"
         Me.CSupplier.HeaderText = "Supplier"
         Me.CSupplier.Name = "CSupplier"
-        Me.CSupplier.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CSupplier.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CSupplier.TrueValue = "-1"
         '
         'CCustomer
@@ -462,7 +462,7 @@ Partial Class User
         Me.CCustomer.FalseValue = "0"
         Me.CCustomer.HeaderText = "Customer"
         Me.CCustomer.Name = "CCustomer"
-        Me.CCustomer.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CCustomer.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CCustomer.TrueValue = "-1"
         '
         'CMasuk
@@ -470,7 +470,7 @@ Partial Class User
         Me.CMasuk.FalseValue = "0"
         Me.CMasuk.HeaderText = "Masuk"
         Me.CMasuk.Name = "CMasuk"
-        Me.CMasuk.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CMasuk.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CMasuk.TrueValue = "-1"
         '
         'CKeluar
@@ -478,7 +478,7 @@ Partial Class User
         Me.CKeluar.FalseValue = "0"
         Me.CKeluar.HeaderText = "Keluar"
         Me.CKeluar.Name = "CKeluar"
-        Me.CKeluar.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CKeluar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CKeluar.TrueValue = "-1"
         '
         'CLabaRugi
@@ -486,7 +486,7 @@ Partial Class User
         Me.CLabaRugi.FalseValue = "0"
         Me.CLabaRugi.HeaderText = "Laba Rugi"
         Me.CLabaRugi.Name = "CLabaRugi"
-        Me.CLabaRugi.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CLabaRugi.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.CLabaRugi.TrueValue = "-1"
         '
         'User

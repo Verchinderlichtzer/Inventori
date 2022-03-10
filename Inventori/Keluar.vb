@@ -290,6 +290,8 @@
     End Sub
 
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
+        CONN.Dispose()
+        Koneksi()
         Dim StokPerBarang As Integer
         Dim QtyPerBarang As Integer
         If BStatus = Nothing Then
@@ -339,8 +341,6 @@
         QN("INSERT INTO TBLBayarKeluar VALUES('" & TFaktur.SelectedItem & "', #" & Now & "#, 'Faktur Penjualan " & TFaktur.SelectedItem & " Pembayaran Ke-" & DR(0) + 1 & " (" & AStatus & ")', " & Dibayar & ", '" & UserAktif & "')")
         Pesan("Transaksi berhasil (" & AStatus & ")", 1)
         TampilFaktur()
-        CONN.Dispose()
-        Koneksi()
     End Sub
 
     Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
