@@ -24,7 +24,7 @@ Partial Class LabaRugi
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LabaRugi))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.PaletPrimer = New Krypton.Toolkit.KryptonPalette(Me.components)
         Me.LBLID = New Krypton.Toolkit.KryptonLabel()
         Me.DGV = New Krypton.Toolkit.KryptonDataGridView()
@@ -100,8 +100,8 @@ Partial Class LabaRugi
         Me.DGV.AllowUserToDeleteRows = False
         Me.DGV.AllowUserToResizeColumns = False
         Me.DGV.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.DGV.ColumnHeadersHeight = 27
         Me.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DGV.Cursor = System.Windows.Forms.Cursors.Default
@@ -191,11 +191,11 @@ Partial Class LabaRugi
         Me.TNominal.CueHint.Color1 = System.Drawing.Color.Gray
         Me.TNominal.CueHint.Font = New System.Drawing.Font("Trebuchet MS", 14.25!, System.Drawing.FontStyle.Italic)
         Me.TNominal.CueHint.Padding = New System.Windows.Forms.Padding(0)
-        Me.TNominal.Location = New System.Drawing.Point(108, 40)
-        Me.TNominal.MaxLength = 8
+        Me.TNominal.Location = New System.Drawing.Point(108, 72)
+        Me.TNominal.MaxLength = 9
         Me.TNominal.Name = "TNominal"
         Me.TNominal.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem
-        Me.TNominal.Size = New System.Drawing.Size(95, 29)
+        Me.TNominal.Size = New System.Drawing.Size(110, 29)
         Me.TNominal.StateActive.Border.Color1 = System.Drawing.Color.FromArgb(CType(CType(65, Byte), Integer), CType(CType(63, Byte), Integer), CType(CType(188, Byte), Integer))
         Me.TNominal.StateActive.Border.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
         Me.TNominal.StateActive.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
@@ -214,7 +214,7 @@ Partial Class LabaRugi
         Me.TNominal.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TNominal.StateDisabled.Border.Rounding = 0!
         Me.TNominal.StateDisabled.Border.Width = 0
-        Me.TNominal.TabIndex = 0
+        Me.TNominal.TabIndex = 1
         '
         'TDeskripsi
         '
@@ -222,7 +222,7 @@ Partial Class LabaRugi
         Me.TDeskripsi.CueHint.Color1 = System.Drawing.Color.Gray
         Me.TDeskripsi.CueHint.Font = New System.Drawing.Font("Trebuchet MS", 14.25!, System.Drawing.FontStyle.Italic)
         Me.TDeskripsi.CueHint.Padding = New System.Windows.Forms.Padding(0)
-        Me.TDeskripsi.Location = New System.Drawing.Point(108, 72)
+        Me.TDeskripsi.Location = New System.Drawing.Point(108, 40)
         Me.TDeskripsi.MaxLength = 255
         Me.TDeskripsi.Name = "TDeskripsi"
         Me.TDeskripsi.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem
@@ -245,12 +245,12 @@ Partial Class LabaRugi
         Me.TDeskripsi.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.Bottom
         Me.TDeskripsi.StateDisabled.Border.Rounding = 0!
         Me.TDeskripsi.StateDisabled.Border.Width = 0
-        Me.TDeskripsi.TabIndex = 1
+        Me.TDeskripsi.TabIndex = 0
         '
         'LBLNominal
         '
         Me.LBLNominal.AutoSize = False
-        Me.LBLNominal.Location = New System.Drawing.Point(8, 40)
+        Me.LBLNominal.Location = New System.Drawing.Point(8, 72)
         Me.LBLNominal.Name = "LBLNominal"
         Me.LBLNominal.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem
         Me.LBLNominal.Size = New System.Drawing.Size(94, 26)
@@ -263,7 +263,7 @@ Partial Class LabaRugi
         'LBLDeskripsi
         '
         Me.LBLDeskripsi.AutoSize = False
-        Me.LBLDeskripsi.Location = New System.Drawing.Point(8, 72)
+        Me.LBLDeskripsi.Location = New System.Drawing.Point(8, 40)
         Me.LBLDeskripsi.Name = "LBLDeskripsi"
         Me.LBLDeskripsi.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem
         Me.LBLDeskripsi.Size = New System.Drawing.Size(94, 26)

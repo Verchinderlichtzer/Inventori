@@ -23,7 +23,7 @@
         TDeskripsi.Clear()
         TCariData.Clear()
         TampilDGV()
-        TNominal.Focus()
+        TDeskripsi.Focus()
     End Sub
 
     Sub CariLR()
@@ -38,10 +38,14 @@
         Clear()
     End Sub
 
-    Private Sub Valid(sender As Object, e As EventArgs) Handles TNominal.TextChanged, TDeskripsi.TextChanged, RBPengeluaran.CheckedChanged, RBPendapatan.CheckedChanged
+    Private Sub Valid(sender As Object, e As EventArgs) Handles TNominal.TextChanged, TDeskripsi.TextChanged
         If TDeskripsi.Text = "" Or TNominal.Text = "" Then BTNSimpan.Enabled = 0 Else BTNSimpan.Enabled = 1
+    End Sub
+
+    Private Sub RBChanged(sender As Object, e As EventArgs) Handles RBPengeluaran.CheckedChanged, RBPendapatan.CheckedChanged
         CariLR()
         If Not DR.HasRows Then Notis()
+        TDeskripsi.Focus()
     End Sub
 
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click

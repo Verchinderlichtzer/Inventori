@@ -353,6 +353,9 @@
                             <LeftBorder>
                               <Style>Solid</Style>
                             </LeftBorder>
+                            <RightBorder>
+                              <Style>Solid</Style>
+                            </RightBorder>
                             <BackgroundColor>=IIf(RowNumber(Nothing) Mod 2, "#EEEFF0", "#DBDEDF")</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -455,7 +458,7 @@
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Format>###,###,###</Format>
-                                    <Color>#333333</Color>
+                                    <Color>=IIf(Fields!Status.Value = "Belum Lunas", "#A52733", "#333333")</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -888,7 +891,6 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0in</Top>
             <Left>0.12501in</Left>
             <Height>0.355in</Height>
             <Width>6.53388in</Width>
@@ -924,7 +926,6 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0in</Top>
             <Left>6.72833in</Left>
             <Height>0.23in</Height>
             <Width>1.41667in</Width>

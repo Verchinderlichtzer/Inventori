@@ -9,14 +9,14 @@
     <Shape ID="DesignTable:TBLBarang" ZOrder="11" X="6" Y="11" Height="210" Width="185" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
     <Shape ID="DesignTable:TBLSupplier" ZOrder="10" X="200" Y="13" Height="172" Width="194" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:TBLCustomer" ZOrder="9" X="439" Y="11" Height="172" Width="207" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
-    <Shape ID="DesignTable:TBLPembelian" ZOrder="4" X="680" Y="9" Height="364" Width="203" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="313" />
+    <Shape ID="DesignTable:TBLPembelian" ZOrder="5" X="680" Y="9" Height="364" Width="203" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="313" />
     <Shape ID="DesignTable:TBLPenjualan" ZOrder="8" X="924" Y="170" Height="419" Width="223" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="351" />
-    <Shape ID="DesignTable:TBLLabaRugi" ZOrder="1" X="265" Y="413" Height="153" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="102" />
-    <Shape ID="DesignTable:TBLTransaksiBarang" ZOrder="3" X="255" Y="191" Height="210" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
-    <Shape ID="DesignTable:TBLTransaksiCustomer" ZOrder="2" X="479" Y="205" Height="305" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
-    <Shape ID="DesignTable:TBLTransaksiSupplier" ZOrder="7" X="5" Y="235" Height="305" Width="246" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="24" OldDataTableHeight="0" SplitterPosition="254" />
-    <Shape ID="DesignTable:TBLGrafik" ZOrder="6" X="922" Y="20" Height="134" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
-    <Shape ID="DesignTable:TBLTransaksi" ZOrder="5" X="703" Y="380" Height="210" Width="166" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
+    <Shape ID="DesignTable:TBLLabaRugi" ZOrder="2" X="265" Y="413" Height="153" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="102" />
+    <Shape ID="DesignTable:TBLTransaksiBarang" ZOrder="4" X="255" Y="191" Height="210" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
+    <Shape ID="DesignTable:TBLTransaksiCustomer" ZOrder="3" X="479" Y="205" Height="305" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
+    <Shape ID="DesignTable:TBLTransaksiSupplier" ZOrder="1" X="5" Y="235" Height="305" Width="246" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="24" OldDataTableHeight="0" SplitterPosition="254" />
+    <Shape ID="DesignTable:TBLGrafik" ZOrder="7" X="922" Y="20" Height="134" Width="158" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
+    <Shape ID="DesignTable:TBLTransaksi" ZOrder="6" X="703" Y="380" Height="210" Width="166" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

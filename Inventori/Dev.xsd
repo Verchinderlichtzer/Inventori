@@ -670,7 +670,7 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="ID_Barang" msprop:Generator_ColumnPropNameInTable="ID_BarangColumn" msprop:Generator_ColumnPropNameInRow="ID_Barang" msprop:Generator_UserColumnName="ID_Barang" msprop:Generator_ColumnVarNameInTable="columnID_Barang" type="xs:int" minOccurs="0" />
-              <xs:element name="Status" msprop:Generator_UserColumnName="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" minOccurs="0">
+              <xs:element name="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_UserColumnName="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="255" />
