@@ -170,7 +170,6 @@
 
     Private Sub Masuk_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Clear()
-        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
         RemoveHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
         TampilFaktur()
         AddHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
@@ -178,6 +177,7 @@
         Do While DR.Read
             TSupplier.Items.Add(DR(0) & " - " & DR(1))
         Loop
+        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
         DGVBarang.Columns(0).Visible = 0
         DGVBarang.Columns(2).Visible = 0
         DGVBarang.Columns(3).Visible = 0

@@ -2085,6 +2085,8 @@ Partial Public Class Dev
         
         Private columnID_Barang As Global.System.Data.DataColumn
         
+        Private columnStatus As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -2249,6 +2251,14 @@ Partial Public Class Dev
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property StatusColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnStatus
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -2301,9 +2311,10 @@ Partial Public Class Dev
                     ByVal PPN As Integer,  _
                     ByVal BiayaLain As Integer,  _
                     ByVal Keterangan As String,  _
-                    ByVal ID_Barang As Integer) As TBLPenjualanRow
+                    ByVal ID_Barang As Integer,  _
+                    ByVal Status As String) As TBLPenjualanRow
             Dim rowTBLPenjualanRow As TBLPenjualanRow = CType(Me.NewRow,TBLPenjualanRow)
-            Dim columnValuesArray() As Object = New Object() {ID_Keluar, Tanggal, TBLCustomer_Nama, Alamat, Telepon, Email, TBLBarang_Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, ID_Barang}
+            Dim columnValuesArray() As Object = New Object() {ID_Keluar, Tanggal, TBLCustomer_Nama, Alamat, Telepon, Email, TBLBarang_Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, ID_Barang, Status}
             rowTBLPenjualanRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowTBLPenjualanRow)
             Return rowTBLPenjualanRow
@@ -2342,6 +2353,7 @@ Partial Public Class Dev
             Me.columnBiayaLain = MyBase.Columns("BiayaLain")
             Me.columnKeterangan = MyBase.Columns("Keterangan")
             Me.columnID_Barang = MyBase.Columns("ID_Barang")
+            Me.columnStatus = MyBase.Columns("Status")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2379,6 +2391,8 @@ Partial Public Class Dev
             MyBase.Columns.Add(Me.columnKeterangan)
             Me.columnID_Barang = New Global.System.Data.DataColumn("ID_Barang", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnID_Barang)
+            Me.columnStatus = New Global.System.Data.DataColumn("Status", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnStatus)
             Me.columnID_Keluar.MaxLength = 255
             Me.columnTBLCustomer_Nama.Caption = "TBLCustomer.Nama"
             Me.columnTBLCustomer_Nama.MaxLength = 255
@@ -2389,6 +2403,7 @@ Partial Public Class Dev
             Me.columnTBLBarang_Nama.MaxLength = 255
             Me.columnSatuan.MaxLength = 255
             Me.columnKeterangan.MaxLength = 255
+            Me.columnStatus.MaxLength = 255
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -5695,6 +5710,21 @@ Partial Public Class Dev
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Status() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableTBLPenjualan.StatusColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("The value for column 'Status' in table 'TBLPenjualan' is DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableTBLPenjualan.StatusColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsID_KeluarNull() As Boolean
             Return Me.IsNull(Me.tableTBLPenjualan.ID_KeluarColumn)
         End Function
@@ -5883,6 +5913,18 @@ Partial Public Class Dev
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetID_BarangNull()
             Me(Me.tableTBLPenjualan.ID_BarangColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsStatusNull() As Boolean
+            Return Me.IsNull(Me.tableTBLPenjualan.StatusColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetStatusNull()
+            Me(Me.tableTBLPenjualan.StatusColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -9258,6 +9300,7 @@ Namespace DevTableAdapters
             tableMapping.ColumnMappings.Add("BiayaLain", "BiayaLain")
             tableMapping.ColumnMappings.Add("Keterangan", "Keterangan")
             tableMapping.ColumnMappings.Add("ID_Barang", "ID_Barang")
+            tableMapping.ColumnMappings.Add("Status", "Status")
             Me._adapter.TableMappings.Add(tableMapping)
         End Sub
         
@@ -9276,11 +9319,11 @@ Namespace DevTableAdapters
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "SELECT TBLKeluar.ID_Keluar, Tanggal, TBLCustomer.Nama, Alamat, Telepon, Email, TB"& _ 
                 "LBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keteran"& _ 
-                "gan, TBLTransaksi.ID_Barang FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ("& _ 
-                "(TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Cust"& _ 
-                "omer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Kel"& _ 
-                "uar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Barang = T"& _ 
-                "BLTransaksi.ID_Barang"
+                "gan, TBLTransaksi.ID_Barang, Status FROM TBLBarang INNER JOIN (TBLTransaksi INNE"& _ 
+                "R JOIN ((TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar"& _ 
+                ".ID_Customer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKelua"& _ 
+                "r.ID_Keluar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Ba"& _ 
+                "rang = TBLTransaksi.ID_Barang"
             Me._commandCollection(0).CommandType = Global.System.Data.CommandType.Text
         End Sub
         

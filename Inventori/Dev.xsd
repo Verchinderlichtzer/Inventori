@@ -260,10 +260,10 @@
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="TBLPenjualanTableAdapter" GeneratorDataComponentClassName="TBLPenjualanTableAdapter" Name="TBLPenjualan" UserDataComponentName="TBLPenjualanTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="DevConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DevConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT TBLKeluar.ID_Keluar, Tanggal, TBLCustomer.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, TBLTransaksi.ID_Barang FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang</CommandText>
+                    <CommandText>SELECT TBLKeluar.ID_Keluar, Tanggal, TBLCustomer.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, TBLTransaksi.ID_Barang, Status FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -286,6 +286,7 @@
               <Mapping SourceColumn="BiayaLain" DataSetColumn="BiayaLain" />
               <Mapping SourceColumn="Keterangan" DataSetColumn="Keterangan" />
               <Mapping SourceColumn="ID_Barang" DataSetColumn="ID_Barang" />
+              <Mapping SourceColumn="Status" DataSetColumn="Status" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -669,6 +670,13 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="ID_Barang" msprop:Generator_ColumnPropNameInTable="ID_BarangColumn" msprop:Generator_ColumnPropNameInRow="ID_Barang" msprop:Generator_UserColumnName="ID_Barang" msprop:Generator_ColumnVarNameInTable="columnID_Barang" type="xs:int" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_UserColumnName="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -854,28 +862,28 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="TBLTransaksi" msprop:Generator_RowEvHandlerName="TBLTransaksiRowChangeEventHandler" msprop:Generator_RowDeletedName="TBLTransaksiRowDeleted" msprop:Generator_RowDeletingName="TBLTransaksiRowDeleting" msprop:Generator_RowEvArgName="TBLTransaksiRowChangeEvent" msprop:Generator_TablePropName="TBLTransaksi" msprop:Generator_RowChangedName="TBLTransaksiRowChanged" msprop:Generator_RowChangingName="TBLTransaksiRowChanging" msprop:Generator_TableClassName="TBLTransaksiDataTable" msprop:Generator_RowClassName="TBLTransaksiRow" msprop:Generator_TableVarName="tableTBLTransaksi" msprop:Generator_UserTableName="TBLTransaksi">
+        <xs:element name="TBLTransaksi" msprop:Generator_RowEvHandlerName="TBLTransaksiRowChangeEventHandler" msprop:Generator_RowDeletedName="TBLTransaksiRowDeleted" msprop:Generator_RowDeletingName="TBLTransaksiRowDeleting" msprop:Generator_RowEvArgName="TBLTransaksiRowChangeEvent" msprop:Generator_TablePropName="TBLTransaksi" msprop:Generator_RowChangedName="TBLTransaksiRowChanged" msprop:Generator_UserTableName="TBLTransaksi" msprop:Generator_RowChangingName="TBLTransaksiRowChanging" msprop:Generator_RowClassName="TBLTransaksiRow" msprop:Generator_TableClassName="TBLTransaksiDataTable" msprop:Generator_TableVarName="tableTBLTransaksi">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID_Masuk" msprop:Generator_ColumnPropNameInRow="ID_Masuk" msprop:Generator_ColumnPropNameInTable="ID_MasukColumn" msprop:Generator_ColumnVarNameInTable="columnID_Masuk" msprop:Generator_UserColumnName="ID_Masuk" minOccurs="0">
+              <xs:element name="ID_Masuk" msprop:Generator_ColumnPropNameInTable="ID_MasukColumn" msprop:Generator_ColumnPropNameInRow="ID_Masuk" msprop:Generator_UserColumnName="ID_Masuk" msprop:Generator_ColumnVarNameInTable="columnID_Masuk" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="255" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Tanggal" msprop:Generator_ColumnPropNameInRow="Tanggal" msprop:Generator_ColumnPropNameInTable="TanggalColumn" msprop:Generator_ColumnVarNameInTable="columnTanggal" msprop:Generator_UserColumnName="Tanggal" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="Nama" msprop:Generator_ColumnPropNameInRow="Nama" msprop:Generator_ColumnPropNameInTable="NamaColumn" msprop:Generator_ColumnVarNameInTable="columnNama" msprop:Generator_UserColumnName="Nama" minOccurs="0">
+              <xs:element name="Tanggal" msprop:Generator_ColumnPropNameInTable="TanggalColumn" msprop:Generator_ColumnPropNameInRow="Tanggal" msprop:Generator_UserColumnName="Tanggal" msprop:Generator_ColumnVarNameInTable="columnTanggal" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Nama" msprop:Generator_ColumnPropNameInTable="NamaColumn" msprop:Generator_ColumnPropNameInRow="Nama" msprop:Generator_UserColumnName="Nama" msprop:Generator_ColumnVarNameInTable="columnNama" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="255" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Subtotal" msprop:Generator_ColumnPropNameInRow="Subtotal" msprop:Generator_ColumnPropNameInTable="SubtotalColumn" msprop:Generator_ColumnVarNameInTable="columnSubtotal" msprop:Generator_UserColumnName="Subtotal" type="xs:double" minOccurs="0" />
-              <xs:element name="PPN" msprop:Generator_ColumnPropNameInRow="PPN" msprop:Generator_ColumnPropNameInTable="PPNColumn" msprop:Generator_ColumnVarNameInTable="columnPPN" msprop:Generator_UserColumnName="PPN" type="xs:int" minOccurs="0" />
-              <xs:element name="BiayaLain" msprop:Generator_ColumnPropNameInRow="BiayaLain" msprop:Generator_ColumnPropNameInTable="BiayaLainColumn" msprop:Generator_ColumnVarNameInTable="columnBiayaLain" msprop:Generator_UserColumnName="BiayaLain" type="xs:int" minOccurs="0" />
-              <xs:element name="Terbayar" msprop:Generator_ColumnPropNameInRow="Terbayar" msprop:Generator_ColumnPropNameInTable="TerbayarColumn" msprop:Generator_ColumnVarNameInTable="columnTerbayar" msprop:Generator_UserColumnName="Terbayar" type="xs:int" minOccurs="0" />
+              <xs:element name="Subtotal" msprop:Generator_ColumnPropNameInTable="SubtotalColumn" msprop:Generator_ColumnPropNameInRow="Subtotal" msprop:Generator_UserColumnName="Subtotal" msprop:Generator_ColumnVarNameInTable="columnSubtotal" type="xs:double" minOccurs="0" />
+              <xs:element name="PPN" msprop:Generator_ColumnPropNameInTable="PPNColumn" msprop:Generator_ColumnPropNameInRow="PPN" msprop:Generator_UserColumnName="PPN" msprop:Generator_ColumnVarNameInTable="columnPPN" type="xs:int" minOccurs="0" />
+              <xs:element name="BiayaLain" msprop:Generator_ColumnPropNameInTable="BiayaLainColumn" msprop:Generator_ColumnPropNameInRow="BiayaLain" msprop:Generator_UserColumnName="BiayaLain" msprop:Generator_ColumnVarNameInTable="columnBiayaLain" type="xs:int" minOccurs="0" />
+              <xs:element name="Terbayar" msprop:Generator_ColumnPropNameInTable="TerbayarColumn" msprop:Generator_ColumnPropNameInRow="Terbayar" msprop:Generator_UserColumnName="Terbayar" msprop:Generator_ColumnVarNameInTable="columnTerbayar" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

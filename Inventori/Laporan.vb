@@ -260,14 +260,14 @@ Public Class Laporan
         If e.RowIndex < 0 Then Exit Sub
         FilterJenis = Nothing
         IDEntitas = DGV.Rows(e.RowIndex).Cells(0).Value
-        If Not TEntitas.SelectedIndex = 0 Or TEntitas.SelectedIndex = 1 Then NamaEntitas = DGV.Rows(e.RowIndex).Cells(1).Value
+        If TEntitas.SelectedIndex = 2 Or TEntitas.SelectedIndex = 3 Or TEntitas.SelectedIndex = 4 Then NamaEntitas = DGV.Rows(e.RowIndex).Cells(1).Value
         If TEntitas.SelectedIndex = 0 Then 'Pembelian
             LBLFilter.Text = "Faktur Pembelian " & IDEntitas
             FullQuery = "SELECT TBLMasuk.ID_Masuk, Tanggal, TBLSupplier.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier) INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLMasuk.ID_Masuk = '" & IDEntitas & "'"
             LaporanTerpilih = "Pembelian"
         ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
             LBLFilter.Text = "Faktur Penjualan " & IDEntitas
-            FullQuery = "SELECT TBLKeluar.ID_Keluar, Tanggal, TBLCustomer.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, TBLTransaksi.ID_Barang FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLKeluar.ID_Keluar = '" & IDEntitas & "'"
+            FullQuery = "SELECT TBLKeluar.ID_Keluar, Tanggal, TBLCustomer.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, TBLTransaksi.ID_Barang, Status FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLKeluar.ID_Keluar = '" & IDEntitas & "'"
             LaporanTerpilih = "Penjualan"
         ElseIf TEntitas.SelectedIndex = 2 Then 'Transaksi Barang
             FilterJenis = "Riwayat transaksi pada "
@@ -382,6 +382,7 @@ Public Class Laporan
     End Sub
 
     Sub TampilDGV()
+        DGV.DataSource = Nothing
         If TEntitas.SelectedIndex = 0 Then 'Pembelian
             QDGV("SELECT ID_Masuk AS [Faktur Pembelian] FROM TBLMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", DGV, FetchData, 12, 0)
         ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan

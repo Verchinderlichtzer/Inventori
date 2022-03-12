@@ -81,6 +81,10 @@
           <DataField>ID_Barang</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
+        <Field Name="Status">
+          <DataField>Status</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>Dev</rd:DataSetName>
@@ -648,7 +652,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Pembayaran mohon ditransfer ke rekening :</Value>
+                                  <Value>=IIf(Fields!Status.Value = "Belum Lunas", "Pembayaran mohon ditransfer ke rekening :", Nothing)</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
@@ -828,7 +832,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!Bank.Value</Value>
+                                  <Value>=IIf(Fields!Status.Value = "Belum Lunas", Parameters!Bank.Value, Nothing)</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
@@ -1008,15 +1012,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>No Rekening : </Value>
-                                  <Style>
-                                    <FontFamily>Segoe UI</FontFamily>
-                                    <FontWeight>Normal</FontWeight>
-                                    <Color>#333333</Color>
-                                  </Style>
-                                </TextRun>
-                                <TextRun>
-                                  <Value>=Parameters!Rekening.Value</Value>
+                                  <Value>=IIf(Fields!Status.Value = "Belum Lunas", "No Rekening : " &amp; Parameters!Rekening.Value, Nothing)</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
@@ -1196,15 +1192,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Atas Nama : </Value>
-                                  <Style>
-                                    <FontFamily>Segoe UI</FontFamily>
-                                    <FontWeight>Normal</FontWeight>
-                                    <Color>#333333</Color>
-                                  </Style>
-                                </TextRun>
-                                <TextRun>
-                                  <Value>=Parameters!AtasNama.Value</Value>
+                                  <Value>=IIf(Fields!Status.Value = "Belum Lunas", "Atas Nama : " &amp; Parameters!AtasNama.Value, Nothing)</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
@@ -1227,6 +1215,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -1433,7 +1422,6 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
@@ -1695,7 +1683,6 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0in</Top>
             <Left>6.72833in</Left>
             <Height>0.23in</Height>
             <Width>1.41667in</Width>
@@ -1897,7 +1884,6 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox8</rd:DefaultName>
-            <Top>0in</Top>
             <Left>0.12501in</Left>
             <Height>0.355in</Height>
             <Width>6.53388in</Width>

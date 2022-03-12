@@ -271,7 +271,6 @@
 
     Private Sub Keluar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Clear()
-        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
         RemoveHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
         TampilFaktur()
         AddHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
@@ -279,7 +278,7 @@
         Do While DR.Read
             TCustomer.Items.Add(DR(0) & " - " & DR(1))
         Loop
-        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama FROM TBLBarang WHERE Stok > 0 ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
+        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
         DGVBarang.Columns(0).Visible = 0
         DGVBarang.Columns(2).Visible = 0
         DGVBarang.Columns(3).Visible = 0
@@ -418,7 +417,7 @@
     Dim CurrentPage As Integer = 1
 
     Sub Paging()
-        QR("SELECT COUNT(ID_Barang) FROM TBLBarang WHERE Stok > 0 AND Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%'")
+        QR("SELECT COUNT(ID_Barang) FROM TBLBarang WHERE Stok > 0 AND (Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%')")
         If DR(0) Mod 14 = 0 And CurrentPage > 1 And CurrentPage = Math.Ceiling(DR(0) / 14) + 1 Then DGVBarangPrev.PerformClick()
         DGVBarangPageCounter.Text = CurrentPage & " / " & IIf(Math.Ceiling(DR(0) / 14) = 0, 1, Math.Ceiling(DR(0) / 14))
         If CurrentPage = 1 Then DGVBarangPrev.Enabled = 0 Else DGVBarangPrev.Enabled = 1
@@ -428,7 +427,7 @@
     Sub TampilDGV()
         FetchData = 0
         CurrentPage = 1
-        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama FROM TBLBarang WHERE Stok > 0 AND Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%' ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
+        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama FROM TBLBarang WHERE Stok > 0 AND (Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%') ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
         Paging()
     End Sub
 

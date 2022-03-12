@@ -57,6 +57,12 @@ Partial Class Dashboard
         Me.TEmail = New Krypton.Toolkit.KryptonTextBox()
         Me.TNama = New Krypton.Toolkit.KryptonTextBox()
         Me.DGV = New Krypton.Toolkit.KryptonDataGridView()
+        Me.CPeriode = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CKeluar = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CPendapatan = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CMasuk = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CPengeluaran = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CSaldoAkhir = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TFaktur = New Krypton.Toolkit.KryptonComboBox()
         Me.PanelTotalTransaksi = New Krypton.Toolkit.KryptonGroup()
         Me.LBLRekapitulasi = New Krypton.Toolkit.KryptonLabel()
@@ -95,12 +101,6 @@ Partial Class Dashboard
         Me.LBLUserAktif = New Krypton.Toolkit.KryptonLabel()
         Me.LBLAuthor = New Krypton.Toolkit.KryptonLabel()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
-        Me.CPeriode = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CKeluar = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CPendapatan = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CMasuk = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CPengeluaran = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.CSaldoAkhir = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.PanelProfil, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelProfil.Panel, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelProfil.Panel.SuspendLayout()
@@ -762,10 +762,80 @@ Partial Class Dashboard
         Me.DGV.StateTracking.HeaderColumn.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(69, Byte), Integer), CType(CType(121, Byte), Integer))
         Me.DGV.TabIndex = 105
         '
+        'CPeriode
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CPeriode.DefaultCellStyle = DataGridViewCellStyle2
+        Me.CPeriode.HeaderText = "Periode"
+        Me.CPeriode.Name = "CPeriode"
+        Me.CPeriode.ReadOnly = True
+        Me.CPeriode.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CPeriode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CPeriode.Width = 85
+        '
+        'CKeluar
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CKeluar.DefaultCellStyle = DataGridViewCellStyle3
+        Me.CKeluar.HeaderText = "Keluar"
+        Me.CKeluar.Name = "CKeluar"
+        Me.CKeluar.ReadOnly = True
+        Me.CKeluar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CKeluar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CKeluar.Width = 60
+        '
+        'CPendapatan
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle4.Format = "###,###,###"
+        Me.CPendapatan.DefaultCellStyle = DataGridViewCellStyle4
+        Me.CPendapatan.HeaderText = "Pendapatan"
+        Me.CPendapatan.Name = "CPendapatan"
+        Me.CPendapatan.ReadOnly = True
+        Me.CPendapatan.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CPendapatan.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CPendapatan.Width = 106
+        '
+        'CMasuk
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.CMasuk.DefaultCellStyle = DataGridViewCellStyle5
+        Me.CMasuk.HeaderText = "Masuk"
+        Me.CMasuk.Name = "CMasuk"
+        Me.CMasuk.ReadOnly = True
+        Me.CMasuk.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CMasuk.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CMasuk.Width = 60
+        '
+        'CPengeluaran
+        '
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle6.Format = "###,###,###"
+        Me.CPengeluaran.DefaultCellStyle = DataGridViewCellStyle6
+        Me.CPengeluaran.HeaderText = "Pengeluaran"
+        Me.CPengeluaran.Name = "CPengeluaran"
+        Me.CPengeluaran.ReadOnly = True
+        Me.CPengeluaran.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CPengeluaran.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CPengeluaran.Width = 106
+        '
+        'CSaldoAkhir
+        '
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle7.Format = "###,###,###"
+        Me.CSaldoAkhir.DefaultCellStyle = DataGridViewCellStyle7
+        Me.CSaldoAkhir.HeaderText = "Saldo Akhir"
+        Me.CSaldoAkhir.Name = "CSaldoAkhir"
+        Me.CSaldoAkhir.ReadOnly = True
+        Me.CSaldoAkhir.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.CSaldoAkhir.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.CSaldoAkhir.Width = 115
+        '
         'TFaktur
         '
         Me.TFaktur.AlwaysActive = False
         Me.TFaktur.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable
+        Me.TFaktur.DropDownHeight = 300
         Me.TFaktur.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.TFaktur.DropDownWidth = 119
         Me.TFaktur.InputControlStyle = Krypton.Toolkit.InputControlStyle.Custom3
@@ -774,7 +844,7 @@ Partial Class Dashboard
         Me.TFaktur.Name = "TFaktur"
         Me.TFaktur.Palette = Me.PaletSekunder
         Me.TFaktur.PaletteMode = Krypton.Toolkit.PaletteMode.Custom
-        Me.TFaktur.Size = New System.Drawing.Size(119, 26)
+        Me.TFaktur.Size = New System.Drawing.Size(147, 26)
         Me.TFaktur.StateActive.ComboBox.Content.Font = New System.Drawing.Font("Trebuchet MS", 13.75!)
         Me.TFaktur.StateCommon.ComboBox.Content.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.TFaktur.StateCommon.ComboBox.Content.Font = New System.Drawing.Font("Trebuchet MS", 13.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -1249,10 +1319,10 @@ Partial Class Dashboard
         'LBLTanggal
         '
         Me.LBLTanggal.AutoSize = False
-        Me.LBLTanggal.Location = New System.Drawing.Point(241, 31)
+        Me.LBLTanggal.Location = New System.Drawing.Point(269, 31)
         Me.LBLTanggal.Name = "LBLTanggal"
         Me.LBLTanggal.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem
-        Me.LBLTanggal.Size = New System.Drawing.Size(295, 26)
+        Me.LBLTanggal.Size = New System.Drawing.Size(267, 26)
         Me.LBLTanggal.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.LBLTanggal.StateCommon.ShortText.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
         Me.LBLTanggal.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.5!, System.Drawing.FontStyle.Bold)
@@ -1551,75 +1621,6 @@ Partial Class Dashboard
         Me.LBLAuthor.StateCommon.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 12.5!, System.Drawing.FontStyle.Bold)
         Me.LBLAuthor.TabIndex = 13
         Me.LBLAuthor.Values.Text = "Aplikasi Pengolahan Barang / Gudang (dibuat oleh Sujudi Hanif)"
-        '
-        'CPeriode
-        '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CPeriode.DefaultCellStyle = DataGridViewCellStyle2
-        Me.CPeriode.HeaderText = "Periode"
-        Me.CPeriode.Name = "CPeriode"
-        Me.CPeriode.ReadOnly = True
-        Me.CPeriode.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CPeriode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CPeriode.Width = 85
-        '
-        'CKeluar
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CKeluar.DefaultCellStyle = DataGridViewCellStyle3
-        Me.CKeluar.HeaderText = "Keluar"
-        Me.CKeluar.Name = "CKeluar"
-        Me.CKeluar.ReadOnly = True
-        Me.CKeluar.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CKeluar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CKeluar.Width = 60
-        '
-        'CPendapatan
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle4.Format = "###,###,###"
-        Me.CPendapatan.DefaultCellStyle = DataGridViewCellStyle4
-        Me.CPendapatan.HeaderText = "Pendapatan"
-        Me.CPendapatan.Name = "CPendapatan"
-        Me.CPendapatan.ReadOnly = True
-        Me.CPendapatan.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CPendapatan.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CPendapatan.Width = 106
-        '
-        'CMasuk
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.CMasuk.DefaultCellStyle = DataGridViewCellStyle5
-        Me.CMasuk.HeaderText = "Masuk"
-        Me.CMasuk.Name = "CMasuk"
-        Me.CMasuk.ReadOnly = True
-        Me.CMasuk.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CMasuk.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CMasuk.Width = 60
-        '
-        'CPengeluaran
-        '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle6.Format = "###,###,###"
-        Me.CPengeluaran.DefaultCellStyle = DataGridViewCellStyle6
-        Me.CPengeluaran.HeaderText = "Pengeluaran"
-        Me.CPengeluaran.Name = "CPengeluaran"
-        Me.CPengeluaran.ReadOnly = True
-        Me.CPengeluaran.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CPengeluaran.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CPengeluaran.Width = 106
-        '
-        'CSaldoAkhir
-        '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle7.Format = "###,###,###"
-        Me.CSaldoAkhir.DefaultCellStyle = DataGridViewCellStyle7
-        Me.CSaldoAkhir.HeaderText = "Saldo Akhir"
-        Me.CSaldoAkhir.Name = "CSaldoAkhir"
-        Me.CSaldoAkhir.ReadOnly = True
-        Me.CSaldoAkhir.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.CSaldoAkhir.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.CSaldoAkhir.Width = 115
         '
         'Dashboard
         '
