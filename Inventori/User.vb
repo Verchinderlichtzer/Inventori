@@ -3,8 +3,8 @@
     Sub Clear()
         TUsername.Clear()
         TPassword.Clear()
-        TampilDGV()
         TCariData.Clear()
+        TampilDGV()
         TUsername.Focus()
     End Sub
 
@@ -66,16 +66,9 @@
     End Sub
 
     Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
-        JumlahData = 0
         FetchData = 1
         CurrentPage = 1
-        Baris.Clear()
-        QRL("SELECT Username, Barang, Supplier, Customer, Masuk, Keluar, LabaRugi FROM TBLUser WHERE NOT Username = 'admin' AND Username LIKE '%" & TCariData.Text & "%' ORDER BY Username ASC")
-        Do While DR.Read
-            JumlahData += 1
-            Baris.Add({DR(0), DR(1), DR(2), DR(3), DR(4), DR(5), DR(6)})
-        Loop
-        Paging()
+        TampilDGV()
     End Sub
 
     Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
@@ -125,7 +118,7 @@
     Sub TampilDGV()
         JumlahData = 0
         Baris.Clear()
-        QRL("SELECT Username, Barang, Supplier, Customer, Masuk, Keluar, LabaRugi FROM TBLUser WHERE NOT Username = 'Admin' ORDER BY Username ASC")
+        QRL("SELECT Username, Barang, Supplier, Customer, Masuk, Keluar, LabaRugi AS [Laba Rugi] FROM TBLUser WHERE NOT Username = 'admin' AND Username LIKE '%" & TCariData.Text & "%' ORDER BY Username ASC")
         Do While DR.Read
             JumlahData += 1
             Baris.Add({DR(0), DR(1), DR(2), DR(3), DR(4), DR(5), DR(6)})

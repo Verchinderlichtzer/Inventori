@@ -34,6 +34,7 @@ Partial Class Login
         Me.PanelLogin = New Krypton.Toolkit.KryptonGroup()
         Me.TPassword = New Krypton.Toolkit.KryptonTextBox()
         Me.TUsername = New Krypton.Toolkit.KryptonTextBox()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PanelLogin, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PanelLogin.Panel, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelLogin.Panel.SuspendLayout()
@@ -43,7 +44,7 @@ Partial Class Login
         'Thumbnail
         '
         Me.Thumbnail.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Thumbnail.Location = New System.Drawing.Point(124, 14)
+        Me.Thumbnail.Location = New System.Drawing.Point(123, 18)
         Me.Thumbnail.Name = "Thumbnail"
         Me.Thumbnail.OverrideDefault.Back.Color1 = System.Drawing.Color.Transparent
         Me.Thumbnail.OverrideDefault.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -61,7 +62,7 @@ Partial Class Login
         'LBLUsername
         '
         Me.LBLUsername.AutoSize = False
-        Me.LBLUsername.Location = New System.Drawing.Point(7, 164)
+        Me.LBLUsername.Location = New System.Drawing.Point(7, 174)
         Me.LBLUsername.Name = "LBLUsername"
         Me.LBLUsername.Size = New System.Drawing.Size(92, 26)
         Me.LBLUsername.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -107,7 +108,7 @@ Partial Class Login
         'LBLPassword
         '
         Me.LBLPassword.AutoSize = False
-        Me.LBLPassword.Location = New System.Drawing.Point(7, 246)
+        Me.LBLPassword.Location = New System.Drawing.Point(7, 256)
         Me.LBLPassword.Name = "LBLPassword"
         Me.LBLPassword.Size = New System.Drawing.Size(92, 26)
         Me.LBLPassword.StateCommon.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -119,7 +120,7 @@ Partial Class Login
         'LBLBatal
         '
         Me.LBLBatal.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.LBLBatal.Location = New System.Drawing.Point(323, 407)
+        Me.LBLBatal.Location = New System.Drawing.Point(322, 420)
         Me.LBLBatal.Name = "LBLBatal"
         Me.LBLBatal.Size = New System.Drawing.Size(47, 22)
         Me.LBLBatal.StateCommon.ShortText.Color1 = System.Drawing.SystemColors.Highlight
@@ -131,7 +132,7 @@ Partial Class Login
         '
         Me.BTNLogin.Cursor = System.Windows.Forms.Cursors.Hand
         Me.BTNLogin.Enabled = False
-        Me.BTNLogin.Location = New System.Drawing.Point(10, 365)
+        Me.BTNLogin.Location = New System.Drawing.Point(9, 378)
         Me.BTNLogin.Name = "BTNLogin"
         Me.BTNLogin.OverrideDefault.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNLogin.OverrideDefault.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -158,7 +159,7 @@ Partial Class Login
         '
         'CBCookies
         '
-        Me.CBCookies.Location = New System.Drawing.Point(11, 314)
+        Me.CBCookies.Location = New System.Drawing.Point(11, 324)
         Me.CBCookies.Name = "CBCookies"
         Me.CBCookies.OverrideFocus.DrawFocus = Krypton.Toolkit.InheritBool.[False]
         Me.CBCookies.Palette = Me.PaletPrimer
@@ -188,23 +189,23 @@ Partial Class Login
         Me.PanelLogin.Panel.Controls.Add(Me.LBLBatal)
         Me.PanelLogin.Panel.Controls.Add(Me.LBLUsername)
         Me.PanelLogin.Panel.Controls.Add(Me.LBLPassword)
-        Me.PanelLogin.Size = New System.Drawing.Size(384, 437)
+        Me.PanelLogin.Size = New System.Drawing.Size(380, 450)
         Me.PanelLogin.StateCommon.Back.Color1 = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
         Me.PanelLogin.StateCommon.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
         Me.PanelLogin.StateCommon.Border.Color1 = System.Drawing.Color.Magenta
-        Me.PanelLogin.StateCommon.Border.Color2 = System.Drawing.Color.Lime
+        Me.PanelLogin.StateCommon.Border.Color2 = System.Drawing.Color.Cyan
         Me.PanelLogin.StateCommon.Border.ColorAngle = 45.0!
         Me.PanelLogin.StateCommon.Border.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Linear
         Me.PanelLogin.StateCommon.Border.DrawBorders = CType((((Krypton.Toolkit.PaletteDrawBorders.Top Or Krypton.Toolkit.PaletteDrawBorders.Bottom) _
             Or Krypton.Toolkit.PaletteDrawBorders.Left) _
             Or Krypton.Toolkit.PaletteDrawBorders.Right), Krypton.Toolkit.PaletteDrawBorders)
-        Me.PanelLogin.StateCommon.Border.Width = 2
+        Me.PanelLogin.StateCommon.Border.Width = 1
         Me.PanelLogin.TabIndex = 128
         '
         'TPassword
         '
         Me.TPassword.AlwaysActive = False
-        Me.TPassword.Location = New System.Drawing.Point(12, 278)
+        Me.TPassword.Location = New System.Drawing.Point(11, 288)
         Me.TPassword.MaxLength = 255
         Me.TPassword.Name = "TPassword"
         Me.TPassword.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem
@@ -237,7 +238,7 @@ Partial Class Login
         Me.TUsername.CueHint.Color1 = System.Drawing.Color.Gray
         Me.TUsername.CueHint.Font = New System.Drawing.Font("Trebuchet MS", 14.25!, System.Drawing.FontStyle.Italic)
         Me.TUsername.CueHint.Padding = New System.Windows.Forms.Padding(0)
-        Me.TUsername.Location = New System.Drawing.Point(12, 196)
+        Me.TUsername.Location = New System.Drawing.Point(11, 206)
         Me.TUsername.MaxLength = 255
         Me.TUsername.Name = "TUsername"
         Me.TUsername.PaletteMode = Krypton.Toolkit.PaletteMode.ProfessionalSystem
@@ -262,11 +263,16 @@ Partial Class Login
         Me.TUsername.StateDisabled.Border.Width = 0
         Me.TUsername.TabIndex = 0
         '
+        'Timer1
+        '
+        Me.Timer1.Enabled = True
+        Me.Timer1.Interval = 25
+        '
         'Login
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(384, 437)
+        Me.ClientSize = New System.Drawing.Size(380, 450)
         Me.Controls.Add(Me.PanelLogin)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -292,4 +298,5 @@ Partial Class Login
     Friend WithEvents PanelLogin As Krypton.Toolkit.KryptonGroup
     Friend WithEvents TUsername As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents TPassword As Krypton.Toolkit.KryptonTextBox
+    Friend WithEvents Timer1 As Timer
 End Class

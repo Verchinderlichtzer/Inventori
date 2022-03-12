@@ -22,11 +22,16 @@ Public Class MainF
 
     Sub HakAkses()
         Dim Kolom = 0
-        If UserAktif.ToString.Equals("admin", StringComparison.OrdinalIgnoreCase) Then BTNUser.Enabled = 1 Else BTNUser.Enabled = 0
+        If UserAktif.ToString.Equals("Admin", StringComparison.OrdinalIgnoreCase) Then BTNUser.Enabled = 1 Else BTNUser.Enabled = 0
         QR("SELECT Barang, Supplier, Customer, Masuk, Keluar, LabaRugi FROM TBLUser WHERE Username = '" & UserAktif & "'")
         Dim BTNMenuAkses() As Object = {BTNBarang, BTNSupplier, BTNCustomer, BTNMasuk, BTNKeluar, BTNLabaRugi} 'Semua BTNMenu, kecuali User dan Kategori Lain
         For Each BTN In BTNMenuAkses
-            If DR(Kolom) = 0 Then BTN.Enabled = 0 Else BTN.Enabled = 1
+            If DR(Kolom) = 0 Then
+                BTN.Enabled = 0
+                BTN.Checked = 0
+            Else
+                BTN.Enabled = 1
+            End If
             Kolom += 1
         Next
     End Sub

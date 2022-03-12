@@ -26,8 +26,8 @@
         TAlamat.Clear()
         TTelepon.Clear()
         TEmail.Clear()
-        TampilDGV()
         TCariData.Clear()
+        TampilDGV()
         TNama.Focus()
     End Sub
 
@@ -105,8 +105,7 @@
     Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
         FetchData = 0
         CurrentPage = 1
-        QDGV("SELECT * FROM TBLCustomer WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%' OR Email LIKE '%" & TCariData.Text & "%' ORDER BY ID_Customer ASC", DGV, FetchData, 12, 0)
-        Paging()
+        TampilDGV()
     End Sub
 
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, koentji As Keys) As Boolean
@@ -136,7 +135,7 @@
     End Sub
 
     Sub TampilDGV()
-        QDGV("SELECT ID_Customer AS [ID Customer], Nama AS [Nama Customer], Alamat, Telepon, Email FROM TBLCustomer ORDER BY ID_Customer ASC", DGV, FetchData, 12, 0)
+        QDGV("SELECT ID_Customer AS [ID Customer], Nama AS [Nama Customer], Alamat, Telepon, Email FROM TBLCustomer WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%' OR Email LIKE '%" & TCariData.Text & "%' ORDER BY ID_Customer ASC", DGV, FetchData, 12, 0)
         Paging()
     End Sub
 

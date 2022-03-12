@@ -20,10 +20,10 @@ Module Modul
     End Sub
 
     Public Sub QR(QueryReader As String)
+        CMD = New OleDbCommand(QueryReader, CONN)
+        DR = CMD.ExecuteReader
+        DR.Read()
         Try
-            CMD = New OleDbCommand(QueryReader, CONN)
-            DR = CMD.ExecuteReader
-            DR.Read()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation)
             'Application.Restart()
@@ -31,9 +31,9 @@ Module Modul
     End Sub
 
     Public Sub QRL(QueryReaderLooping As String)
+        CMD = New OleDbCommand(QueryReaderLooping, CONN)
+        DR = CMD.ExecuteReader
         Try
-            CMD = New OleDbCommand(QueryReaderLooping, CONN)
-            DR = CMD.ExecuteReader
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation)
             'Application.Restart()
@@ -41,9 +41,9 @@ Module Modul
     End Sub
 
     Public Sub QN(QueryNonReader As String)
+        CMD = New OleDbCommand(QueryNonReader, CONN)
+        CMD.ExecuteNonQuery()
         Try
-            CMD = New OleDbCommand(QueryNonReader, CONN)
-            CMD.ExecuteNonQuery()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation)
             'Application.Restart()

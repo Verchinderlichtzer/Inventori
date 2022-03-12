@@ -246,16 +246,11 @@
     End Sub
 
     Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
-        FetchData = 0
-        CurrentPage = 1
         TampilFaktur()
     End Sub
 
     Private Sub TCariBarang_TextChanged(sender As Object, e As EventArgs) Handles TCariBarang.TextChanged
-        FetchData = 0
-        CurrentPage = 1
-        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama, HargaBeli, HargaJual FROM TBLBarang WHERE Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%' ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
-        Paging()
+        TampilDGV()
     End Sub
 
     Private Sub DGVBarang_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGVBarang.CellMouseClick
@@ -317,7 +312,9 @@
     End Sub
 
     Sub TampilDGV()
-        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama, HargaBeli, HargaJual FROM TBLBarang ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
+        FetchData = 0
+        CurrentPage = 1
+        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama, HargaBeli, HargaJual FROM TBLBarang WHERE Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%' ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
         Paging()
     End Sub
 

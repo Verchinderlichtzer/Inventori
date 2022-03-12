@@ -112,9 +112,9 @@
             Terbayar = DR("Terbayar")
             BStatus = DR("Status")
             TMetode.SelectedItem = DR("Metode")
-            QRL("SELECT TBLBarang.ID_Barang, MAX(Nama), SUM(Stok), SUM(Qty), MAX(Satuan), MAX(Diskon) / SUM(TotalHarga) * 100, SUM(TotalHarga) - SUM(Diskon) FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN TBLDetailKeluar ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur WHERE TBLDetailKeluar.ID_Keluar = '" & TFaktur.SelectedItem & "' GROUP BY TBLBarang.ID_Barang")
+            QRL("SELECT TBLBarang.ID_Barang, MAX(Nama), SUM(Stok), SUM(Qty), MAX(Satuan), SUM(Diskon) / SUM(TotalHarga) * 100, SUM(TotalHarga) - SUM(Diskon) FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN TBLDetailKeluar ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur WHERE TBLDetailKeluar.ID_Keluar = '" & TFaktur.SelectedItem & "' GROUP BY TBLBarang.ID_Barang")
             Do While DR.Read
-                DGV.Rows.Add(DR(0), DR(1), DR(2), DR(3), DR(4), DR(5), DR(6))
+                DGV.Rows.Add(DR(0), DR(1), DR(2), DR(3), DR(4), CInt(DR(5)), DR(6))
             Loop
             BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
             BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
@@ -153,10 +153,7 @@
     End Sub
 
     Private Sub TCariBarang_TextChanged(sender As Object, e As EventArgs) Handles TCariBarang.TextChanged
-        FetchData = 0
-        CurrentPage = 1
-        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama FROM TBLBarang WHERE Stok > 0 AND Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%' ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
-        Paging()
+        TampilDGV()
     End Sub
 
     Private Sub DGVBarang_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGVBarang.CellMouseClick
@@ -344,8 +341,6 @@
     End Sub
 
     Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
-        FetchData = 0
-        CurrentPage = 1
         TampilFaktur()
     End Sub
 
@@ -431,7 +426,9 @@
     End Sub
 
     Sub TampilDGV()
-        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama FROM TBLBarang WHERE Stok > 0 ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
+        FetchData = 0
+        CurrentPage = 1
+        QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama FROM TBLBarang WHERE Stok > 0 AND Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%' ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
         Paging()
     End Sub
 

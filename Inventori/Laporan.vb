@@ -124,9 +124,9 @@ Public Class Laporan
         Dim CurrentReportDataSource = New ReportDataSource()
         Dev.Clear()
         Terlapor.Show()
-        If RBGaris.Checked = True Then
+        If RBGaris.Checked = True And Judul = "Grafik" Then
             Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & "2.rdlc"
-        ElseIf RBKurva.Checked = True Then
+        ElseIf RBKurva.Checked = True And Judul = "Grafik" Then
             Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & "3.rdlc"
         Else
             Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & ".rdlc"
@@ -136,7 +136,7 @@ Public Class Laporan
         Terlapor.RV.LocalReport.DataSources.Add(CurrentReportDataSource)
         DA = New OleDbDataAdapter(Query, CONN)
         DA.Fill(DT)
-        If Microsoft.VisualBasic.Left(Judul, 6) = "Grafik" Then
+        If Judul = "Grafik" Then
             Terlapor.RV.LocalReport.SetParameters(TampilTahun)
         Else
             Terlapor.RV.LocalReport.SetParameters(TampilDeskripsi)
@@ -244,46 +244,23 @@ Public Class Laporan
             TidakMemilih()
             Exit Sub
         End If
-        If TEntitas.SelectedIndex = 0 Then 'Pembelian
-            QDGV("SELECT ID_Masuk AS [Faktur Pembelian] FROM TBLMasuk ORDER BY Tanggal DESC", DGV, FetchData, 12, 0)
-        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
-            QDGV("SELECT ID_Keluar AS [Faktur Penjualan] FROM TBLKeluar ORDER BY Tanggal DESC", DGV, FetchData, 12, 0)
-        ElseIf TEntitas.SelectedIndex = 2 Then 'Transaksi Barang
-            QDGV("SELECT ID_Barang, Nama, Nama + ' (' + Satuan + ')' AS [Daftar Barang] FROM TBLBarang ORDER BY Nama ASC", DGV, FetchData, 12, 0)
-            DGV.Columns(0).Visible = 0
-            DGV.Columns(1).Visible = 0
-        ElseIf TEntitas.SelectedIndex = 3 Then 'Transaksi Supplier
-            QDGV("SELECT ID_Supplier, Nama AS [Daftar Supplier] FROM TBLSupplier ORDER BY Nama ASC", DGV, FetchData, 12, 0)
-            DGV.Columns(0).Visible = 0
-        ElseIf TEntitas.SelectedIndex = 4 Then 'Transaksi Customer
-            QDGV("SELECT ID_Customer, Nama AS [Daftar Customer] FROM TBLCustomer ORDER BY Nama ASC", DGV, FetchData, 12, 0)
-            DGV.Columns(0).Visible = 0
-        End If
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
     End Sub
 
     Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
-        If TEntitas.SelectedIndex = 0 Then 'Pembelian
-            QDGV("SELECT ID_Masuk AS [Faktur Pembelian] FROM TBLMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", DGV, FetchData, 12, 0)
-        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
-            QDGV("SELECT ID_Keluar AS [Faktur Penjualan] FROM TBLKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", DGV, FetchData, 12, 0)
-        ElseIf TEntitas.SelectedIndex = 2 Then 'Transaksi Barang
-            QDGV("SELECT ID_Barang, Nama, Nama + ' (' + Satuan + ')' AS [Daftar Barang] FROM TBLBarang WHERE Nama LIKE '%" & TCariData.Text & "%' OR Satuan LIKE '%" & TCariData.Text & "%' ORDER BY Nama ASC", DGV, FetchData, 12, 0)
-            DGV.Columns(0).Visible = 0
-            DGV.Columns(1).Visible = 0
-        ElseIf TEntitas.SelectedIndex = 3 Then 'Transaksi Supplier
-            QDGV("SELECT ID_Supplier, Nama AS [Daftar Supplier] FROM TBLSupplier WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%' ORDER BY Nama ASC", DGV, FetchData, 12, 0)
-            DGV.Columns(0).Visible = 0
-        ElseIf TEntitas.SelectedIndex = 4 Then 'Transaksi Customer
-            QDGV("SELECT ID_Customer, Nama AS [Daftar Customer] FROM TBLCustomer WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%' ORDER BY Nama ASC", DGV, FetchData, 12, 0)
-            DGV.Columns(0).Visible = 0
-        End If
+        If TEntitas.SelectedIndex = -1 Then Exit Sub
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
     End Sub
 
     Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
         If e.RowIndex < 0 Then Exit Sub
         FilterJenis = Nothing
         IDEntitas = DGV.Rows(e.RowIndex).Cells(0).Value
-        NamaEntitas = DGV.Rows(e.RowIndex).Cells(1).Value
+        If Not TEntitas.SelectedIndex = 0 Or TEntitas.SelectedIndex = 1 Then NamaEntitas = DGV.Rows(e.RowIndex).Cells(1).Value
         If TEntitas.SelectedIndex = 0 Then 'Pembelian
             LBLFilter.Text = "Faktur Pembelian " & IDEntitas
             FullQuery = "SELECT TBLMasuk.ID_Masuk, Tanggal, TBLSupplier.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier) INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLMasuk.ID_Masuk = '" & IDEntitas & "'"
@@ -387,7 +364,17 @@ Public Class Laporan
     Dim CurrentPage As Integer = 1
 
     Sub Paging()
-        QR("SELECT COUNT(ID_Barang) FROM TBLBarang WHERE Nama LIKE '%" & TCariData.Text & "%' OR Satuan LIKE '%" & TCariData.Text & "%' OR Lokasi LIKE '%" & TCariData.Text & "%'")
+        If TEntitas.SelectedIndex = 0 Then 'Pembelian
+            QR("SELECT COUNT(ID_Masuk) FROM TBLMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%'")
+        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
+            QR("SELECT COUNT(ID_Keluar) FROM TBLKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%'")
+        ElseIf TEntitas.SelectedIndex = 2 Then 'Transaksi Barang
+            QR("SELECT COUNT(ID_Barang) FROM TBLBarang WHERE Nama LIKE '%" & TCariData.Text & "%' OR Satuan LIKE '%" & TCariData.Text & "%'")
+        ElseIf TEntitas.SelectedIndex = 3 Then 'Transaksi Supplier
+            QR("SELECT COUNT(ID_Supplier) FROM TBLSupplier WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%'")
+        ElseIf TEntitas.SelectedIndex = 4 Then 'Transaksi Customer
+            QR("SELECT COUNT(ID_Customer) FROM TBLCustomer WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%'")
+        End If
         If DR(0) Mod 12 = 0 And CurrentPage > 1 And CurrentPage = Math.Ceiling(DR(0) / 12) + 1 Then DGVPrev.PerformClick()
         DGVPageCounter.Text = CurrentPage & " / " & IIf(Math.Ceiling(DR(0) / 12) = 0, 1, Math.Ceiling(DR(0) / 12))
         If CurrentPage = 1 Then DGVPrev.Enabled = 0 Else DGVPrev.Enabled = 1
@@ -395,7 +382,21 @@ Public Class Laporan
     End Sub
 
     Sub TampilDGV()
-        QDGV("SELECT * FROM TBLBarang ORDER BY ID_Barang ASC", DGV, FetchData, 12, 0)
+        If TEntitas.SelectedIndex = 0 Then 'Pembelian
+            QDGV("SELECT ID_Masuk AS [Faktur Pembelian] FROM TBLMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", DGV, FetchData, 12, 0)
+        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
+            QDGV("SELECT ID_Keluar AS [Faktur Penjualan] FROM TBLKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", DGV, FetchData, 12, 0)
+        ElseIf TEntitas.SelectedIndex = 2 Then 'Transaksi Barang
+            QDGV("SELECT ID_Barang, Nama, Nama + ' (' + Satuan + ')' AS [Daftar Barang] FROM TBLBarang WHERE Nama LIKE '%" & TCariData.Text & "%' OR Satuan LIKE '%" & TCariData.Text & "%' ORDER BY Nama ASC", DGV, FetchData, 12, 0)
+            DGV.Columns(0).Visible = 0
+            DGV.Columns(1).Visible = 0
+        ElseIf TEntitas.SelectedIndex = 3 Then 'Transaksi Supplier
+            QDGV("SELECT ID_Supplier, Nama AS [Daftar Supplier] FROM TBLSupplier WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%' ORDER BY Nama ASC", DGV, FetchData, 12, 0)
+            DGV.Columns(0).Visible = 0
+        ElseIf TEntitas.SelectedIndex = 4 Then 'Transaksi Customer
+            QDGV("SELECT ID_Customer, Nama AS [Daftar Customer] FROM TBLCustomer WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%' ORDER BY Nama ASC", DGV, FetchData, 12, 0)
+            DGV.Columns(0).Visible = 0
+        End If
         Paging()
     End Sub
 

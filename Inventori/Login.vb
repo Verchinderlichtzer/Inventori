@@ -5,18 +5,18 @@ Public Class Login
     Public MoveForm_MousePosition As Point
     Private Declare Sub keybd_event Lib "user32" (bVk As Byte, bScan As Byte, dwFlags As Integer, dwExtraInfo As Integer)
 
-    Public Sub PanelLogin_MouseDown(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseDown
+    Public Sub Login_MouseDown(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseDown, Thumbnail.MouseDown
         If e.Button = MouseButtons.Left Then
             MoveForm = True
             MoveForm_MousePosition = e.Location
         End If
     End Sub
 
-    Public Sub PanelLogin_MouseMove(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseMove
+    Public Sub Login_MouseMove(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseMove, Thumbnail.MouseMove
         If MoveForm Then Location += (e.Location - MoveForm_MousePosition)
     End Sub
 
-    Public Sub PanelLogin_MouseUp(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseUp
+    Public Sub Login_MouseUp(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseUp, Thumbnail.MouseUp
         If e.Button = MouseButtons.Left Then MoveForm = 0
     End Sub
 
@@ -29,6 +29,7 @@ Public Class Login
             Call keybd_event(Keys.CapsLock, &H14, 1, 0)
             Call keybd_event(Keys.CapsLock, &H14, 3, 0)
         End If
+        TUsername.Focus()
     End Sub
 
     Private Sub BTNLogin_Click(sender As Object, e As EventArgs) Handles BTNLogin.Click
@@ -71,4 +72,10 @@ Public Class Login
             Return CP
         End Get
     End Property
+
+    Dim x As Integer = 45
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        x += 3
+        PanelLogin.StateCommon.Border.ColorAngle = x
+    End Sub
 End Class

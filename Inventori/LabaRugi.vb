@@ -17,9 +17,12 @@
     Sub Clear()
         Notis()
         RBPengeluaran.Checked = 1
+        CBTampilLabaRugi.Checked = 1
+        CBTampilFaktur.Checked = 0
         TNominal.Clear()
         TDeskripsi.Clear()
         TCariData.Clear()
+        TampilDGV()
         TNominal.Focus()
     End Sub
 
@@ -32,9 +35,7 @@
     End Sub
 
     Private Sub LabaRugi_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Notis()
-        TampilDGV()
-        Timer1.Start()
+        Clear()
     End Sub
 
     Private Sub Valid(sender As Object, e As EventArgs) Handles TNominal.TextChanged, TDeskripsi.TextChanged, RBPengeluaran.CheckedChanged, RBPendapatan.CheckedChanged
@@ -52,7 +53,6 @@
             QN("UPDATE TBLLabaRugi SET Deskripsi = '" & TDeskripsi.Text & "', Nominal = " & Val(TNominal.Text) & " WHERE ID_LR = '" & TID.Text & "'")
             Pesan("Data berhasil diubah", 1)
         End If
-        TampilDGV()
         Clear()
     End Sub
 
@@ -65,7 +65,6 @@
             If Confirm.ShowDialog() = DialogResult.Yes Then
                 QN("DELETE FROM TBLLabaRugi WHERE ID_LR = '" & TID.Text & "'")
                 Pesan("Data berhasil dihapus", 1)
-                TampilDGV()
                 Clear()
             End If
         End If
@@ -74,22 +73,13 @@
     Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
         FetchData = 0
         CurrentPage = 1
-        TampilDGV()
         Clear()
     End Sub
 
     Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
         FetchData = 0
         CurrentPage = 1
-        If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = False Then
-            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
-        ElseIf CBTampilLabaRugi.Checked = False And CBTampilFaktur.Checked = True Then
-            QDGV("SELECT Tanggal, ID_Masuk AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
-        Else
-            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Masuk, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
-        End If
-        Paging()
-        Timer1.Start()
+        TampilDGV()
     End Sub
 
     Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TNominal.KeyPress, TID.KeyPress
@@ -109,31 +99,6 @@
         RBPendapatan.Visible = 0
         BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
         BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        For Each Style In DGV.Rows
-            If Microsoft.VisualBasic.Left(Style.Cells(1).Value, 1) = "R" Or Microsoft.VisualBasic.Left(Style.Cells(1).Value, 1) = "M" Then
-                Style.Cells(4).Style.ForeColor = Color.FromArgb(220, 53, 69)
-                Style.Cells(4).Style.SelectionForeColor = Color.FromArgb(220, 53, 69)
-            Else 'Hijau
-                Style.Cells(4).Style.ForeColor = Color.FromArgb(40, 167, 69)
-                Style.Cells(4).Style.SelectionForeColor = Color.FromArgb(40, 167, 69)
-            End If
-        Next
-        Dim Lebar() As Integer = {5, 112, 188, 548, 115, 131}
-        Dim i = 0
-        For Each x In DGV.Columns
-            x.SortMode = DataGridViewColumnSortMode.NotSortable
-            x.Width = Lebar(i)
-            i += 1
-        Next
-        DGV.Columns(0).Visible = 0
-        DGV.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DGV.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DGV.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-        DGV.Columns(4).DefaultCellStyle.Format = "###,###,###"
-        Timer1.Stop()
     End Sub
 
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, koentji As Keys) As Boolean
@@ -166,18 +131,39 @@
         DGVPageCounter.Text = CurrentPage & " / " & IIf(Math.Ceiling(DR(0) / 13) = 0, 1, Math.Ceiling(DR(0) / 13))
         If CurrentPage = 1 Then DGVPrev.Enabled = 0 Else DGVPrev.Enabled = 1
         If CurrentPage >= Math.Ceiling(DR(0) / 13) Then DGVNext.Enabled = 0 Else DGVNext.Enabled = 1
+        For Each Style In DGV.Rows
+            If Microsoft.VisualBasic.Left(Style.Cells(1).Value, 1) = "R" Or Microsoft.VisualBasic.Left(Style.Cells(1).Value, 1) = "M" Then
+                Style.Cells(4).Style.ForeColor = Color.FromArgb(220, 53, 69)
+                Style.Cells(4).Style.SelectionForeColor = Color.FromArgb(220, 53, 69)
+            Else 'Hijau
+                Style.Cells(4).Style.ForeColor = Color.FromArgb(40, 167, 69)
+                Style.Cells(4).Style.SelectionForeColor = Color.FromArgb(40, 167, 69)
+            End If
+        Next
     End Sub
 
     Sub TampilDGV()
         If CBTampilLabaRugi.Checked = True And CBTampilFaktur.Checked = False Then
-            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi ORDER BY 1 DESC", DGV, FetchData, 13, 0)
+            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
         ElseIf CBTampilLabaRugi.Checked = False And CBTampilFaktur.Checked = True Then
-            QDGV("SELECT Tanggal, ID_Masuk AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLBayarMasuk UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar ORDER BY 1 DESC", DGV, FetchData, 13, 0)
+            QDGV("SELECT Tanggal, ID_Masuk AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
         Else
-            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi UNION ALL SELECT Tanggal, ID_Masuk, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarMasuk UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar ORDER BY 1 DESC", DGV, FetchData, 13, 0)
+            QDGV("SELECT Tanggal, ID_LR AS Faktur, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM') AS Tanggal, Deskripsi, Nominal, Username FROM TBLLabaRugi WHERE ID_LR LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Masuk, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' UNION ALL SELECT Tanggal, ID_Keluar, FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Deskripsi, Nominal, Username FROM TBLBayarKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' OR Deskripsi LIKE '%" & TCariData.Text & "%' OR Username LIKE '%" & TCariData.Text & "%' ORDER BY 1 DESC", DGV, FetchData, 13, 0)
         End If
+        If DGV.Columns.Count = 0 Then Exit Sub
+        Dim Lebar() As Integer = {5, 112, 188, 548, 115, 131}
+        Dim i = 0
+        For Each x In DGV.Columns
+            x.SortMode = DataGridViewColumnSortMode.NotSortable
+            x.Width = Lebar(i)
+            i += 1
+        Next
+        DGV.Columns(0).Visible = 0
+        DGV.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DGV.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DGV.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        DGV.Columns(4).DefaultCellStyle.Format = "###,###,###"
         Paging()
-        Timer1.Start()
     End Sub
 
     Private Sub DGVPrevClick(sender As Object, e As EventArgs) Handles DGVPrev.Click

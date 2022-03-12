@@ -133,6 +133,9 @@ Partial Class MainF
         Me.BTNLaporan.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNLaporan.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNLaporan.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNLaporan.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNLaporan.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNLaporan.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNLaporan.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNLaporan.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNLaporan.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -181,6 +184,9 @@ Partial Class MainF
         Me.BTNCatatan.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNCatatan.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNCatatan.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNCatatan.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNCatatan.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNCatatan.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNCatatan.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNCatatan.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNCatatan.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -243,6 +249,9 @@ Partial Class MainF
         Me.BTNLabaRugi.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNLabaRugi.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNLabaRugi.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNLabaRugi.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNLabaRugi.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNLabaRugi.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNLabaRugi.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNLabaRugi.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNLabaRugi.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -291,6 +300,9 @@ Partial Class MainF
         Me.BTNKeluar.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNKeluar.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNKeluar.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNKeluar.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNKeluar.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNKeluar.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNKeluar.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNKeluar.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNKeluar.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -339,6 +351,9 @@ Partial Class MainF
         Me.BTNMasuk.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNMasuk.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNMasuk.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNMasuk.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNMasuk.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNMasuk.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNMasuk.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNMasuk.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNMasuk.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -401,6 +416,9 @@ Partial Class MainF
         Me.BTNCustomer.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNCustomer.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNCustomer.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNCustomer.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNCustomer.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNCustomer.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNCustomer.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNCustomer.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNCustomer.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -449,6 +467,9 @@ Partial Class MainF
         Me.BTNSupplier.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNSupplier.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNSupplier.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNSupplier.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNSupplier.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNSupplier.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNSupplier.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNSupplier.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNSupplier.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -497,6 +518,9 @@ Partial Class MainF
         Me.BTNBarang.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNBarang.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNBarang.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNBarang.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNBarang.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNBarang.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNBarang.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNBarang.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNBarang.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
@@ -545,6 +569,9 @@ Partial Class MainF
         Me.BTNUser.StateCommon.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(48, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(141, Byte), Integer))
         Me.BTNUser.StateCommon.Content.ShortText.Font = New System.Drawing.Font("Trebuchet MS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BTNUser.StateCommon.Content.ShortText.TextH = Krypton.Toolkit.PaletteRelativeAlign.Near
+        Me.BTNUser.StateDisabled.Back.Color1 = System.Drawing.Color.White
+        Me.BTNUser.StateDisabled.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid
+        Me.BTNUser.StateDisabled.Border.DrawBorders = Krypton.Toolkit.PaletteDrawBorders.None
         Me.BTNUser.StateDisabled.Content.ShortText.Color1 = System.Drawing.Color.FromArgb(CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(160, Byte), Integer))
         Me.BTNUser.StateNormal.Back.Color1 = System.Drawing.Color.White
         Me.BTNUser.StateNormal.Back.ColorStyle = Krypton.Toolkit.PaletteColorStyle.Solid

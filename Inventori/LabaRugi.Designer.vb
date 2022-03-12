@@ -24,7 +24,7 @@ Partial Class LabaRugi
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LabaRugi))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.PaletPrimer = New Krypton.Toolkit.KryptonPalette(Me.components)
         Me.LBLID = New Krypton.Toolkit.KryptonLabel()
         Me.DGV = New Krypton.Toolkit.KryptonDataGridView()
@@ -42,7 +42,6 @@ Partial Class LabaRugi
         Me.DGVPageCounter = New Krypton.Toolkit.KryptonTextBox()
         Me.DGVPrev = New Krypton.Toolkit.KryptonButton()
         Me.DGVNext = New Krypton.Toolkit.KryptonButton()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.CBTampilLabaRugi = New Krypton.Toolkit.KryptonCheckBox()
         Me.CBTampilFaktur = New Krypton.Toolkit.KryptonCheckBox()
         CType(Me.DGV, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -101,8 +100,8 @@ Partial Class LabaRugi
         Me.DGV.AllowUserToDeleteRows = False
         Me.DGV.AllowUserToResizeColumns = False
         Me.DGV.AllowUserToResizeRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.DGV.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.DGV.ColumnHeadersHeight = 27
         Me.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DGV.Cursor = System.Windows.Forms.Cursors.Default
@@ -549,11 +548,6 @@ Partial Class LabaRugi
         Me.DGVNext.TabIndex = 205
         Me.DGVNext.Values.Text = "►"
         '
-        'Timer1
-        '
-        Me.Timer1.Enabled = True
-        Me.Timer1.Interval = 10
-        '
         'CBTampilLabaRugi
         '
         Me.CBTampilLabaRugi.Checked = True
@@ -634,7 +628,6 @@ Partial Class LabaRugi
     Friend WithEvents DGVPageCounter As Krypton.Toolkit.KryptonTextBox
     Friend WithEvents DGVPrev As Krypton.Toolkit.KryptonButton
     Friend WithEvents DGVNext As Krypton.Toolkit.KryptonButton
-    Friend WithEvents Timer1 As Timer
     Friend WithEvents CBTampilLabaRugi As Krypton.Toolkit.KryptonCheckBox
     Friend WithEvents CBTampilFaktur As Krypton.Toolkit.KryptonCheckBox
 End Class

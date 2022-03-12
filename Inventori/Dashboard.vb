@@ -34,18 +34,18 @@ Public Class Dashboard
     End Sub
 
     Private Sub TampilRiwayat(sender As Object, e As EventArgs) Handles TFaktur.SelectedIndexChanged
-        QR("SELECT SUM(TBLDetailMasuk.TotalHarga), SUM(TBLDetailMasuk.Diskon) FROM TBLDetailMasuk WHERE ID_Masuk = '" & TFaktur.SelectedItem & "' UNION ALL SELECT SUM(TBLDetailKeluar.TotalHarga), SUM(TBLDetailKeluar.Diskon) FROM TBLDetailKeluar WHERE ID_Keluar = '" & TFaktur.SelectedItem & "'")
+        QR("SELECT SUM(TotalHarga), SUM(Diskon) FROM TBLDetailMasuk WHERE ID_Masuk = '" & TFaktur.SelectedItem & "' UNION ALL SELECT SUM(TotalHarga), SUM(Diskon) FROM TBLDetailKeluar WHERE ID_Keluar = '" & TFaktur.SelectedItem & "'")
         If Microsoft.VisualBasic.Left(TFaktur.SelectedItem, 1) = "K" Then DR.Read()
         If IsDBNull(DR(0)) Then Exit Sub
         TTotalHarga.Text = "Rp " & FormatNumber(DR(0), 0)
         TDiskon.Text = "Rp " & FormatNumber(DR(1), 0)
-        QR("SELECT FORMAT(TBLMasuk.Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), TBLSupplier.Nama, TBLMasuk.Subtotal, TBLMasuk.PPN, TBLMasuk.BiayaLain, TBLMasuk.Terbayar, TBLMasuk.Keterangan FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE TBLMasuk.ID_Masuk = '" & TFaktur.SelectedItem & "' UNION ALL SELECT TBLKeluar.Tanggal, TBLCustomer.Nama, TBLKeluar.Subtotal, TBLKeluar.PPN, TBLKeluar.BiayaLain, TBLKeluar.Terbayar, TBLKeluar.Keterangan FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE TBLKeluar.ID_Keluar = '" & TFaktur.SelectedItem & "'")
+        QR("SELECT FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Nama, Subtotal, PPN, BiayaLain, Terbayar, Status, Keterangan FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE ID_Masuk = '" & TFaktur.SelectedItem & "' UNION ALL SELECT FORMAT(Tanggal, 'dd/MM/yyyy HH:mm AM/PM'), Nama, Subtotal, PPN, BiayaLain, Terbayar, Status, Keterangan FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE ID_Keluar = '" & TFaktur.SelectedItem & "'")
         LBLTanggal.Text = DR(0)
         TSupplierCustomer.Text = DR("Nama")
         TPPN.Text = "Rp " & FormatNumber(DR("PPN"), 0)
         TBiayaLain.Text = "Rp " & FormatNumber(DR("BiayaLain"), 0)
         TGrandTotal.Text = "Rp " & FormatNumber(DR("Subtotal") + DR("PPN") + DR("BiayaLain"), 0)
-        TTerbayar.Text = "Rp " & FormatNumber(DR("Terbayar"), 0)
+        TTerbayar.Text = "Rp " & FormatNumber(DR("Terbayar"), 0) & " (" & DR("Status") & ")"
         TKeterangan.Text = DR("Keterangan")
         If Microsoft.VisualBasic.Left(TFaktur.SelectedItem, 1) = "M" Then
             LBLRiwayatTransaksi.Text = "Riwayat Transaksi (Masuk)"
@@ -78,9 +78,9 @@ Public Class Dashboard
         KeluarHarian = DR(0)
         QR("SELECT COUNT(*) FROM TBLKeluar WHERE DATEVALUE(Tanggal) BETWEEN #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 1, Today), "MM/dd/yyyy") & "# AND #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 7, Today), "MM/dd/yyyy") & "#")
         KeluarMingguan = DR(0)
-        QR("SELECT COUNT(*) FROM TBLKeluar WHERE MONTH(TBLKeluar.Tanggal) = '" & Month(Today) & "' AND YEAR(TBLKeluar.Tanggal) = '" & Year(Today) & "'")
+        QR("SELECT COUNT(*) FROM TBLKeluar WHERE MONTH(Tanggal) = '" & Month(Today) & "' AND YEAR(Tanggal) = '" & Year(Today) & "'")
         KeluarBulanan = DR(0)
-        QR("SELECT COUNT(*) FROM TBLKeluar WHERE YEAR(TBLKeluar.Tanggal) = '" & Year(Today) & "'")
+        QR("SELECT COUNT(*) FROM TBLKeluar WHERE YEAR(Tanggal) = '" & Year(Today) & "'")
         KeluarTahunan = DR(0)
     End Sub
 
@@ -91,9 +91,9 @@ Public Class Dashboard
         If Not IsDBNull(DR(0)) Then PendapatanHarian = DR(0)
         QR("SELECT SUM(Nominal) FROM TBLBayarKeluar WHERE DATEVALUE(Tanggal) BETWEEN #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 1, Today), "MM/dd/yyyy") & "# AND #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 7, Today), "MM/dd/yyyy") & "#")
         If Not IsDBNull(DR(0)) Then PendapatanMingguan = DR(0)
-        QR("SELECT SUM(Nominal) FROM TBLBayarKeluar WHERE MONTH(TBLBayarKeluar.Tanggal) = '" & Month(Today) & "' AND YEAR(TBLBayarKeluar.Tanggal) = '" & Year(Today) & "'")
+        QR("SELECT SUM(Nominal) FROM TBLBayarKeluar WHERE MONTH(Tanggal) = '" & Month(Today) & "' AND YEAR(Tanggal) = '" & Year(Today) & "'")
         If Not IsDBNull(DR(0)) Then PendapatanBulanan = DR(0)
-        QR("SELECT SUM(Nominal) FROM TBLBayarKeluar WHERE YEAR(TBLBayarKeluar.Tanggal) = '" & Year(Today) & "'")
+        QR("SELECT SUM(Nominal) FROM TBLBayarKeluar WHERE YEAR(Tanggal) = '" & Year(Today) & "'")
         If Not IsDBNull(DR(0)) Then PendapatanTahunan = DR(0)
     End Sub
 
@@ -104,9 +104,9 @@ Public Class Dashboard
         MasukHarian = DR(0)
         QR("SELECT COUNT(*) FROM TBLMasuk WHERE DATEVALUE(Tanggal) BETWEEN #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 1, Today), "MM/dd/yyyy") & "# AND #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 7, Today), "MM/dd/yyyy") & "# AND NOT Status = 'PO'")
         MasukMingguan = DR(0)
-        QR("SELECT COUNT(*) FROM TBLMasuk WHERE MONTH(TBLMasuk.Tanggal) = '" & Month(Today) & "' AND YEAR(TBLMasuk.Tanggal) = '" & Year(Today) & "' AND NOT Status = 'PO'")
+        QR("SELECT COUNT(*) FROM TBLMasuk WHERE MONTH(Tanggal) = '" & Month(Today) & "' AND YEAR(Tanggal) = '" & Year(Today) & "' AND NOT Status = 'PO'")
         MasukBulanan = DR(0)
-        QR("SELECT COUNT(*) FROM TBLMasuk WHERE YEAR(TBLMasuk.Tanggal) = '" & Year(Today) & "' AND NOT Status = 'PO'")
+        QR("SELECT COUNT(*) FROM TBLMasuk WHERE YEAR(Tanggal) = '" & Year(Today) & "' AND NOT Status = 'PO'")
         MasukTahunan = DR(0)
     End Sub
 
@@ -117,9 +117,9 @@ Public Class Dashboard
         If Not IsDBNull(DR(0)) Then PengeluaranHarian = DR(0)
         QR("SELECT SUM(Nominal) FROM TBLBayarMasuk WHERE DATEVALUE(Tanggal) BETWEEN #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 1, Today), "MM/dd/yyyy") & "# AND #" & Format(DateAdd(DateInterval.Day, -Weekday(Today, FirstDayOfWeek.Monday) + 7, Today), "MM/dd/yyyy") & "#")
         If Not IsDBNull(DR(0)) Then PengeluaranMingguan = DR(0)
-        QR("SELECT SUM(Nominal) FROM TBLBayarMasuk WHERE MONTH(TBLBayarMasuk.Tanggal) = '" & Month(Today) & "' AND YEAR(TBLBayarMasuk.Tanggal) = '" & Year(Today) & "'")
+        QR("SELECT SUM(Nominal) FROM TBLBayarMasuk WHERE MONTH(Tanggal) = '" & Month(Today) & "' AND YEAR(Tanggal) = '" & Year(Today) & "'")
         If Not IsDBNull(DR(0)) Then PengeluaranBulanan = DR(0)
-        QR("SELECT SUM(Nominal) FROM TBLBayarMasuk WHERE YEAR(TBLBayarMasuk.Tanggal) = '" & Year(Today) & "'")
+        QR("SELECT SUM(Nominal) FROM TBLBayarMasuk WHERE YEAR(Tanggal) = '" & Year(Today) & "'")
         If Not IsDBNull(DR(0)) Then PengeluaranTahunan = DR(0)
     End Sub
 
@@ -169,11 +169,11 @@ Public Class Dashboard
     End Sub
 
     Private Sub BTNGantiPw_Click(sender As Object, e As EventArgs) Handles BTNGantiPw.Click
-        QR("SELECT Password FROM tbluser WHERE Username = '" & UserAktif & "'")
+        QR("SELECT [Password] FROM TBLUser WHERE Username = '" & UserAktif & "'")
         If TPwLama.Text <> DR(0) Then
             Pesan("Password salah.", 0)
         Else
-            QN("UPDATE tbluser SET [Password] = '" & TPwBaru.Text & "' WHERE Username = '" & UserAktif & "'")
+            QN("UPDATE TBLUser SET [Password] = '" & TPwBaru.Text & "' WHERE Username = '" & UserAktif & "'")
             Pesan("Password berhasil diubah.", 1)
             PanelGantiPw.Visible = 0
         End If

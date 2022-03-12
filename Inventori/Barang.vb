@@ -31,8 +31,8 @@
         TStok.Enabled = 1
         THargaBeli.Clear()
         THargaJual.Clear()
-        TampilDGV()
         TCariData.Clear()
+        TampilDGV()
         TNama.Focus()
     End Sub
 
@@ -125,8 +125,7 @@
     Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
         FetchData = 0
         CurrentPage = 1
-        QDGV("SELECT * FROM TBLBarang WHERE Nama LIKE '%" & TCariData.Text & "%' OR Satuan LIKE '%" & TCariData.Text & "%' OR Lokasi LIKE '%" & TCariData.Text & "%' ORDER BY ID_Barang", DGV, FetchData, 13, 0)
-        Paging()
+        TampilDGV()
     End Sub
 
     Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TStok.KeyPress, THargaBeli.KeyPress, THargaJual.KeyPress
@@ -160,7 +159,7 @@
     End Sub
 
     Sub TampilDGV()
-        QDGV("SELECT ID_Barang AS [ID Barang], Nama AS [Nama Barang], Satuan, Lokasi, HargaBeli AS [Harga Beli], HargaJual AS [Harga Jual], Stok FROM TBLBarang ORDER BY ID_Barang ASC", DGV, FetchData, 13, 0)
+        QDGV("SELECT ID_Barang AS [ID Barang], Nama AS [Nama Barang], Satuan, Lokasi, HargaBeli AS [Harga Beli], HargaJual AS [Harga Jual], Stok FROM TBLBarang WHERE Nama LIKE '%" & TCariData.Text & "%' OR Satuan LIKE '%" & TCariData.Text & "%' OR Lokasi LIKE '%" & TCariData.Text & "%' ORDER BY ID_Barang", DGV, FetchData, 13, 0)
         Paging()
     End Sub
 
