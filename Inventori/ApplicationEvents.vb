@@ -28,7 +28,7 @@ Namespace My
             Dim Ini As New IniFile
             Ini.Load(Path & "\Dev.ini")
             PPNOtomatis = Ini.Sections("konfigurasi").Keys("ppn").Value
-            QR("SELECT username FROM tbluser WHERE username = '" & Ini.Sections("konfigurasi").Keys("cookies").Value & "'")
+            QR("SELECT Username FROM TBLUser WHERE Username = '" & Ini.Sections("konfigurasi").Keys("cookies").Value & "'")
             If DR.HasRows AndAlso DR(0) <> "Admin" Then
                 UserAktif = DR(0)
                 Application.MainForm = MainF

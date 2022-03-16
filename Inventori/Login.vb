@@ -4,6 +4,7 @@ Public Class Login
     Public MoveForm As Boolean
     Public MoveForm_MousePosition As Point
     Private Declare Sub keybd_event Lib "user32" (bVk As Byte, bScan As Byte, dwFlags As Integer, dwExtraInfo As Integer)
+    Dim x As Integer = 45
 
     Public Sub Login_MouseDown(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseDown, Thumbnail.MouseDown
         If e.Button = MouseButtons.Left Then
@@ -13,7 +14,7 @@ Public Class Login
     End Sub
 
     Public Sub Login_MouseMove(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseMove, Thumbnail.MouseMove
-        If MoveForm Then Location += (e.Location - MoveForm_MousePosition)
+        If MoveForm Then Location += e.Location - MoveForm_MousePosition
     End Sub
 
     Public Sub Login_MouseUp(sender As Object, e As MouseEventArgs) Handles PanelLogin.Panel.MouseUp, Thumbnail.MouseUp
@@ -73,7 +74,6 @@ Public Class Login
         End Get
     End Property
 
-    Dim x As Integer = 45
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         x += 3
         PanelLogin.StateCommon.Border.ColorAngle = x

@@ -20,10 +20,10 @@ Module Modul
     End Sub
 
     Public Sub QR(QueryReader As String)
-        CMD = New OleDbCommand(QueryReader, CONN)
-        DR = CMD.ExecuteReader
-        DR.Read()
         Try
+            CMD = New OleDbCommand(QueryReader, CONN)
+            DR = CMD.ExecuteReader
+            DR.Read()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation)
             'Application.Restart()
@@ -31,9 +31,9 @@ Module Modul
     End Sub
 
     Public Sub QRL(QueryReaderLooping As String)
-        CMD = New OleDbCommand(QueryReaderLooping, CONN)
-        DR = CMD.ExecuteReader
         Try
+            CMD = New OleDbCommand(QueryReaderLooping, CONN)
+            DR = CMD.ExecuteReader
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation)
             'Application.Restart()
@@ -41,9 +41,9 @@ Module Modul
     End Sub
 
     Public Sub QN(QueryNonReader As String)
-        CMD = New OleDbCommand(QueryNonReader, CONN)
-        CMD.ExecuteNonQuery()
         Try
+            CMD = New OleDbCommand(QueryNonReader, CONN)
+            CMD.ExecuteNonQuery()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation)
             'Application.Restart()
@@ -78,15 +78,19 @@ Module Modul
         Angka(e)
     End Sub
 
-    Sub Ukur(Grid As DataGridView)
-        Dim y As Integer = 0
-        Dim z As String = Nothing
-        For Each x In Grid.Columns
-            If x.Visible = False Then Continue For
-            z &= x.Width & " - "
-            y += x.Width
-        Next
-        MsgBox(z & " | " & Grid.Width & " - " & y & " = " & Grid.Width - y, MsgBoxStyle.Information, "Harus 18")
+    Sub Ukur(Sesuatu As Object)
+        If TypeOf Sesuatu Is DataGridView Then
+            Dim y As Integer = 0
+            Dim z As String = Nothing
+            For Each x In Sesuatu.Columns
+                If x.Visible = False Then Continue For
+                z &= x.Width & "  "
+                y += x.Width
+            Next
+            MsgBox(z & "|  " & Sesuatu.Width & " - " & y & " = " & Sesuatu.Width - y, MsgBoxStyle.Information, "18 jika menggunakan VScrollBar, 1 jika menggunakan Pagination")
+        Else
+            MsgBox(Sesuatu.Width & " x " & Sesuatu.Height, MsgBoxStyle.Information, "Panjang x Lebar")
+        End If
     End Sub
 
 End Module
