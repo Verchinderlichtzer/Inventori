@@ -23,7 +23,7 @@
         DGV.DataSource = Nothing
     End Sub
 
-    Private Sub SupplierCustomerBarang(sender As Object, e As EventArgs) Handles TSupplier.SelectedIndexChanged, TCustomer.SelectedIndexChanged, TBarang.SelectedIndexChanged
+    Private Sub BarangSupplierCustomer(sender As Object, e As EventArgs) Handles TSupplier.SelectedIndexChanged, TCustomer.SelectedIndexChanged, TBarang.SelectedIndexChanged
         DGV.DataSource = Nothing
         FetchData = 0
         CurrentPage = 1
@@ -155,7 +155,6 @@
             Isian = Nothing
         End If
 
-
         If CBMasuk.Checked = True And CBKeluar.Checked = True Then
             FullQuery = QueryMasuk & PeriodeMasuk & StatusMasuk & " UNION ALL " & QueryKeluar & PeriodeKeluar & StatusKeluar & " ORDER BY 1 DESC"
             QR("SELECT SUM(TBL.TiapTabel) FROM (SELECT COUNT(ID_Masuk) AS TiapTabel FROM TBLMasuk WHERE " & Isian & PeriodeMasuk & StatusMasuk & " UNION ALL SELECT COUNT(ID_Keluar) AS TiapTabel FROM TBLKeluar WHERE " & Isian & PeriodeKeluar & StatusKeluar & ") TBL")
@@ -200,7 +199,7 @@
         Paging()
     End Sub
 
-#Region "DGV Pagination"
+#Region "DGV"
     Dim FetchData As Integer
     Dim CurrentPage As Integer = 1
 
@@ -250,4 +249,5 @@
         Paging()
     End Sub
 #End Region
+
 End Class

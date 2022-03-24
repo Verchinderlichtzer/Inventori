@@ -259,6 +259,8 @@ Partial Class Barang
         'TSatuan
         '
         Me.TSatuan.AlwaysActive = False
+        Me.TSatuan.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append
+        Me.TSatuan.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.TSatuan.CueHint.Color1 = System.Drawing.Color.Gray
         Me.TSatuan.CueHint.Font = New System.Drawing.Font("Trebuchet MS", 14.25!, System.Drawing.FontStyle.Italic)
         Me.TSatuan.CueHint.Padding = New System.Windows.Forms.Padding(0)

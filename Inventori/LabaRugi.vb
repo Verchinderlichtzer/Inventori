@@ -26,26 +26,28 @@
         TDeskripsi.Focus()
     End Sub
 
-    Sub CariLR()
-        QR("SELECT ID_LR, Deskripsi, Nominal FROM TBLLabaRugi WHERE ID_LR = '" & TID.Text & "'")
-    End Sub
-
-    Private Sub Ditampilkan(sender As Object, e As EventArgs) Handles CBTampilLabaRugi.CheckedChanged, CBTampilFaktur.CheckedChanged
-        TampilDGV()
-    End Sub
-
     Private Sub LabaRugi_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Clear()
-    End Sub
-
-    Private Sub Valid(sender As Object, e As EventArgs) Handles TNominal.TextChanged, TDeskripsi.TextChanged
-        If TDeskripsi.Text = "" Or TNominal.Text = "" Then BTNSimpan.Enabled = 0 Else BTNSimpan.Enabled = 1
+        Notis()
+        TampilDGV()
     End Sub
 
     Private Sub RBChanged(sender As Object, e As EventArgs) Handles RBPengeluaran.CheckedChanged, RBPendapatan.CheckedChanged
         CariLR()
         If Not DR.HasRows Then Notis()
         TDeskripsi.Focus()
+    End Sub
+
+    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TNominal.KeyPress, TID.KeyPress
+        Angka(e)
+    End Sub
+
+    Private Sub Valid(sender As Object, e As EventArgs) Handles TNominal.TextChanged, TDeskripsi.TextChanged
+        If TDeskripsi.Text = "" Or TNominal.Text = "" Then BTNSimpan.Enabled = 0 Else BTNSimpan.Enabled = 1
+    End Sub
+
+#Region "CRUD"
+    Sub CariLR()
+        QR("SELECT ID_LR, Deskripsi, Nominal FROM TBLLabaRugi WHERE ID_LR = '" & TID.Text & "'")
     End Sub
 
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
@@ -80,31 +82,6 @@
         Clear()
     End Sub
 
-    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
-        FetchData = 0
-        CurrentPage = 1
-        TampilDGV()
-    End Sub
-
-    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TNominal.KeyPress, TID.KeyPress
-        Angka(e)
-    End Sub
-
-    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
-        If e.RowIndex < 0 Then Exit Sub
-        If Microsoft.VisualBasic.Left(DGV.Rows(e.RowIndex).Cells(1).Value, 1) = "K" Or Microsoft.VisualBasic.Left(DGV.Rows(e.RowIndex).Cells(1).Value, 1) = "M" Then
-            Clear()
-            Exit Sub
-        End If
-        TID.Text = DGV.Rows(e.RowIndex).Cells(1).Value
-        TDeskripsi.Text = DGV.Rows(e.RowIndex).Cells(3).Value
-        TNominal.Text = DGV.Rows(e.RowIndex).Cells(4).Value
-        RBPengeluaran.Visible = 0
-        RBPendapatan.Visible = 0
-        BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
-        BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
-    End Sub
-
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, koentji As Keys) As Boolean
         If koentji = Keys.Enter Then
             BTNSimpan.PerformClick()
@@ -118,8 +95,9 @@
         End If
         Return MyBase.ProcessCmdKey(msg, koentji)
     End Function
+#End Region
 
-#Region "DGV Pagination"
+#Region "DGV"
     Dim FetchData As Integer
     Dim CurrentPage As Integer = 1
 
@@ -170,6 +148,33 @@
         Paging()
     End Sub
 
+    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
+    End Sub
+
+    Private Sub FilterDGV(sender As Object, e As EventArgs) Handles CBTampilLabaRugi.CheckedChanged, CBTampilFaktur.CheckedChanged
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
+    End Sub
+
+    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
+        If e.RowIndex < 0 Then Exit Sub
+        If Microsoft.VisualBasic.Left(DGV.Rows(e.RowIndex).Cells(1).Value, 1) = "K" Or Microsoft.VisualBasic.Left(DGV.Rows(e.RowIndex).Cells(1).Value, 1) = "M" Then
+            Clear()
+            Exit Sub
+        End If
+        TID.Text = DGV.Rows(e.RowIndex).Cells(1).Value
+        TDeskripsi.Text = DGV.Rows(e.RowIndex).Cells(3).Value
+        TNominal.Text = DGV.Rows(e.RowIndex).Cells(4).Value
+        RBPengeluaran.Visible = 0
+        RBPendapatan.Visible = 0
+        BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
+        BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
+    End Sub
+
     Private Sub DGVPrevClick(sender As Object, e As EventArgs) Handles DGVPrev.Click
         FetchData -= 13
         DS.Clear()
@@ -186,4 +191,5 @@
         Paging()
     End Sub
 #End Region
+
 End Class

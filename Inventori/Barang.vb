@@ -5,19 +5,25 @@
         BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_simpan_common
         TID.Text = 1
         Dim x = 0
-        QRL("SELECT ID_Barang FROM TBLBarang ORDER BY ID_Barang ASC")
+        QRL("SELECT ID_Barang FROM TBLBarang ORDER BY ID_Barang")
         Do While DR.Read
             x += 1
-            If Not DR.HasRows Then
-                TID.Text = 1
-            Else
-                If DR(0) <> x Then
+            If DR.HasRows Then
+                If DR(0) = x Then
+                    TID.Text = x + 1
+                Else
                     TID.Text = x
                     Exit Sub
-                Else
-                    TID.Text = x + 1
                 End If
             End If
+        Loop
+    End Sub
+
+    Sub TampilSatuan()
+        TSatuan.AutoCompleteCustomSource.Clear()
+        QRL("SELECT DISTINCT Satuan FROM TBLBarang ORDER BY Satuan")
+        Do While DR.Read
+            TSatuan.AutoCompleteCustomSource.Add(DR(0))
         Loop
     End Sub
 
@@ -34,22 +40,6 @@
         TCariData.Clear()
         TampilDGV()
         TNama.Focus()
-    End Sub
-
-    Sub CariID()
-        QR("SELECT * FROM TBLBarang WHERE ID_Barang = " & Val(TID.Text) & "")
-    End Sub
-
-    Sub TampilSatuan()
-        TSatuan.AutoCompleteCustomSource.Clear()
-        QRL("SELECT DISTINCT Satuan FROM TBLBarang ORDER BY Satuan")
-        Do While DR.Read
-            TSatuan.AutoCompleteCustomSource.Add(DR(0))
-        Loop
-    End Sub
-
-    Private Sub Valid(sender As Object, e As EventArgs) Handles TSatuan.TextChanged, TNama.TextChanged
-        If TNama.Text = "" Or TSatuan.Text = "" Then BTNSimpan.Enabled = 0 Else BTNSimpan.Enabled = 1
     End Sub
 
     Private Sub Barang_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -70,20 +60,33 @@
         DGV.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
     End Sub
 
+    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TStok.KeyPress, THargaBeli.KeyPress, THargaJual.KeyPress
+        Angka(e)
+    End Sub
+
+    Private Sub Valid(sender As Object, e As EventArgs) Handles TSatuan.TextChanged, TNama.TextChanged
+        If TNama.Text = "" Or TSatuan.Text = "" Then BTNSimpan.Enabled = 0 Else BTNSimpan.Enabled = 1
+    End Sub
+
+#Region "CRUD"
+    Sub CariID()
+        QR("SELECT * FROM TBLBarang WHERE ID_Barang = " & Val(TID.Text))
+    End Sub
+
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
         CariID()
         If Not DR.HasRows Then
             QN("INSERT INTO TBLBarang VALUES(" & Val(TID.Text) & ",'" & TNama.Text & "','" & TSatuan.Text.Substring(0, 1).ToUpper() + TSatuan.Text.Substring(1).ToLower() & "','" & TLokasi.Text & "'," & Val(THargaBeli.Text) & "," & Val(THargaJual.Text) & "," & Val(TStok.Text) & ")")
             Pesan("Barang berhasil ditambah", 1)
         Else
-            QN("UPDATE TBLBarang SET Nama = '" & TNama.Text & "', Satuan = '" & TSatuan.Text.Substring(0, 1).ToUpper() + TSatuan.Text.Substring(1).ToLower() & "', Lokasi = '" & TLokasi.Text & "', HargaBeli = '" & Val(THargaBeli.Text) & "', HargaJual = '" & Val(THargaJual.Text) & "' WHERE ID_Barang = " & Val(TID.Text) & "")
+            QN("UPDATE TBLBarang SET Nama = '" & TNama.Text & "', Satuan = '" & TSatuan.Text.Substring(0, 1).ToUpper() + TSatuan.Text.Substring(1).ToLower() & "', Lokasi = '" & TLokasi.Text & "', HargaBeli = '" & Val(THargaBeli.Text) & "', HargaJual = '" & Val(THargaJual.Text) & "' WHERE ID_Barang = " & Val(TID.Text))
             Pesan("Barang berhasil diubah", 1)
         End If
         Clear()
     End Sub
 
     Private Sub BTNHapus_Click(sender As Object, e As EventArgs) Handles BTNHapus.Click
-        QR("SELECT ID_Barang FROM TBLTransaksi WHERE ID_Barang = " & Val(TID.Text) & "")
+        QR("SELECT ID_Barang FROM TBLTransaksi WHERE ID_Barang = " & Val(TID.Text))
         If DR.HasRows Then
             Pesan("Barang pernah terlibat dalam transaksi", 0)
             Exit Sub
@@ -94,7 +97,7 @@
         Else
             Dim Confirm As New Konfirmasi("Konfirmasi Hapus", "Hapus " & DR(1) & "?")
             If Confirm.ShowDialog() = DialogResult.Yes Then
-                QN("DELETE FROM TBLBarang WHERE ID_Barang = " & Val(TID.Text) & "")
+                QN("DELETE FROM TBLBarang WHERE ID_Barang = " & Val(TID.Text))
                 Pesan("Barang berhasil dihapus", 1)
                 Clear()
             End If
@@ -105,31 +108,6 @@
         FetchData = 0
         CurrentPage = 1
         Clear()
-    End Sub
-
-    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
-        If e.RowIndex < 0 Then Exit Sub
-        TID.Text = DGV.Rows(e.RowIndex).Cells(0).Value
-        CariID()
-        TNama.Text = DR(1)
-        TSatuan.Text = DR(2)
-        TLokasi.Text = DR(3)
-        THargaBeli.Text = DR(4)
-        THargaJual.Text = DR(5)
-        TStok.Text = DR(6)
-        TStok.Enabled = 0
-        BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
-        BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
-    End Sub
-
-    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
-        FetchData = 0
-        CurrentPage = 1
-        TampilDGV()
-    End Sub
-
-    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TStok.KeyPress, THargaBeli.KeyPress, THargaJual.KeyPress
-        Angka(e)
     End Sub
 
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, koentji As Keys) As Boolean
@@ -145,8 +123,9 @@
         End If
         Return MyBase.ProcessCmdKey(msg, koentji)
     End Function
+#End Region
 
-#Region "DGV Pagination"
+#Region "DGV"
     Dim FetchData As Integer
     Dim CurrentPage As Integer = 1
 
@@ -161,6 +140,27 @@
     Sub TampilDGV()
         QDGV("SELECT ID_Barang AS [ID Barang], Nama AS [Nama Barang], Satuan, Lokasi, HargaBeli AS [Harga Beli], HargaJual AS [Harga Jual], Stok FROM TBLBarang WHERE Nama LIKE '%" & TCariData.Text & "%' OR Satuan LIKE '%" & TCariData.Text & "%' OR Lokasi LIKE '%" & TCariData.Text & "%' ORDER BY ID_Barang", DGV, FetchData, 13, 0)
         Paging()
+    End Sub
+
+    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
+    End Sub
+
+    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
+        If e.RowIndex < 0 Then Exit Sub
+        TID.Text = DGV.Rows(e.RowIndex).Cells(0).Value
+        CariID()
+        TNama.Text = DR(1)
+        TSatuan.Text = DR(2)
+        TLokasi.Text = DR(3)
+        THargaBeli.Text = DR(4)
+        THargaJual.Text = DR(5)
+        TStok.Text = DR(6)
+        TStok.Enabled = 0
+        BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
+        BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
     End Sub
 
     Private Sub DGVPrevClick(sender As Object, e As EventArgs) Handles DGVPrev.Click
@@ -179,4 +179,5 @@
         Paging()
     End Sub
 #End Region
+
 End Class

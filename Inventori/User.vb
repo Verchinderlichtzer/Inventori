@@ -8,8 +8,8 @@
         TUsername.Focus()
     End Sub
 
-    Sub CariID()
-        QR("SELECT Username FROM TBLUser WHERE Username = '" & TUsername.Text & "'")
+    Private Sub User_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Clear()
     End Sub
 
     Private Sub Valid(sender As Object, e As EventArgs) Handles TUsername.TextChanged, TPassword.TextChanged
@@ -24,8 +24,9 @@
         End If
     End Sub
 
-    Private Sub User_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Clear()
+#Region "CRUD"
+    Sub CariID()
+        QR("SELECT Username FROM TBLUser WHERE Username = '" & TUsername.Text & "'")
     End Sub
 
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
@@ -65,23 +66,6 @@
         Clear()
     End Sub
 
-    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
-        FetchData = 1
-        CurrentPage = 1
-        TampilDGV()
-    End Sub
-
-    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
-        If e.RowIndex < 0 Then Exit Sub
-        TPassword.Clear()
-        If e.ColumnIndex = 0 Then TUsername.Text = DGV.Rows(e.RowIndex).Cells(0).Value
-    End Sub
-    Private Sub DGV_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellContentClick
-        If e.RowIndex < 0 Then Exit Sub
-        DGV.CommitEdit(DataGridViewDataErrorContexts.Commit)
-        QN("UPDATE TBLUser SET Barang = " & DGV.Rows(e.RowIndex).Cells(1).Value & ", Supplier = " & DGV.Rows(e.RowIndex).Cells(2).Value & ", Customer = " & DGV.Rows(e.RowIndex).Cells(3).Value & ", Masuk = " & DGV.Rows(e.RowIndex).Cells(4).Value & ", Keluar = " & DGV.Rows(e.RowIndex).Cells(5).Value & ", LabaRugi = " & DGV.Rows(e.RowIndex).Cells(6).Value & " WHERE Username = '" & DGV.Rows(e.RowIndex).Cells(0).Value & "'")
-    End Sub
-
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, koentji As Keys) As Boolean
         If koentji = Keys.Enter Then
             BTNSimpan.PerformClick()
@@ -95,8 +79,9 @@
         End If
         Return MyBase.ProcessCmdKey(msg, koentji)
     End Function
+#End Region
 
-#Region "DGV Pagination"
+#Region "DGV"
     ReadOnly Baris As New Collection
     Dim JumlahData As Integer
 
@@ -118,12 +103,31 @@
     Sub TampilDGV()
         JumlahData = 0
         Baris.Clear()
-        QRL("SELECT Username, Barang, Supplier, Customer, Masuk, Keluar, LabaRugi AS [Laba Rugi] FROM TBLUser WHERE NOT Username = 'admin' AND Username LIKE '%" & TCariData.Text & "%' ORDER BY Username ASC")
+        QRL("SELECT Username, Barang, Supplier, Customer, Masuk, Keluar, LabaRugi AS [Laba Rugi] FROM TBLUser WHERE NOT Username = 'Admin' AND Username LIKE '%" & TCariData.Text & "%' ORDER BY Username ASC")
         Do While DR.Read
             JumlahData += 1
             Baris.Add({DR(0), DR(1), DR(2), DR(3), DR(4), DR(5), DR(6)})
         Loop
+        If Baris.Count = 0 Then Exit Sub
         Paging()
+    End Sub
+
+    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
+        FetchData = 1
+        CurrentPage = 1
+        TampilDGV()
+    End Sub
+
+    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
+        If e.RowIndex < 0 Then Exit Sub
+        TPassword.Clear()
+        If e.ColumnIndex = 0 Then TUsername.Text = DGV.Rows(e.RowIndex).Cells(0).Value
+    End Sub
+
+    Private Sub DGV_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellContentClick
+        If e.RowIndex < 0 Then Exit Sub
+        DGV.CommitEdit(DataGridViewDataErrorContexts.Commit)
+        QN("UPDATE TBLUser SET Barang = " & DGV.Rows(e.RowIndex).Cells(1).Value & ", Supplier = " & DGV.Rows(e.RowIndex).Cells(2).Value & ", Customer = " & DGV.Rows(e.RowIndex).Cells(3).Value & ", Masuk = " & DGV.Rows(e.RowIndex).Cells(4).Value & ", Keluar = " & DGV.Rows(e.RowIndex).Cells(5).Value & ", LabaRugi = " & DGV.Rows(e.RowIndex).Cells(6).Value & " WHERE Username = '" & DGV.Rows(e.RowIndex).Cells(0).Value & "'")
     End Sub
 
     Private Sub DGVPrev_Click(sender As Object, e As EventArgs) Handles DGVPrev.Click

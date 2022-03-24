@@ -38,7 +38,7 @@
         TMetode.SelectedIndex = 0
         DGV.Rows.Clear()
         TCariBarang.Clear()
-        TampilDGV()
+        TampilDGVBarang()
         TglKeluar = Now
         Subtotal = 0
         PPN = 0
@@ -70,8 +70,24 @@
         Akses("Keluar", 1, 0, 0, 0, 1, "Grand Total :", 1, 1, 1)
     End Sub
 
-    Sub Akses(TTitle As String, EMetode As Integer, VTglKeluar As Integer, VTerbayar As Integer, RDGV As Integer, VDGV As Integer, TGrandSisa As String, EPPN As Integer, EBiayaLain As Integer, VDetailBarang As Integer)
-        MainF.LBLTitle.Text = TTitle
+    Private Sub Keluar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Clear()
+        RemoveHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
+        TampilFaktur()
+        AddHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
+        QRL("SELECT ID_Customer, Nama FROM tblcustomer ORDER BY Nama ASC")
+        Do While DR.Read
+            TCustomer.Items.Add(DR(0) & " - " & DR(1))
+        Loop
+        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+        DGVBarang.Columns(0).Visible = 0
+        DGVBarang.Columns(2).Visible = 0
+        DGVBarang.Columns(3).Visible = 0
+        DGVBarang.Columns(4).Visible = 0
+    End Sub
+
+    Sub Akses(XTitle As String, EMetode As Integer, VTglKeluar As Integer, VTerbayar As Integer, RDGV As Integer, VDGV As Integer, XGrandSisa As String, EPPN As Integer, EBiayaLain As Integer, VDetailBarang As Integer)
+        MainF.LBLTitle.Text = XTitle
         TMetode.Enabled = EMetode
         LBLTglKeluar.Visible = VTglKeluar
         TTglKeluar.Visible = VTglKeluar
@@ -79,7 +95,7 @@
         TTerbayar.Visible = VTerbayar
         DGV.ReadOnly = RDGV
         DGV.Columns(2).Visible = VDGV
-        LBLGrandSisa.Text = TGrandSisa
+        LBLGrandSisa.Text = XGrandSisa
         TPPN.Enabled = EPPN
         TBiayaLain.Enabled = EBiayaLain
         LBLDetailBarang.Visible = VDetailBarang
@@ -124,6 +140,71 @@
         End If
     End Sub
 
+    Private Sub TMetode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TMetode.SelectedIndexChanged
+        If TFaktur.SelectedIndex > 0 Then Exit Sub
+        TotalHargaBarangAVG = 0
+        TotalHargaBarang = 0
+        GrandSisa = 0
+        For Each x In DGV.Rows
+            IDBarang = x.Cells("CIDBarang").Value
+            NamaBarang = x.Cells("CNamaBarang").Value
+            StokBarang = x.Cells("CStok").Value
+            QtyBarang = x.Cells("CQty").Value
+            TampilDGVDetailBarang()
+            TotalHarga = 0
+            If TMetode.SelectedItem = "LIFO" Then
+                QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & x.Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal DESC")
+            ElseIf TMetode.SelectedItem = "FEFO" Then
+                QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & x.Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Kedaluwarsa ASC, Tanggal ASC")
+            Else
+                QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & x.Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal ASC")
+            End If
+            Do While DR.Read
+                TotalHarga += (DR(0) - DR(1)) * DR(2)
+                If QtyBarang >= DR(0) - DR(1) Then
+                    TotalHargaBarang += (DR(0) - DR(1)) * DR(2)
+                    QtyBarang -= DR(0) - DR(1)
+                Else
+                    TotalHargaBarang += QtyBarang * DR(2)
+                    QtyBarang = 0
+                End If
+            Loop
+            If TMetode.SelectedItem = "AVG" Then
+                TotalHargaBarangAVG = CInt(x.Cells("CQty").Value * (TotalHarga / x.Cells("CStok").Value))
+                x.Cells("CTotalHarga").Value = TotalHargaBarangAVG * (100 - x.Cells("CDiskon").Value) / 100
+            Else
+                x.Cells("CTotalHarga").Value = TotalHargaBarang * (100 - x.Cells("CDiskon").Value) / 100
+            End If
+            TotalHargaBarang = 0
+        Next
+        Hitung()
+        ControlOtomatis()
+    End Sub
+
+    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TDibayar.KeyPress, TPPN.KeyPress, TBiayaLain.KeyPress
+        Angka(e)
+        If (sender.Text = "" And Asc(e.KeyChar) = 48) Or (sender Is TDibayar And Val(TDibayar.Text) = GrandSisa And Not Asc(e.KeyChar) = 8) Then
+            e.Handled = 1
+        End If
+    End Sub
+
+    Sub Validasi()
+        For Each x In DGV.Rows
+            If TFaktur.SelectedIndex = -1 Or TCustomer.SelectedIndex = -1 Or DGV.Rows.Count = 0 Or Val(TDibayar.Text) = 0 Or x.Cells(3).Value = 0 Then
+                BTNSimpan.Enabled = 0
+                Exit For
+            Else
+                BTNSimpan.Enabled = 1
+            End If
+        Next
+    End Sub
+
+    Private Sub Valid(sender As Object, e As EventArgs) Handles TCustomer.SelectedIndexChanged, TPPN.TextChanged, TDibayar.TextChanged, TBiayaLain.TextChanged
+        Hitung()
+        ControlOtomatis()
+        Validasi()
+    End Sub
+
     Sub Hitung()
         Subtotal = 0
         For Each x In DGV.Rows
@@ -152,139 +233,7 @@
         TKurang.Text = FormatNumber(Kurang, 0)
     End Sub
 
-    Private Sub TCariBarang_TextChanged(sender As Object, e As EventArgs) Handles TCariBarang.TextChanged
-        TampilDGV()
-    End Sub
-
-    Private Sub DGVBarang_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGVBarang.CellMouseClick
-        If e.RowIndex < 0 Or TFaktur.SelectedIndex > 0 Then Exit Sub
-        For Each x In DGV.Rows
-            If x.Cells(0).Value = DGVBarang.Rows(e.RowIndex).Cells(0).Value Then Exit Sub
-        Next
-        DGV.Rows.Add(DGVBarang.Rows(e.RowIndex).Cells(0).Value, DGVBarang.Rows(e.RowIndex).Cells(4).Value, DGVBarang.Rows(e.RowIndex).Cells(3).Value, 0, DGVBarang.Rows(e.RowIndex).Cells(2).Value, 0, 0)
-        Hitung()
-        ControlOtomatis()
-        Validasi()
-    End Sub
-
-    Private Sub DGV_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellEndEdit
-        If DGV.Rows(e.RowIndex).Cells("CQty").Value > DGV.Rows(e.RowIndex).Cells("CStok").Value Then
-            DGV.Rows(e.RowIndex).Cells("CQty").Value = DGV.Rows(e.RowIndex).Cells("CStok").Value
-        End If
-        IDBarang = DGV.Rows(e.RowIndex).Cells("CIDBarang").Value
-        NamaBarang = DGV.Rows(e.RowIndex).Cells("CNamaBarang").Value
-        StokBarang = DGV.Rows(e.RowIndex).Cells("CStok").Value
-        QtyBarang = DGV.Rows(e.RowIndex).Cells("CQty").Value
-        TampilDGVDetailBarang()
-        TotalHargaBarangAVG = 0
-        TotalHargaBarang = 0
-        GrandSisa = 0
-        If TMetode.SelectedItem = "LIFO" Then
-            QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & DGV.Rows(e.RowIndex).Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal DESC")
-        ElseIf TMetode.SelectedItem = "FEFO" Then
-            QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & DGV.Rows(e.RowIndex).Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Kedaluwarsa ASC, Tanggal ASC")
-        Else
-            QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & DGV.Rows(e.RowIndex).Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal ASC")
-        End If
-        TotalHarga = 0
-        Do While DR.Read
-            TotalHarga += (DR(0) - DR(1)) * DR(2)
-            If QtyBarang >= DR(0) - DR(1) Then
-                TotalHargaBarang += (DR(0) - DR(1)) * DR(2)
-                QtyBarang -= DR(0) - DR(1)
-            Else
-                TotalHargaBarang += QtyBarang * DR(2)
-                QtyBarang = 0
-            End If
-        Loop
-        If TMetode.SelectedItem = "AVG" Then
-            TotalHargaBarangAVG = CInt(DGV.Rows(e.RowIndex).Cells("CQty").Value * (TotalHarga / DGV.Rows(e.RowIndex).Cells("CStok").Value))
-            DGV.Rows(e.RowIndex).Cells("CTotalHarga").Value = TotalHargaBarangAVG * (100 - DGV.Rows(e.RowIndex).Cells("CDiskon").Value) / 100
-        Else
-            DGV.Rows(e.RowIndex).Cells("CTotalHarga").Value = TotalHargaBarang * (100 - DGV.Rows(e.RowIndex).Cells("CDiskon").Value) / 100
-        End If
-        Hitung()
-        ControlOtomatis()
-        Validasi()
-    End Sub
-
-    Sub Validasi()
-        For Each x In DGV.Rows
-            If TFaktur.SelectedIndex = -1 Or TCustomer.SelectedIndex = -1 Or DGV.Rows.Count = 0 Or Val(TDibayar.Text) = 0 Or x.Cells(3).Value = 0 Then
-                BTNSimpan.Enabled = 0
-                Exit For
-            Else
-                BTNSimpan.Enabled = 1
-            End If
-        Next
-    End Sub
-
-    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
-        If e.RowIndex < 0 Then Exit Sub
-        IDBarang = DGV.Rows(e.RowIndex).Cells("CIDBarang").Value
-        NamaBarang = DGV.Rows(e.RowIndex).Cells("CNamaBarang").Value
-        StokBarang = DGV.Rows(e.RowIndex).Cells("CStok").Value
-        QtyBarang = DGV.Rows(e.RowIndex).Cells("CQty").Value
-        TampilDGVDetailBarang()
-    End Sub
-
-    Sub TampilDGVDetailBarang()
-        If IDBarang = Nothing Or TFaktur.SelectedIndex > 0 Then Exit Sub
-        Dim QtySemula As Integer = QtyBarang
-        LBLDetailBarang.Text = "Detail pada barang : " & NamaBarang & " (" & QtyBarang & ")"
-        DGVDetailBarang.Rows.Clear()
-        If TMetode.SelectedItem = "LIFO" Then
-            QRL("SELECT Stok, Satuan, TBLTransaksi.Faktur, Tanggal, Terbeli, Terjual, TBLTransaksi.HargaJual, FORMAT(Kedaluwarsa, 'dd-MM-yyyy') FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN (TBLMasuk INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur WHERE TBLTransaksi.ID_Barang = " & IDBarang & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal DESC")
-        ElseIf TMetode.SelectedItem = "FEFO" Then
-            QRL("SELECT Stok, Satuan, TBLTransaksi.Faktur, Tanggal, Terbeli, Terjual, TBLTransaksi.HargaJual, FORMAT(Kedaluwarsa, 'dd-MM-yyyy') FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN (TBLMasuk INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur WHERE TBLTransaksi.ID_Barang = " & IDBarang & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Kedaluwarsa ASC, Tanggal ASC")
-        Else
-            QRL("SELECT Stok, Satuan, TBLTransaksi.Faktur, Tanggal, Terbeli, Terjual, TBLTransaksi.HargaJual, FORMAT(Kedaluwarsa, 'dd-MM-yyyy') FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN (TBLMasuk INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur WHERE TBLTransaksi.ID_Barang = " & IDBarang & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal ASC")
-        End If
-        Do While DR.Read
-            DGVDetailBarang.Rows.Add(DR(2), Format(DR(3), "dd/MM/yyyy"), DR(4) - DR(5), DR(6), 0, 0, 0, 0, DR(7))
-        Loop
-        For Each x In DGVDetailBarang.Rows
-            If QtyBarang >= x.Cells(2).Value Then
-                x.Cells(4).Value = x.Cells(2).Value
-                QtyBarang -= x.Cells(2).Value
-                x.Cells(7).Value = QtyBarang
-            ElseIf QtyBarang > 0 Then
-                x.Cells(4).Value = QtyBarang
-                QtyBarang -= x.Cells(2).Value
-                If x.Cells(2).Value <> x.Cells(4).Value Then x.Cells(7).Value = 0 Else x.Cells(7).Value = x.Cells(4).Value
-            ElseIf QtyBarang = 0 Then
-                x.Cells(4).Value = 0
-            End If
-            If TMetode.SelectedItem <> "AVG" Then
-                x.Cells(5).Value = x.Cells(3).Value * x.Cells(4).Value
-            Else
-                TotalHarga = 0
-                For Each y In DGVDetailBarang.Rows
-                    TotalHarga += y.Cells(2).Value * y.Cells(3).Value
-                Next
-                x.Cells(5).Value = TotalHarga / StokBarang * x.Cells(4).Value
-            End If
-            x.Cells(6).Value = x.Cells(2).Value - x.Cells(4).Value
-        Next
-        QtyBarang = QtySemula
-    End Sub
-
-    Private Sub Keluar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Clear()
-        RemoveHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
-        TampilFaktur()
-        AddHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
-        QRL("SELECT ID_Customer, Nama FROM tblcustomer ORDER BY Nama ASC")
-        Do While DR.Read
-            TCustomer.Items.Add(DR(0) & " - " & DR(1))
-        Loop
-        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-        DGVBarang.Columns(0).Visible = 0
-        DGVBarang.Columns(2).Visible = 0
-        DGVBarang.Columns(3).Visible = 0
-        DGVBarang.Columns(4).Visible = 0
-    End Sub
-
+#Region "CRUD"
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
         CONN.Dispose()
         Koneksi()
@@ -342,77 +291,9 @@
     Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
         TampilFaktur()
     End Sub
+#End Region
 
-    Private Sub Valid(sender As Object, e As EventArgs) Handles TCustomer.SelectedIndexChanged, TPPN.TextChanged, TDibayar.TextChanged, TBiayaLain.TextChanged
-        Hitung()
-        ControlOtomatis()
-        Validasi()
-    End Sub
-
-    Private Sub DGV_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles DGV.EditingControlShowing
-        Dim Angka As TextBox = CType(e.Control, TextBox)
-        If Not DGV.CurrentCell.ColumnIndex = 0 Then AddHandler Angka.KeyPress, AddressOf Angka_KeyPress
-    End Sub
-
-    Private Sub DGV_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DGV.KeyPress
-        On Error Resume Next
-        DGVDetailBarang.Rows.Clear()
-        If Asc(e.KeyChar) = 27 Then DGV.Rows.Remove(DGV.CurrentRow)
-        LBLDetailBarang.Text = "Detail pada barang :"
-        Hitung()
-        ControlOtomatis()
-        Validasi()
-    End Sub
-
-    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TDibayar.KeyPress, TPPN.KeyPress, TBiayaLain.KeyPress
-        Angka(e)
-        If (sender.Text = "" And Asc(e.KeyChar) = 48) Or (sender Is TDibayar And Val(TDibayar.Text) = GrandSisa And Not Asc(e.KeyChar) = 8) Then
-            e.Handled = 1
-        End If
-    End Sub
-
-    Private Sub TMetode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TMetode.SelectedIndexChanged
-        If TFaktur.SelectedIndex > 0 Then Exit Sub
-        TotalHargaBarangAVG = 0
-        TotalHargaBarang = 0
-        GrandSisa = 0
-        For Each x In DGV.Rows
-            IDBarang = x.Cells("CIDBarang").Value
-            NamaBarang = x.Cells("CNamaBarang").Value
-            StokBarang = x.Cells("CStok").Value
-            QtyBarang = x.Cells("CQty").Value
-            TampilDGVDetailBarang()
-            TotalHarga = 0
-            If TMetode.SelectedItem = "LIFO" Then
-                QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & x.Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal DESC")
-            ElseIf TMetode.SelectedItem = "FEFO" Then
-                QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & x.Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Kedaluwarsa ASC, Tanggal ASC")
-            Else
-                QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & x.Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal ASC")
-            End If
-            Do While DR.Read
-                TotalHarga += (DR(0) - DR(1)) * DR(2)
-                If QtyBarang >= DR(0) - DR(1) Then
-                    TotalHargaBarang += (DR(0) - DR(1)) * DR(2)
-                    QtyBarang -= DR(0) - DR(1)
-                Else
-                    TotalHargaBarang += QtyBarang * DR(2)
-                    QtyBarang = 0
-                End If
-            Loop
-            If TMetode.SelectedItem = "AVG" Then
-                TotalHargaBarangAVG = CInt(x.Cells("CQty").Value * (TotalHarga / x.Cells("CStok").Value))
-                x.Cells("CTotalHarga").Value = TotalHargaBarangAVG * (100 - x.Cells("CDiskon").Value) / 100
-            Else
-                x.Cells("CTotalHarga").Value = TotalHargaBarang * (100 - x.Cells("CDiskon").Value) / 100
-            End If
-            TotalHargaBarang = 0
-        Next
-        Hitung()
-        ControlOtomatis()
-    End Sub
-
-#Region "DGVBarang Pagination"
+#Region "DGVBarang"
     Dim FetchData As Integer
     Dim CurrentPage As Integer = 1
 
@@ -424,11 +305,26 @@
         If CurrentPage >= Math.Ceiling(DR(0) / 14) Then DGVBarangNext.Enabled = 0 Else DGVBarangNext.Enabled = 1
     End Sub
 
-    Sub TampilDGV()
+    Sub TampilDGVBarang()
         FetchData = 0
         CurrentPage = 1
         QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama FROM TBLBarang WHERE Stok > 0 AND (Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%') ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
         Paging()
+    End Sub
+
+    Private Sub TCariBarang_TextChanged(sender As Object, e As EventArgs) Handles TCariBarang.TextChanged
+        TampilDGVBarang()
+    End Sub
+
+    Private Sub DGVBarang_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGVBarang.CellMouseClick
+        If e.RowIndex < 0 Or TFaktur.SelectedIndex > 0 Then Exit Sub
+        For Each x In DGV.Rows
+            If x.Cells(0).Value = DGVBarang.Rows(e.RowIndex).Cells(0).Value Then Exit Sub
+        Next
+        DGV.Rows.Add(DGVBarang.Rows(e.RowIndex).Cells(0).Value, DGVBarang.Rows(e.RowIndex).Cells(4).Value, DGVBarang.Rows(e.RowIndex).Cells(3).Value, 0, DGVBarang.Rows(e.RowIndex).Cells(2).Value, 0, 0)
+        Hitung()
+        ControlOtomatis()
+        Validasi()
     End Sub
 
     Private Sub DGVBarangPrevClick(sender As Object, e As EventArgs) Handles DGVBarangPrev.Click
@@ -447,4 +343,113 @@
         Paging()
     End Sub
 #End Region
+
+#Region "DGV"
+    Private Sub DGV_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles DGV.EditingControlShowing
+        Dim Angka As TextBox = CType(e.Control, TextBox)
+        If Not DGV.CurrentCell.ColumnIndex = 0 Then AddHandler Angka.KeyPress, AddressOf Angka_KeyPress
+    End Sub
+
+    Private Sub DGV_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellEndEdit
+        If DGV.Rows(e.RowIndex).Cells("CQty").Value > DGV.Rows(e.RowIndex).Cells("CStok").Value Then
+            DGV.Rows(e.RowIndex).Cells("CQty").Value = DGV.Rows(e.RowIndex).Cells("CStok").Value
+        End If
+        IDBarang = DGV.Rows(e.RowIndex).Cells("CIDBarang").Value
+        NamaBarang = DGV.Rows(e.RowIndex).Cells("CNamaBarang").Value
+        StokBarang = DGV.Rows(e.RowIndex).Cells("CStok").Value
+        QtyBarang = DGV.Rows(e.RowIndex).Cells("CQty").Value
+        TampilDGVDetailBarang()
+        TotalHargaBarangAVG = 0
+        TotalHargaBarang = 0
+        GrandSisa = 0
+        If TMetode.SelectedItem = "LIFO" Then
+            QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & DGV.Rows(e.RowIndex).Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal DESC")
+        ElseIf TMetode.SelectedItem = "FEFO" Then
+            QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & DGV.Rows(e.RowIndex).Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Kedaluwarsa ASC, Tanggal ASC")
+        Else
+            QRL("SELECT Terbeli, Terjual, TBLTransaksi.HargaJual FROM TBLMasuk INNER JOIN (TBLTransaksi INNER JOIN TBLDetailMasuk ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk WHERE TBLTransaksi.ID_Barang = " & DGV.Rows(e.RowIndex).Cells(0).Value & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal ASC")
+        End If
+        TotalHarga = 0
+        Do While DR.Read
+            TotalHarga += (DR(0) - DR(1)) * DR(2)
+            If QtyBarang >= DR(0) - DR(1) Then
+                TotalHargaBarang += (DR(0) - DR(1)) * DR(2)
+                QtyBarang -= DR(0) - DR(1)
+            Else
+                TotalHargaBarang += QtyBarang * DR(2)
+                QtyBarang = 0
+            End If
+        Loop
+        If TMetode.SelectedItem = "AVG" Then
+            TotalHargaBarangAVG = CInt(DGV.Rows(e.RowIndex).Cells("CQty").Value * (TotalHarga / DGV.Rows(e.RowIndex).Cells("CStok").Value))
+            DGV.Rows(e.RowIndex).Cells("CTotalHarga").Value = TotalHargaBarangAVG * (100 - DGV.Rows(e.RowIndex).Cells("CDiskon").Value) / 100
+        Else
+            DGV.Rows(e.RowIndex).Cells("CTotalHarga").Value = TotalHargaBarang * (100 - DGV.Rows(e.RowIndex).Cells("CDiskon").Value) / 100
+        End If
+        Hitung()
+        ControlOtomatis()
+        Validasi()
+    End Sub
+
+    Private Sub DGV_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DGV.KeyPress
+        On Error Resume Next
+        DGVDetailBarang.Rows.Clear()
+        If Asc(e.KeyChar) = 27 Then DGV.Rows.Remove(DGV.CurrentRow)
+        LBLDetailBarang.Text = "Detail pada barang :"
+        Hitung()
+        ControlOtomatis()
+        Validasi()
+    End Sub
+
+    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
+        If e.RowIndex < 0 Then Exit Sub
+        IDBarang = DGV.Rows(e.RowIndex).Cells("CIDBarang").Value
+        NamaBarang = DGV.Rows(e.RowIndex).Cells("CNamaBarang").Value
+        StokBarang = DGV.Rows(e.RowIndex).Cells("CStok").Value
+        QtyBarang = DGV.Rows(e.RowIndex).Cells("CQty").Value
+        TampilDGVDetailBarang()
+    End Sub
+
+    Sub TampilDGVDetailBarang()
+        If IDBarang = Nothing Or TFaktur.SelectedIndex > 0 Then Exit Sub
+        Dim QtySemula As Integer = QtyBarang
+        LBLDetailBarang.Text = "Detail pada barang : " & NamaBarang & " (" & QtyBarang & ")"
+        DGVDetailBarang.Rows.Clear()
+        If TMetode.SelectedItem = "LIFO" Then
+            QRL("SELECT Stok, Satuan, TBLTransaksi.Faktur, Tanggal, Terbeli, Terjual, TBLTransaksi.HargaJual, FORMAT(Kedaluwarsa, 'dd-MM-yyyy') FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN (TBLMasuk INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur WHERE TBLTransaksi.ID_Barang = " & IDBarang & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal DESC")
+        ElseIf TMetode.SelectedItem = "FEFO" Then
+            QRL("SELECT Stok, Satuan, TBLTransaksi.Faktur, Tanggal, Terbeli, Terjual, TBLTransaksi.HargaJual, FORMAT(Kedaluwarsa, 'dd-MM-yyyy') FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN (TBLMasuk INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur WHERE TBLTransaksi.ID_Barang = " & IDBarang & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Kedaluwarsa ASC, Tanggal ASC")
+        Else
+            QRL("SELECT Stok, Satuan, TBLTransaksi.Faktur, Tanggal, Terbeli, Terjual, TBLTransaksi.HargaJual, FORMAT(Kedaluwarsa, 'dd-MM-yyyy') FROM (TBLBarang INNER JOIN TBLTransaksi ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang) INNER JOIN (TBLMasuk INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur WHERE TBLTransaksi.ID_Barang = " & IDBarang & " AND Terbeli > Terjual AND NOT Status = 'PO' ORDER BY Tanggal ASC")
+        End If
+        Do While DR.Read
+            DGVDetailBarang.Rows.Add(DR(2), Format(DR(3), "dd/MM/yyyy"), DR(4) - DR(5), DR(6), 0, 0, 0, 0, DR(7))
+        Loop
+        For Each x In DGVDetailBarang.Rows
+            If QtyBarang >= x.Cells(2).Value Then
+                x.Cells(4).Value = x.Cells(2).Value
+                QtyBarang -= x.Cells(2).Value
+                x.Cells(7).Value = QtyBarang
+            ElseIf QtyBarang > 0 Then
+                x.Cells(4).Value = QtyBarang
+                QtyBarang -= x.Cells(2).Value
+                If x.Cells(2).Value <> x.Cells(4).Value Then x.Cells(7).Value = 0 Else x.Cells(7).Value = x.Cells(4).Value
+            ElseIf QtyBarang = 0 Then
+                x.Cells(4).Value = 0
+            End If
+            If TMetode.SelectedItem <> "AVG" Then
+                x.Cells(5).Value = x.Cells(3).Value * x.Cells(4).Value
+            Else
+                TotalHarga = 0
+                For Each y In DGVDetailBarang.Rows
+                    TotalHarga += y.Cells(2).Value * y.Cells(3).Value
+                Next
+                x.Cells(5).Value = TotalHarga / StokBarang * x.Cells(4).Value
+            End If
+            x.Cells(6).Value = x.Cells(2).Value - x.Cells(4).Value
+        Next
+        QtyBarang = QtySemula
+    End Sub
+#End Region
+
 End Class

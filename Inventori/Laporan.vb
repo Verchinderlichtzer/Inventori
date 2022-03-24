@@ -24,132 +24,6 @@ Public Class Laporan
     Dim TampilTahun As ReportParameter
     Dim Params As ReportParameter()
 
-    Sub Bersihkan()
-        RBBarang.Checked = 0
-        RBSupplier.Checked = 0
-        RBCustomer.Checked = 0
-        CBTransaksi.Checked = 0
-        CBLain.Checked = 0
-        RBBatang.Checked = 0
-        RBGaris.Checked = 0
-        RBKurva.Checked = 0
-
-        CBMasuk.Checked = 0
-        CBKeluar.Checked = 0
-        TDari.Value = Today
-        TSampai.Value = Today
-        TBulanan.Value = Today
-        TTahunan.SelectedIndex = 0
-        TEntitas.SelectedIndex = -1
-        TCariData.Clear()
-        DGV.DataSource = Nothing
-
-        FilterJenis = Nothing
-        FilterTanggal = Nothing
-        LBLFilter.Text = ""
-
-        FullQuery = Nothing
-        Waktu = Nothing
-        IDEntitas = Nothing
-        NamaEntitas = Nothing
-        LaporanTerpilih = Nothing
-    End Sub
-
-    Sub TidakMemilih()
-        FilterJenis = Nothing
-        FilterTanggal = Nothing
-        LBLFilter.Text = ""
-        FullQuery = Nothing
-        Waktu = Nothing
-        IDEntitas = Nothing
-        NamaEntitas = Nothing
-        LaporanTerpilih = Nothing
-    End Sub
-
-    Private Sub Lapor(sender As Object, e As EventArgs) Handles BTNLapor.Click
-        If LaporanTerpilih = Nothing Then
-            Pesan("Pilih Laporan valid", 0)
-            Exit Sub
-        End If
-        Select Case LaporanTerpilih
-            Case "Supplier"
-                TampilLaporan("Supplier", TBLSupplierBindingSource, "SELECT * FROM TBLSupplier", Dev.TBLSupplier)
-            Case "Customer"
-                TampilLaporan("Customer", TBLCustomerBindingSource, "SELECT * FROM TBLCustomer", Dev.TBLCustomer)
-            Case "Barang"
-                TampilLaporan("Barang", TBLBarangBindingSource, "SELECT * FROM TBLBarang", Dev.TBLBarang)
-            Case "Transaksi"
-                If CBMasuk.Checked = True And CBKeluar.Checked = True Then
-                    FullQuery = "SELECT ID_Masuk, Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE NOT Status = 'PO'" & Waktu & " UNION ALL SELECT ID_Keluar, Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE NOT Status = 'x'" & Waktu & " ORDER BY 2 ASC, 1 ASC"
-                ElseIf CBMasuk.Checked = True Then
-                    FullQuery = "SELECT ID_Masuk, Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE NOT Status = 'PO'" & Waktu & " ORDER BY 2 ASC, 1 ASC"
-                ElseIf CBKeluar.Checked = True Then
-                    FullQuery = "SELECT ID_Keluar AS [ID_Masuk], Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE NOT Status = 'x'" & Waktu & " ORDER BY 2 ASC, 1 ASC"
-                End If
-                TampilLaporan("Transaksi", TBLTransaksiBindingSource, FullQuery, Dev.TBLTransaksi)
-            Case "Grafik"
-                FullQuery = "SELECT ID_Masuk, Tanggal, Nominal FROM TBLBayarMasuk WHERE YEAR(Tanggal) = " & TTahunan.SelectedItem & " UNION ALL SELECT ID_Keluar, Tanggal, Nominal FROM TBLBayarKeluar WHERE YEAR(Tanggal) = " & TTahunan.SelectedItem
-                TampilLaporan("Grafik", TBLGrafikBindingSource, FullQuery, Dev.TBLGrafik)
-            Case "LabaRugi"
-                If CBTransaksi.Checked = True And CBLain.Checked = True Then
-                    FullQuery = "SELECT ID_LR, Tanggal, Deskripsi, Nominal FROM TBLLabaRugi WHERE NOT ID_LR = 'x'" & Waktu & " UNION ALL SELECT ID_Masuk, Tanggal, Deskripsi, Nominal FROM TBLBayarMasuk WHERE NOT ID_Masuk = 'x'" & Waktu & " UNION ALL SELECT ID_Keluar, Tanggal, Deskripsi, Nominal FROM TBLBayarKeluar WHERE NOT ID_Keluar = 'x'" & Waktu & " ORDER BY 2 ASC"
-                ElseIf CBTransaksi.Checked = True Then
-                    FullQuery = "SELECT ID_Masuk AS [ID_LR], Tanggal, Deskripsi, Nominal FROM TBLBayarMasuk WHERE NOT ID_Masuk = 'x'" & Waktu & " UNION ALL SELECT ID_Keluar, Tanggal, Deskripsi, Nominal FROM TBLBayarKeluar WHERE NOT ID_Keluar = 'x'" & Waktu & " ORDER BY 2 ASC"
-                ElseIf CBLain.Checked = True Then
-                    FullQuery = "SELECT ID_LR, Tanggal, Deskripsi, Nominal FROM TBLLabaRugi WHERE NOT ID_LR = 'x'" & Waktu & " ORDER BY 2 ASC"
-                End If
-                TampilLaporan("LabaRugi", TBLLabaRugiBindingSource, FullQuery, Dev.TBLLabaRugi)
-            Case "Pembelian"
-                TampilLaporan("Pembelian", TBLPembelianBindingSource, FullQuery, Dev.TBLPembelian)
-            Case "Penjualan"
-                TampilLaporan("Penjualan", TBLPenjualanBindingSource, FullQuery, Dev.TBLPenjualan)
-            Case "TransaksiBarang"
-                FullQuery = "SELECT TBLMasuk.ID_Masuk, Tanggal, Nama, StokAwal, TBLDetailMasuk.Qty, StokAkhir, TotalHarga FROM TBLSupplier INNER JOIN (TBLMasuk INNER JOIN (TBLDetailMasuk INNER JOIN TBLTransaksi ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE NOT Status = 'PO' AND ID_Barang = " & CInt(IDEntitas) & Waktu & " UNION ALL SELECT TBLKeluar.ID_Keluar, Tanggal, Nama, StokAwal, TBLDetailKeluar.Qty, StokAkhir, TotalHarga FROM TBLCustomer INNER JOIN (TBLKeluar INNER JOIN (TBLDetailKeluar INNER JOIN TBLTransaksi ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE ID_Barang = " & CInt(IDEntitas) & Waktu & " ORDER BY 2 ASC, 4 DESC"
-                TampilLaporan("TransaksiBarang", TBLTransaksiBarangBindingSource, FullQuery, Dev.TBLTransaksiBarang)
-            Case "TransaksiSupplier"
-                FullQuery = "SELECT Nama, Alamat, Telepon, Email, ID_Masuk, Tanggal, Subtotal, PPN, BiayaLain, Terbayar, Status, Keterangan FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE TBLMasuk.ID_Supplier = " & CInt(IDEntitas) & Waktu & " ORDER BY 5 DESC"
-                TampilLaporan("TransaksiSupplier", TBLTransaksiSupplierBindingSource, FullQuery, Dev.TBLTransaksiSupplier)
-            Case "TransaksiCustomer"
-                FullQuery = "SELECT Nama, Alamat, Telepon, Email, ID_Keluar, Tanggal, Subtotal, PPN, BiayaLain, Terbayar, Status, Keterangan FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE TBLKeluar.ID_Customer = " & CInt(IDEntitas) & Waktu & " ORDER BY 5 DESC"
-                TampilLaporan("TransaksiCustomer", TBLTransaksiCustomerBindingSource, FullQuery, Dev.TBLTransaksiCustomer)
-        End Select
-    End Sub
-
-    Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
-        Bersihkan()
-    End Sub
-
-    Sub TampilLaporan(Judul As String, BS As BindingSource, Query As String, DT As DataTable)
-        TampilDeskripsi = New ReportParameter("Deskripsi", LBLFilter.Text)
-        Dim CurrentReportDataSource = New ReportDataSource()
-        Dev.Clear()
-        Terlapor.Show()
-        If RBGaris.Checked = True And Judul = "Grafik" Then
-            Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & "2.rdlc"
-        ElseIf RBKurva.Checked = True And Judul = "Grafik" Then
-            Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & "3.rdlc"
-        Else
-            Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & ".rdlc"
-        End If
-        CurrentReportDataSource.Name = "Data" & Judul
-        CurrentReportDataSource.Value = BS
-        Terlapor.RV.LocalReport.DataSources.Add(CurrentReportDataSource)
-        DA = New OleDbDataAdapter(Query, CONN)
-        DA.Fill(DT)
-        If Judul = "Grafik" Then
-            Terlapor.RV.LocalReport.SetParameters(TampilTahun)
-        Else
-            Terlapor.RV.LocalReport.SetParameters(TampilDeskripsi)
-            For Each param As ReportParameter In Params
-                Terlapor.RV.LocalReport.SetParameters(param)
-            Next
-        End If
-        Terlapor.RV.SetDisplayMode(DisplayMode.PrintLayout)
-        Terlapor.RV.ZoomMode = ZoomMode.Percent
-        Terlapor.RV.ZoomPercent = 100
-        Terlapor.RV.RefreshReport()
-    End Sub
-
     Private Sub Laporan_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         QR("SELECT * FROM TBLInfo")
         TampilNama = New ReportParameter("Nama", DR(0).ToString)
@@ -173,6 +47,18 @@ Public Class Laporan
         TTahunan.SelectedIndex = 0
     End Sub
 
+    Sub TidakMemilih()
+        FilterJenis = Nothing
+        FilterTanggal = Nothing
+        LBLFilter.Text = ""
+        FullQuery = Nothing
+        Waktu = Nothing
+        IDEntitas = Nothing
+        NamaEntitas = Nothing
+        LaporanTerpilih = Nothing
+    End Sub
+
+#Region "Kiri"
     Private Sub TampilFile(sender As Object, e As EventArgs) Handles RBSupplier.CheckedChanged, RBCustomer.CheckedChanged, RBBarang.CheckedChanged
         NamaEntitas = Nothing
         If RBBarang.Checked = False And RBSupplier.Checked = False And RBCustomer.Checked = False Then Exit Sub
@@ -238,54 +124,9 @@ Public Class Laporan
         LaporanTerpilih = "Grafik"
         LBLFilter.Text = FilterJenis & FilterTanggal
     End Sub
+#End Region
 
-    Private Sub TEntitas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TEntitas.SelectedIndexChanged
-        If TEntitas.SelectedIndex = -1 Then
-            TidakMemilih()
-            Exit Sub
-        End If
-        FetchData = 0
-        CurrentPage = 1
-        TampilDGV()
-    End Sub
-
-    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
-        If TEntitas.SelectedIndex = -1 Then Exit Sub
-        FetchData = 0
-        CurrentPage = 1
-        TampilDGV()
-    End Sub
-
-    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
-        If e.RowIndex < 0 Then Exit Sub
-        FilterJenis = Nothing
-        IDEntitas = DGV.Rows(e.RowIndex).Cells(0).Value
-        If TEntitas.SelectedIndex = 2 Or TEntitas.SelectedIndex = 3 Or TEntitas.SelectedIndex = 4 Then NamaEntitas = DGV.Rows(e.RowIndex).Cells(1).Value
-        If TEntitas.SelectedIndex = 0 Then 'Pembelian
-            LBLFilter.Text = "Faktur Pembelian " & IDEntitas
-            FullQuery = "SELECT TBLMasuk.ID_Masuk, Tanggal, TBLSupplier.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier) INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLMasuk.ID_Masuk = '" & IDEntitas & "'"
-            LaporanTerpilih = "Pembelian"
-        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
-            LBLFilter.Text = "Faktur Penjualan " & IDEntitas
-            FullQuery = "SELECT TBLKeluar.ID_Keluar, Tanggal, TBLCustomer.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, TBLTransaksi.ID_Barang, Status FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLKeluar.ID_Keluar = '" & IDEntitas & "'"
-            LaporanTerpilih = "Penjualan"
-        ElseIf TEntitas.SelectedIndex = 2 Then 'Transaksi Barang
-            FilterJenis = "Riwayat transaksi pada "
-            LaporanTerpilih = "TransaksiBarang"
-            LBLFilter.Text = FilterJenis & NamaEntitas & FilterTanggal
-        ElseIf TEntitas.SelectedIndex = 3 Then 'Transaksi Supplier
-            FilterJenis = "Riwayat transaksi dengan "
-            LaporanTerpilih = "TransaksiSupplier"
-            LBLFilter.Text = FilterJenis & NamaEntitas & FilterTanggal
-        ElseIf TEntitas.SelectedIndex = 4 Then 'Transaksi Customer
-            FilterJenis = "Riwayat transaksi dengan "
-            LaporanTerpilih = "TransaksiCustomer"
-            LBLFilter.Text = FilterJenis & NamaEntitas & FilterTanggal
-        End If
-    End Sub
-
-#Region "Tanggal Transaksi"
-
+#Region "Tengah"
     Private Sub DTPPeriodik(sender As Object, e As EventArgs) Handles TSampai.ValueChanged, TDari.ValueChanged
         If FilterJenis = Nothing Then Exit Sub
         If sender Is TDari And TDari.Value > TSampai.Value Then
@@ -356,10 +197,173 @@ Public Class Laporan
             LBLFilter.Text = FilterJenis & NamaEntitas & FilterTanggal
         End If
     End Sub
-
 #End Region
 
-#Region "DGV Pagination"
+#Region "Kanan"
+    Private Sub TEntitas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TEntitas.SelectedIndexChanged
+        If TEntitas.SelectedIndex = -1 Then
+            TidakMemilih()
+            Exit Sub
+        End If
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
+    End Sub
+
+    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
+        If TEntitas.SelectedIndex = -1 Then Exit Sub
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
+    End Sub
+
+    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
+        If e.RowIndex < 0 Then Exit Sub
+        FilterJenis = Nothing
+        IDEntitas = DGV.Rows(e.RowIndex).Cells(0).Value
+        If TEntitas.SelectedIndex = 2 Or TEntitas.SelectedIndex = 3 Or TEntitas.SelectedIndex = 4 Then NamaEntitas = DGV.Rows(e.RowIndex).Cells(1).Value
+        If TEntitas.SelectedIndex = 0 Then 'Pembelian
+            LBLFilter.Text = "Faktur Pembelian " & IDEntitas
+            FullQuery = "SELECT TBLMasuk.ID_Masuk, Tanggal, TBLSupplier.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier) INNER JOIN TBLDetailMasuk ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLMasuk.ID_Masuk = '" & IDEntitas & "'"
+            LaporanTerpilih = "Pembelian"
+        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
+            LBLFilter.Text = "Faktur Penjualan " & IDEntitas
+            FullQuery = "SELECT TBLKeluar.ID_Keluar, Tanggal, TBLCustomer.Nama, Alamat, Telepon, Email, TBLBarang.Nama, Qty, Satuan, Diskon, TotalHarga, Subtotal, PPN, BiayaLain, Keterangan, TBLTransaksi.ID_Barang, Status FROM TBLBarang INNER JOIN (TBLTransaksi INNER JOIN ((TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer) INNER JOIN TBLDetailKeluar ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLBarang.ID_Barang = TBLTransaksi.ID_Barang WHERE TBLKeluar.ID_Keluar = '" & IDEntitas & "'"
+            LaporanTerpilih = "Penjualan"
+        ElseIf TEntitas.SelectedIndex = 2 Then 'Transaksi Barang
+            FilterJenis = "Riwayat transaksi pada "
+            LaporanTerpilih = "TransaksiBarang"
+            LBLFilter.Text = FilterJenis & NamaEntitas & FilterTanggal
+        ElseIf TEntitas.SelectedIndex = 3 Then 'Transaksi Supplier
+            FilterJenis = "Riwayat transaksi dengan "
+            LaporanTerpilih = "TransaksiSupplier"
+            LBLFilter.Text = FilterJenis & NamaEntitas & FilterTanggal
+        ElseIf TEntitas.SelectedIndex = 4 Then 'Transaksi Customer
+            FilterJenis = "Riwayat transaksi dengan "
+            LaporanTerpilih = "TransaksiCustomer"
+            LBLFilter.Text = FilterJenis & NamaEntitas & FilterTanggal
+        End If
+    End Sub
+#End Region
+
+#Region "Lapor / Clear"
+    Sub Laporkan(Judul As String, BS As BindingSource, Query As String, DT As DataTable)
+        TampilDeskripsi = New ReportParameter("Deskripsi", LBLFilter.Text)
+        Dim CurrentReportDataSource = New ReportDataSource()
+        Dev.Clear()
+        Terlapor.Show()
+        If RBGaris.Checked = True And Judul = "Grafik" Then
+            Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & "2.rdlc"
+        ElseIf RBKurva.Checked = True And Judul = "Grafik" Then
+            Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & "3.rdlc"
+        Else
+            Terlapor.RV.LocalReport.ReportEmbeddedResource = "Inventori.Laporan" & Judul & ".rdlc"
+        End If
+        CurrentReportDataSource.Name = "Data" & Judul
+        CurrentReportDataSource.Value = BS
+        Terlapor.RV.LocalReport.DataSources.Add(CurrentReportDataSource)
+        DA = New OleDbDataAdapter(Query, CONN)
+        DA.Fill(DT)
+        If Judul = "Grafik" Then
+            Terlapor.RV.LocalReport.SetParameters(TampilTahun)
+        Else
+            Terlapor.RV.LocalReport.SetParameters(TampilDeskripsi)
+            For Each param As ReportParameter In Params
+                Terlapor.RV.LocalReport.SetParameters(param)
+            Next
+        End If
+        Terlapor.RV.SetDisplayMode(DisplayMode.PrintLayout)
+        Terlapor.RV.ZoomMode = ZoomMode.Percent
+        Terlapor.RV.ZoomPercent = 100
+        Terlapor.RV.RefreshReport()
+    End Sub
+
+    Private Sub BTNLapor_Click(sender As Object, e As EventArgs) Handles BTNLapor.Click
+        If LaporanTerpilih = Nothing Then
+            Pesan("Pilih Laporan valid", 0)
+            Exit Sub
+        End If
+        Select Case LaporanTerpilih
+            Case "Supplier"
+                Laporkan("Supplier", TBLSupplierBindingSource, "SELECT * FROM TBLSupplier", Dev.TBLSupplier)
+            Case "Customer"
+                Laporkan("Customer", TBLCustomerBindingSource, "SELECT * FROM TBLCustomer", Dev.TBLCustomer)
+            Case "Barang"
+                Laporkan("Barang", TBLBarangBindingSource, "SELECT * FROM TBLBarang", Dev.TBLBarang)
+            Case "Transaksi"
+                If CBMasuk.Checked = True And CBKeluar.Checked = True Then
+                    FullQuery = "SELECT ID_Masuk, Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE NOT Status = 'PO'" & Waktu & " UNION ALL SELECT ID_Keluar, Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE NOT Status = 'x'" & Waktu & " ORDER BY 2 ASC, 1 ASC"
+                ElseIf CBMasuk.Checked = True Then
+                    FullQuery = "SELECT ID_Masuk, Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE NOT Status = 'PO'" & Waktu & " ORDER BY 2 ASC, 1 ASC"
+                ElseIf CBKeluar.Checked = True Then
+                    FullQuery = "SELECT ID_Keluar AS [ID_Masuk], Tanggal, Nama, Subtotal, PPN, BiayaLain, Terbayar FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE NOT Status = 'x'" & Waktu & " ORDER BY 2 ASC, 1 ASC"
+                End If
+                Laporkan("Transaksi", TBLTransaksiBindingSource, FullQuery, Dev.TBLTransaksi)
+            Case "Grafik"
+                FullQuery = "SELECT ID_Masuk, Tanggal, Nominal FROM TBLBayarMasuk WHERE YEAR(Tanggal) = " & TTahunan.SelectedItem & " UNION ALL SELECT ID_Keluar, Tanggal, Nominal FROM TBLBayarKeluar WHERE YEAR(Tanggal) = " & TTahunan.SelectedItem
+                Laporkan("Grafik", TBLGrafikBindingSource, FullQuery, Dev.TBLGrafik)
+            Case "LabaRugi"
+                If CBTransaksi.Checked = True And CBLain.Checked = True Then
+                    FullQuery = "SELECT ID_LR, Tanggal, Deskripsi, Nominal FROM TBLLabaRugi WHERE NOT ID_LR = 'x'" & Waktu & " UNION ALL SELECT ID_Masuk, Tanggal, Deskripsi, Nominal FROM TBLBayarMasuk WHERE NOT ID_Masuk = 'x'" & Waktu & " UNION ALL SELECT ID_Keluar, Tanggal, Deskripsi, Nominal FROM TBLBayarKeluar WHERE NOT ID_Keluar = 'x'" & Waktu & " ORDER BY 2 ASC"
+                ElseIf CBTransaksi.Checked = True Then
+                    FullQuery = "SELECT ID_Masuk AS [ID_LR], Tanggal, Deskripsi, Nominal FROM TBLBayarMasuk WHERE NOT ID_Masuk = 'x'" & Waktu & " UNION ALL SELECT ID_Keluar, Tanggal, Deskripsi, Nominal FROM TBLBayarKeluar WHERE NOT ID_Keluar = 'x'" & Waktu & " ORDER BY 2 ASC"
+                ElseIf CBLain.Checked = True Then
+                    FullQuery = "SELECT ID_LR, Tanggal, Deskripsi, Nominal FROM TBLLabaRugi WHERE NOT ID_LR = 'x'" & Waktu & " ORDER BY 2 ASC"
+                End If
+                Laporkan("LabaRugi", TBLLabaRugiBindingSource, FullQuery, Dev.TBLLabaRugi)
+            Case "Pembelian"
+                Laporkan("Pembelian", TBLPembelianBindingSource, FullQuery, Dev.TBLPembelian)
+            Case "Penjualan"
+                Laporkan("Penjualan", TBLPenjualanBindingSource, FullQuery, Dev.TBLPenjualan)
+            Case "TransaksiBarang"
+                FullQuery = "SELECT TBLMasuk.ID_Masuk, Tanggal, Nama, StokAwal, TBLDetailMasuk.Qty, StokAkhir, TotalHarga FROM TBLSupplier INNER JOIN (TBLMasuk INNER JOIN (TBLDetailMasuk INNER JOIN TBLTransaksi ON TBLTransaksi.Faktur = TBLDetailMasuk.Faktur) ON TBLMasuk.ID_Masuk = TBLDetailMasuk.ID_Masuk) ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE NOT Status = 'PO' AND ID_Barang = " & CInt(IDEntitas) & Waktu & " UNION ALL SELECT TBLKeluar.ID_Keluar, Tanggal, Nama, StokAwal, TBLDetailKeluar.Qty, StokAkhir, TotalHarga FROM TBLCustomer INNER JOIN (TBLKeluar INNER JOIN (TBLDetailKeluar INNER JOIN TBLTransaksi ON TBLTransaksi.Faktur = TBLDetailKeluar.Faktur) ON TBLKeluar.ID_Keluar = TBLDetailKeluar.ID_Keluar) ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE ID_Barang = " & CInt(IDEntitas) & Waktu & " ORDER BY 2 ASC, 4 DESC"
+                Laporkan("TransaksiBarang", TBLTransaksiBarangBindingSource, FullQuery, Dev.TBLTransaksiBarang)
+            Case "TransaksiSupplier"
+                FullQuery = "SELECT Nama, Alamat, Telepon, Email, ID_Masuk, Tanggal, Subtotal, PPN, BiayaLain, Terbayar, Status, Keterangan FROM TBLSupplier INNER JOIN TBLMasuk ON TBLSupplier.ID_Supplier = TBLMasuk.ID_Supplier WHERE TBLMasuk.ID_Supplier = " & CInt(IDEntitas) & Waktu & " ORDER BY 5 DESC"
+                Laporkan("TransaksiSupplier", TBLTransaksiSupplierBindingSource, FullQuery, Dev.TBLTransaksiSupplier)
+            Case "TransaksiCustomer"
+                FullQuery = "SELECT Nama, Alamat, Telepon, Email, ID_Keluar, Tanggal, Subtotal, PPN, BiayaLain, Terbayar, Status, Keterangan FROM TBLCustomer INNER JOIN TBLKeluar ON TBLCustomer.ID_Customer = TBLKeluar.ID_Customer WHERE TBLKeluar.ID_Customer = " & CInt(IDEntitas) & Waktu & " ORDER BY 5 DESC"
+                Laporkan("TransaksiCustomer", TBLTransaksiCustomerBindingSource, FullQuery, Dev.TBLTransaksiCustomer)
+        End Select
+    End Sub
+
+    Sub Clear()
+        RBBarang.Checked = 0
+        RBSupplier.Checked = 0
+        RBCustomer.Checked = 0
+        CBTransaksi.Checked = 0
+        CBLain.Checked = 0
+        RBBatang.Checked = 0
+        RBGaris.Checked = 0
+        RBKurva.Checked = 0
+
+        CBMasuk.Checked = 0
+        CBKeluar.Checked = 0
+        TDari.Value = Today
+        TSampai.Value = Today
+        TBulanan.Value = Today
+        TTahunan.SelectedIndex = 0
+        TEntitas.SelectedIndex = -1
+        TCariData.Clear()
+        DGV.DataSource = Nothing
+
+        FilterJenis = Nothing
+        FilterTanggal = Nothing
+        LBLFilter.Text = ""
+
+        FullQuery = Nothing
+        Waktu = Nothing
+        IDEntitas = Nothing
+        NamaEntitas = Nothing
+        LaporanTerpilih = Nothing
+    End Sub
+
+    Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
+        Clear()
+    End Sub
+#End Region
+
+#Region "DGV"
     Dim FetchData As Integer
     Dim CurrentPage As Integer = 1
 
@@ -404,6 +408,11 @@ Public Class Laporan
     Private Sub DGVPrevClick(sender As Object, e As EventArgs) Handles DGVPrev.Click
         FetchData -= 12
         DS.Clear()
+        If TEntitas.SelectedIndex = 0 Then 'Pembelian
+            DA = New OleDbDataAdapter("SELECT ID_Masuk AS [Faktur Pembelian] FROM TBLMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", CONN)
+        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
+            DA = New OleDbDataAdapter("SELECT ID_Keluar AS [Faktur Penjualan] FROM TBLKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", CONN)
+        End If
         DA.Fill(DS, FetchData, 12, 0)
         CurrentPage -= 1
         Paging()
@@ -412,6 +421,11 @@ Public Class Laporan
     Private Sub DGVNextClick(sender As Object, e As EventArgs) Handles DGVNext.Click
         FetchData += 12
         DS.Clear()
+        If TEntitas.SelectedIndex = 0 Then 'Pembelian
+            DA = New OleDbDataAdapter("SELECT ID_Masuk AS [Faktur Pembelian] FROM TBLMasuk WHERE ID_Masuk LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", CONN)
+        ElseIf TEntitas.SelectedIndex = 1 Then 'Penjualan
+            DA = New OleDbDataAdapter("SELECT ID_Keluar AS [Faktur Penjualan] FROM TBLKeluar WHERE ID_Keluar LIKE '%" & TCariData.Text & "%' ORDER BY Tanggal DESC", CONN)
+        End If
         DA.Fill(DS, FetchData, 12, 0)
         CurrentPage += 1
         Paging()

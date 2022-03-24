@@ -27,7 +27,7 @@
         TSupplier.SelectedIndex = -1
         DGV.Rows.Clear()
         TCariBarang.Clear()
-        TampilDGV()
+        TampilDGVBarang()
         TglMasuk = Now
         Subtotal = 0
         PPN = 0
@@ -47,8 +47,26 @@
         Akses("Purchase Order", 0, 0, 0, 0, "Grand Total :", "Sisa :", 0, 0, 1, 1, 1, 0)
     End Sub
 
-    Sub Akses(TTitle As String, VTglMasuk As Integer, VTerbayar As Integer, VDibayar As Integer, VSisaKurang As Integer, XGrandSisa As String, XSisaKurang As String, VDGVC As Integer, RDGVC As Integer, RDGVC7 As Integer, EPPN As Integer, EBiayaLain As Integer, EHapus As Integer)
-        MainF.LBLTitle.Text = TTitle
+    Private Sub Masuk_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Clear()
+        RemoveHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
+        TampilFaktur()
+        AddHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
+        QRL("SELECT ID_Supplier, Nama FROM TBLSupplier ORDER BY Nama ASC")
+        Do While DR.Read
+            TSupplier.Items.Add(DR(0) & " - " & DR(1))
+        Loop
+        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+        DGVBarang.Columns(0).Visible = 0
+        DGVBarang.Columns(2).Visible = 0
+        DGVBarang.Columns(3).Visible = 0
+        DGVBarang.Columns(4).Visible = 0
+        DGVBarang.Columns(5).Visible = 0
+        DGVBarang.Columns(6).Visible = 0
+    End Sub
+
+    Sub Akses(XTitle As String, VTglMasuk As Integer, VTerbayar As Integer, VDibayar As Integer, VSisaKurang As Integer, XGrandSisa As String, XSisaKurang As String, VDGVC As Integer, RDGVC As Integer, RDGVC7 As Integer, EPPN As Integer, EBiayaLain As Integer, EHapus As Integer)
+        MainF.LBLTitle.Text = XTitle
         LBLTglMasuk.Visible = VTglMasuk
         TTglMasuk.Visible = VTglMasuk
         LBLTerbayar.Visible = VTerbayar
@@ -121,6 +139,30 @@
         ControlOtomatis()
     End Sub
 
+    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TDibayar.KeyPress, TPPN.KeyPress, TBiayaLain.KeyPress
+        Angka(e)
+        If (sender.Text = "" And Asc(e.KeyChar) = 48) Or (sender Is TDibayar And Val(TDibayar.Text) = GrandSisa And Not Asc(e.KeyChar) = 8) Then
+            e.Handled = 1
+        End If
+    End Sub
+
+    Sub Validasi()
+        For Each x In DGV.Rows
+            If TFaktur.SelectedIndex = -1 Or TSupplier.SelectedIndex = -1 Or DGV.Rows.Count = 0 Or (x.Cells(7).Value <> "" And Not IsDate(x.Cells(7).Value)) Or (BStatus <> Nothing And Val(TDibayar.Text) = 0) Then
+                BTNSimpan.Enabled = 0
+                Exit For
+            Else
+                BTNSimpan.Enabled = 1
+            End If
+        Next
+    End Sub
+
+    Private Sub Valid(sender As Object, e As EventArgs) Handles TPPN.TextChanged, TDibayar.TextChanged, TBiayaLain.TextChanged, TSupplier.SelectedIndexChanged
+        Hitung()
+        ControlOtomatis()
+        Validasi()
+    End Sub
+
     Sub Hitung()
         Subtotal = 0
         For Each x In DGV.Rows
@@ -151,41 +193,7 @@
         TSisaKurang.Text = FormatNumber(SisaKurang, 0)
     End Sub
 
-    Sub Validasi()
-        For Each x In DGV.Rows
-            If TFaktur.SelectedIndex = -1 Or TSupplier.SelectedIndex = -1 Or DGV.Rows.Count = 0 Or (x.Cells(7).Value <> "" And Not IsDate(x.Cells(7).Value)) Or (BStatus <> Nothing And Val(TDibayar.Text) = 0) Then
-                BTNSimpan.Enabled = 0
-                Exit For
-            Else
-                BTNSimpan.Enabled = 1
-            End If
-        Next
-    End Sub
-
-    Private Sub Valid(sender As Object, e As EventArgs) Handles TPPN.TextChanged, TDibayar.TextChanged, TBiayaLain.TextChanged, TSupplier.SelectedIndexChanged
-        Hitung()
-        ControlOtomatis()
-        Validasi()
-    End Sub
-
-    Private Sub Masuk_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Clear()
-        RemoveHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
-        TampilFaktur()
-        AddHandler TFaktur.SelectedIndexChanged, AddressOf TFaktur_SelectedIndexChanged
-        QRL("SELECT ID_Supplier, Nama FROM TBLSupplier ORDER BY Nama ASC")
-        Do While DR.Read
-            TSupplier.Items.Add(DR(0) & " - " & DR(1))
-        Loop
-        DGVBarang.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-        DGVBarang.Columns(0).Visible = 0
-        DGVBarang.Columns(2).Visible = 0
-        DGVBarang.Columns(3).Visible = 0
-        DGVBarang.Columns(4).Visible = 0
-        DGVBarang.Columns(5).Visible = 0
-        DGVBarang.Columns(6).Visible = 0
-    End Sub
-
+#Region "CRUD"
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
         CONN.Dispose()
         Koneksi()
@@ -248,58 +256,9 @@
     Private Sub BTNClear_Click(sender As Object, e As EventArgs) Handles BTNClear.Click
         TampilFaktur()
     End Sub
+#End Region
 
-    Private Sub TCariBarang_TextChanged(sender As Object, e As EventArgs) Handles TCariBarang.TextChanged
-        TampilDGV()
-    End Sub
-
-    Private Sub DGVBarang_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGVBarang.CellMouseClick
-        If e.RowIndex < 0 Then Exit Sub
-        For Each x In DGV.Rows
-            If x.Cells(0).Value = DGVBarang.Rows(e.RowIndex).Cells(0).Value Or BStatus = "Belum Lunas" Then Exit Sub
-        Next
-        DGV.Rows.Add(DGVBarang.Rows(e.RowIndex).Cells(0).Value, DGVBarang.Rows(e.RowIndex).Cells(4).Value, 1, DGVBarang.Rows(e.RowIndex).Cells(2).Value, DGVBarang.Rows(e.RowIndex).Cells(5).Value, 0, 0, "", DGVBarang.Rows(e.RowIndex).Cells(6).Value, DGVBarang.Rows(e.RowIndex).Cells(3).Value)
-        Hitung()
-        ControlOtomatis()
-    End Sub
-
-    Private Sub DGV_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellEndEdit
-        If DGV.Rows(e.RowIndex).Cells(2).Value <= 0 Then DGV.Rows(e.RowIndex).Cells(2).Value = 1
-        If DGV.Rows(e.RowIndex).Cells(4).Value <= 0 Then DGV.Rows(e.RowIndex).Cells(4).Value = 1
-        If DGV.Rows(e.RowIndex).Cells(8).Value <= 0 Then DGV.Rows(e.RowIndex).Cells(8).Value = 1
-        Hitung()
-        ControlOtomatis()
-        Validasi()
-    End Sub
-
-    Private Sub DGV_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles DGV.EditingControlShowing
-        Dim Angka As TextBox = CType(e.Control, TextBox)
-        Dim Tanggal As TextBox = CType(e.Control, TextBox)
-        RemoveHandler Tanggal.KeyPress, AddressOf Tanggal_KeyPress
-        RemoveHandler Angka.KeyPress, AddressOf Angka_KeyPress
-        If DGV.CurrentCell.ColumnIndex = 7 Then
-            AddHandler Tanggal.KeyPress, AddressOf Tanggal_KeyPress
-        Else
-            AddHandler Angka.KeyPress, AddressOf Angka_KeyPress
-        End If
-    End Sub
-
-    Private Sub DGV_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DGV.KeyPress
-        On Error Resume Next
-        If Asc(e.KeyChar) = 27 Then DGV.Rows.Remove(DGV.CurrentRow)
-        Hitung()
-        ControlOtomatis()
-        Validasi()
-    End Sub
-
-    Private Sub InputAngka(sender As Object, e As KeyPressEventArgs) Handles TDibayar.KeyPress, TPPN.KeyPress, TBiayaLain.KeyPress
-        Angka(e)
-        If (sender.Text = "" And Asc(e.KeyChar) = 48) Or (sender Is TDibayar And Val(TDibayar.Text) = GrandSisa And Not Asc(e.KeyChar) = 8) Then
-            e.Handled = 1
-        End If
-    End Sub
-
-#Region "DGVBarang Pagination"
+#Region "DGVBarang"
     Dim FetchData As Integer
     Dim CurrentPage As Integer = 1
 
@@ -311,11 +270,25 @@
         If CurrentPage >= Math.Ceiling(DR(0) / 14) Then DGVBarangNext.Enabled = 0 Else DGVBarangNext.Enabled = 1
     End Sub
 
-    Sub TampilDGV()
+    Sub TampilDGVBarang()
         FetchData = 0
         CurrentPage = 1
         QDGV("SELECT ID_Barang, Nama + ' (' + Satuan + ')' AS [Daftar Barang], Satuan, Stok, Nama, HargaBeli, HargaJual FROM TBLBarang WHERE Nama LIKE '%" & TCariBarang.Text & "%' OR Satuan LIKE '%" & TCariBarang.Text & "%' ORDER BY Nama ASC", DGVBarang, FetchData, 14, 0)
         Paging()
+    End Sub
+
+    Private Sub TCariBarang_TextChanged(sender As Object, e As EventArgs) Handles TCariBarang.TextChanged
+        TampilDGVBarang()
+    End Sub
+
+    Private Sub DGVBarang_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGVBarang.CellMouseClick
+        If e.RowIndex < 0 Then Exit Sub
+        For Each x In DGV.Rows
+            If x.Cells(0).Value = DGVBarang.Rows(e.RowIndex).Cells(0).Value Or BStatus = "Belum Lunas" Then Exit Sub
+        Next
+        DGV.Rows.Add(DGVBarang.Rows(e.RowIndex).Cells(0).Value, DGVBarang.Rows(e.RowIndex).Cells(4).Value, 1, DGVBarang.Rows(e.RowIndex).Cells(2).Value, DGVBarang.Rows(e.RowIndex).Cells(5).Value, 0, 0, "", DGVBarang.Rows(e.RowIndex).Cells(6).Value, DGVBarang.Rows(e.RowIndex).Cells(3).Value)
+        Hitung()
+        ControlOtomatis()
     End Sub
 
     Private Sub DGVBarangPrevClick(sender As Object, e As EventArgs) Handles DGVBarangPrev.Click
@@ -332,6 +305,37 @@
         DA.Fill(DS, FetchData, 14, 0)
         CurrentPage += 1
         Paging()
+    End Sub
+#End Region
+
+#Region "DGV"
+    Private Sub DGV_EditingControlShowing(sender As Object, e As DataGridViewEditingControlShowingEventArgs) Handles DGV.EditingControlShowing
+        Dim Angka As TextBox = CType(e.Control, TextBox)
+        Dim Tanggal As TextBox = CType(e.Control, TextBox)
+        RemoveHandler Tanggal.KeyPress, AddressOf Tanggal_KeyPress
+        RemoveHandler Angka.KeyPress, AddressOf Angka_KeyPress
+        If DGV.CurrentCell.ColumnIndex = 7 Then
+            AddHandler Tanggal.KeyPress, AddressOf Tanggal_KeyPress
+        Else
+            AddHandler Angka.KeyPress, AddressOf Angka_KeyPress
+        End If
+    End Sub
+
+    Private Sub DGV_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles DGV.CellEndEdit
+        If DGV.Rows(e.RowIndex).Cells(2).Value <= 0 Then DGV.Rows(e.RowIndex).Cells(2).Value = 1
+        If DGV.Rows(e.RowIndex).Cells(4).Value <= 0 Then DGV.Rows(e.RowIndex).Cells(4).Value = 1
+        If DGV.Rows(e.RowIndex).Cells(8).Value <= 0 Then DGV.Rows(e.RowIndex).Cells(8).Value = 1
+        Hitung()
+        ControlOtomatis()
+        Validasi()
+    End Sub
+
+    Private Sub DGV_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DGV.KeyPress
+        On Error Resume Next
+        If Asc(e.KeyChar) = 27 Then DGV.Rows.Remove(DGV.CurrentRow)
+        Hitung()
+        ControlOtomatis()
+        Validasi()
     End Sub
 #End Region
 

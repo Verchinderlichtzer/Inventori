@@ -73,46 +73,6 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property checkbox_false() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("checkbox_false", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property checkbox_false_disabled() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("checkbox_false_disabled", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property checkbox_true() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("checkbox_true", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property checkbox_true_disabled() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("checkbox_true_disabled", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property crud_edit_common() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("crud_edit_common", resourceCulture)
@@ -206,46 +166,6 @@ Namespace My.Resources
         Friend ReadOnly Property konfirmasi() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("konfirmasi", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property radiobutton_false() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("radiobutton_false", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property radiobutton_false_disabled() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("radiobutton_false_disabled", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property radiobutton_true() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("radiobutton_true", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property radiobutton_true_disabled() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("radiobutton_true_disabled", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -546,16 +466,6 @@ Namespace My.Resources
         Friend ReadOnly Property sidebar_user_tracking() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("sidebar_user_tracking", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property sorting() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("sorting", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

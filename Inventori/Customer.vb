@@ -1,20 +1,19 @@
 ﻿Public Class Customer
+
     Sub Notis()
         BTNSimpan.Values.Image = My.Resources.crud_simpan_pressed
         BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_simpan_common
         TID.Text = 1
         Dim x = 0
-        QRL("SELECT ID_Customer FROM TBLCustomer ORDER BY ID_Customer ASC")
+        QRL("SELECT ID_Customer FROM TBLCustomer ORDER BY ID_Customer")
         Do While DR.Read
             x += 1
-            If Not DR.HasRows Then
-                TID.Text = 1
-            Else
-                If DR(0) <> x Then
+            If DR.HasRows Then
+                If DR(0) = x Then
+                    TID.Text = x + 1
+                Else
                     TID.Text = x
                     Exit Sub
-                Else
-                    TID.Text = x + 1
                 End If
             End If
         Loop
@@ -31,14 +30,6 @@
         TNama.Focus()
     End Sub
 
-    Sub CariID()
-        QR("SELECT * FROM TBLCustomer WHERE ID_Customer = " & Val(TID.Text) & "")
-    End Sub
-
-    Private Sub Valid(sender As Object, e As EventArgs) Handles TNama.TextChanged
-        If TNama.Text = "" Then BTNSimpan.Enabled = 0 Else BTNSimpan.Enabled = 1
-    End Sub
-
     Private Sub Customer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Clear()
         Dim Lebar() As Integer = {102, 223, 417, 143, 209}
@@ -53,20 +44,29 @@
         DGV.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
     End Sub
 
+    Private Sub Valid(sender As Object, e As EventArgs) Handles TNama.TextChanged
+        If TNama.Text = "" Then BTNSimpan.Enabled = 0 Else BTNSimpan.Enabled = 1
+    End Sub
+
+#Region "CRUD"
+    Sub CariID()
+        QR("SELECT * FROM TBLCustomer WHERE ID_Customer = " & Val(TID.Text))
+    End Sub
+
     Private Sub BTNSimpan_Click(sender As Object, e As EventArgs) Handles BTNSimpan.Click
         CariID()
         If Not DR.HasRows Then
             QN("INSERT INTO TBLCustomer VALUES(" & Val(TID.Text) & ",'" & TNama.Text & "','" & TAlamat.Text & "','" & TTelepon.Text & "','" & TEmail.Text & "')")
             Pesan("Customer berhasil ditambah", 1)
         Else
-            QN("UPDATE TBLCustomer SET Nama = '" & TNama.Text & "', Alamat = '" & TAlamat.Text & "', Telepon = '" & TTelepon.Text & "', Email = '" & TEmail.Text & "'  WHERE ID_Customer = " & Val(TID.Text) & "")
+            QN("UPDATE TBLCustomer SET Nama = '" & TNama.Text & "', Alamat = '" & TAlamat.Text & "', Telepon = '" & TTelepon.Text & "', Email = '" & TEmail.Text & "'  WHERE ID_Customer = " & Val(TID.Text))
             Pesan("Customer berhasil diubah", 1)
         End If
         Clear()
     End Sub
 
     Private Sub BTNHapus_Click(sender As Object, e As EventArgs) Handles BTNHapus.Click
-        QR("SELECT ID_Customer FROM TBLKeluar WHERE ID_Customer = " & Val(TID.Text) & "")
+        QR("SELECT ID_Customer FROM TBLKeluar WHERE ID_Customer = " & Val(TID.Text))
         If DR.HasRows Then
             Pesan("Customer pernah terlibat dalam transaksi", 0)
             Exit Sub
@@ -77,7 +77,7 @@
         Else
             Dim Confirm As New Konfirmasi("Konfirmasi Hapus", "Hapus " & DR(1) & "?")
             If Confirm.ShowDialog() = DialogResult.Yes Then
-                QN("DELETE FROM TBLCustomer WHERE ID_Customer = " & Val(TID.Text) & "")
+                QN("DELETE FROM TBLCustomer WHERE ID_Customer = " & Val(TID.Text))
                 Pesan("Customer berhasil dihapus", 1)
                 Clear()
             End If
@@ -88,24 +88,6 @@
         FetchData = 0
         CurrentPage = 1
         Clear()
-    End Sub
-
-    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
-        If e.RowIndex < 0 Then Exit Sub
-        TID.Text = DGV.Rows(e.RowIndex).Cells(0).Value
-        CariID()
-        TNama.Text = DR(1)
-        TAlamat.Text = DR(2)
-        TTelepon.Text = DR(3)
-        TEmail.Text = DR(4)
-        BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
-        BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
-    End Sub
-
-    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
-        FetchData = 0
-        CurrentPage = 1
-        TampilDGV()
     End Sub
 
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, koentji As Keys) As Boolean
@@ -121,8 +103,9 @@
         End If
         Return MyBase.ProcessCmdKey(msg, koentji)
     End Function
+#End Region
 
-#Region "DGV Pagination"
+#Region "DGV"
     Dim FetchData As Integer
     Dim CurrentPage As Integer = 1
 
@@ -137,6 +120,24 @@
     Sub TampilDGV()
         QDGV("SELECT ID_Customer AS [ID Customer], Nama AS [Nama Customer], Alamat, Telepon, Email FROM TBLCustomer WHERE Nama LIKE '%" & TCariData.Text & "%' OR Alamat LIKE '%" & TCariData.Text & "%' OR Telepon LIKE '%" & TCariData.Text & "%' OR Email LIKE '%" & TCariData.Text & "%' ORDER BY ID_Customer ASC", DGV, FetchData, 12, 0)
         Paging()
+    End Sub
+
+    Private Sub TCariData_TextChanged(sender As Object, e As EventArgs) Handles TCariData.TextChanged
+        FetchData = 0
+        CurrentPage = 1
+        TampilDGV()
+    End Sub
+
+    Private Sub DGV_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles DGV.CellMouseClick
+        If e.RowIndex < 0 Then Exit Sub
+        TID.Text = DGV.Rows(e.RowIndex).Cells(0).Value
+        CariID()
+        TNama.Text = DR(1)
+        TAlamat.Text = DR(2)
+        TTelepon.Text = DR(3)
+        TEmail.Text = DR(4)
+        BTNSimpan.Values.Image = My.Resources.crud_edit_pressed
+        BTNSimpan.Values.ImageStates.ImageNormal = My.Resources.crud_edit_common
     End Sub
 
     Private Sub DGVPrevClick(sender As Object, e As EventArgs) Handles DGVPrev.Click
@@ -155,4 +156,5 @@
         Paging()
     End Sub
 #End Region
+
 End Class
